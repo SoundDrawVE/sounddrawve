@@ -5,4 +5,15 @@ body { padding: 0; margin: 0; }
 #app {
   height: 100vh;
   background: #1D1E22;
+  display: flex;
+  justify-content: center;
+}
+
+.canvasContainer {
+  display: flex;
+  align-content: center;
+}
+
+.canvas {
+  background: #2D2E32;
 }
