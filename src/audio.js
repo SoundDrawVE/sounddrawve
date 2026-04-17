@@ -21,6 +21,11 @@ function createAnalyser(fftSize) {
   analyser.connect(audioCtx.destination);
 }
 
+export function setAnalyser(fftSize) {
+  if (audioCtx) return;
+  createAnalyser(fftSize);
+}
+
 export function setTrack(src) {
   player.src = src;
   player.play();
@@ -33,7 +38,7 @@ export function getAudioData() {
 
 
 player.addEventListener('play', () => {
-  createAnalyser(128);
+  setAnalyser(128);
 
   const timer = setInterval(() => {
     console.log(getAudioData());
