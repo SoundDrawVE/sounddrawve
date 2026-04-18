@@ -1,6 +1,6 @@
 import track from './assets/track.mp3'
 
-const player = document.getElementById('audio');
+export const player = document.getElementById('audio');
 player.src = track;
 
 let audioCtx; 
@@ -39,12 +39,13 @@ export function getAudioData() {
 
 player.addEventListener('play', () => {
   setAnalyser(128);
+  if (audioCtx.state === 'suspended') audioCtx.resume();
 
-  const timer = setInterval(() => {
-    console.log(getAudioData());
-  }, 1000);
+  // const timer = setInterval(() => {
+  //   console.log(getAudioData());
+  // }, 1000);
 
-  setTimeout(() => {
-    clearInterval(timer);
-  }, 2000);
+  // setTimeout(() => {
+  //   clearInterval(timer);
+  // }, 2000);
 });
