@@ -1,5 +1,5 @@
 const container = document.querySelector('#app');
-const canvas = document.getElementById("canvas");
+export const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let w, h;
