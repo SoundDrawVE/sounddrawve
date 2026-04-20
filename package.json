@@ -13,5 +13,9 @@
   },
   "overrides": {
     "rollup": "npm:@rollup/wasm-node"
+  },
+  "dependencies": {
+    "pureimage": "^0.4.18",
+    "ws": "^8.20.0"
   }
 }
