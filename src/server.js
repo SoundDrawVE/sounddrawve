@@ -21,15 +21,33 @@ console.log(FRAMES_DIR);
 
 
 const audioSample1 = [255,255,229,221,230,228,211,173,145,155,172,170,158,160,161,159,159,150,154,161,159,144,155,162,159,156,161,172,168,162,158,154,147,153,158,153,142,151,153,158,171,171,172,167,159,155,150,135,121,89,23,0,0,0,0,0,0,0,0,0,0,0,0,0];
-renderFrame({
-  id: 1,
-  config: { type: 'bars' },
-  width: 1920,
-  height: 1080,
-  frameDir: FRAMES_DIR
-}, 1, audioSample1);
+// renderFrame({
+//   id: 1,
+//   config: { type: 'bars' },
+//   width: 1920,
+//   height: 1080,
+//   frameDir: FRAMES_DIR
+// }, 1, audioSample1);
 
 
+const now = performance.now();
+async function testSpeed() {
+  let counter = 1;
+  while(counter <= 10) {
+    await renderFrame({
+      id: 1,
+      config: { type: 'bars' },
+      width: 1920,
+      height: 1080,
+      frameDir: FRAMES_DIR
+    }, counter, audioSample1);
+
+    if (counter === 10) console.log(performance.now() - now);
+    counter += 1;
+  }
+}
+
+testSpeed();
 
 
 function renderFrame(track, frameIndex, freq) {
