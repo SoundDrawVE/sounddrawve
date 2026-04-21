@@ -1,4 +1,4 @@
-import track from './assets/track.mp3'
+import track from './assets/sample.mp3'
 
 export const player = document.getElementById('audio');
 player.src = track;
