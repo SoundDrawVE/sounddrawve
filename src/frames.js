@@ -1,16 +1,14 @@
 import { visualizeSpectrum } from './visualizer.js';
-import { getSample, getTotalSamples, clearStorage, batch } from './storage.js';
+import { queue, batch } from './storage.js';
 
 
 const WS_URL = 'ws://localhost:3000';
-const BATCH_SIZE = 10;
 const OFFLINE_FPS = 25;         // ← можно поставить 20 или 30
 
 
 let socket = null;
 let currentTrackId = null;
 let isOfflineRendering = false;
-//let currentBatch = [];
 
 
 // Скрытый канвас (создаём один раз)
@@ -22,8 +20,7 @@ const exportCtx = exportCanvas.getContext('2d', { alpha: true });
 
 export function initFraming(trackId) {
   currentTrackId = trackId || 'track-' + Date.now();
-  clearStorage();
-  //currentBatch = [];
+  queue.clear();
   batch.reset();
 
   socket = new WebSocket(WS_URL);
@@ -34,19 +31,18 @@ export function initFraming(trackId) {
 }
 
 
-
 export async function createFrames() {
   if (isOfflineRendering) return;
   isOfflineRendering = true;
 
-  const totalFrames = getTotalSamples();
+  const totalFrames = queue.totalItems();
   let frameIndex = 0;
   const frameInterval = 1000 / OFFLINE_FPS;
 
   console.log(`🚀 Оффлайн-рендер ${OFFLINE_FPS} fps → всего ${totalFrames} кадров`);
 
   while (frameIndex < totalFrames) {
-    const freq = getSample(frameIndex);
+    const freq = queue.getItem(frameIndex);
 
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
     visualizeSpectrum(freq, exportCtx, { w: exportCanvas.width, h: exportCanvas.height });
@@ -56,18 +52,10 @@ export async function createFrames() {
       exportCanvas.toBlob(blob => {
         const reader = new FileReader();
         reader.onload = () => {
-          // currentBatch.push({
-          //   index: frameIndex,
-          //   data: reader.result.split(',')[1]
-          // });
           batch.add({
             index: frameIndex,
             data: reader.result.split(',')[1]
           });
-
-          // if (currentBatch.length >= BATCH_SIZE) {
-          //   sendBatch();
-          // }
 
           if (batch.isFull()) {
             sendBatch();
@@ -94,14 +82,6 @@ export async function createFrames() {
 
 // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
 function sendBatch() {
-  // if (!socket || socket.readyState !== WebSocket.OPEN || currentBatch.length === 0) return;
-  // socket.send(JSON.stringify({
-  //   type: 'batch',
-  //   trackId: currentTrackId,
-  //   frames: [...currentBatch]
-  // }));
-  // currentBatch = [];
-
   if (!socket || socket.readyState !== WebSocket.OPEN || batch.len() === 0) return;
   socket.send(JSON.stringify({
     type: 'batch',

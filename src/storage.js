@@ -1,20 +1,22 @@
-let audioDataQueue = [];
+export const queue = {
+  data: [],
 
-export function saveSample(sample) {
-  audioDataQueue.push(sample);
-}
+  saveItem(item) {
+    this.data.push(item)
+  },
 
-export function getSample(sampleIndex) {
-  return audioDataQueue[sampleIndex];
-}
+  getItem(index) {
+    return this.data[index];
+  },
 
-export function getTotalSamples() {
-  return audioDataQueue.length;
-}
+  totalItems() {
+    return this.data.length;
+  },
 
-export function clearStorage() {
-  audioDataQueue = [];
-}
+  clear() {
+    this.data = [];
+  }
+};
 
 
 export const batch = {
