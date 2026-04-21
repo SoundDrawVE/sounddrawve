@@ -22,91 +22,134 @@ let now;
 let then = performance.now();
 let interval = 1000 / fps;
 
+
+// ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+let socket = null;
+let currentTrackId = null;
+let audioDataQueue = [];        // ← сюда сохраняем ВСЕ freq
+//let isPlaying = false;
+let isOfflineRendering = false;
+
+const WS_URL = 'ws://localhost:3000';
+const BATCH_SIZE = 10;
+const OFFLINE_FPS = 25;         // ← можно поставить 20 или 30
+let currentBatch = [];
+let pendingCaptures = 0;
+
+// Скрытый канвас (создаём один раз)
+const exportCanvas = document.createElement('canvas');
+exportCanvas.width = 976;       // ← твой размер
+exportCanvas.height = 549;
+const exportCtx = exportCanvas.getContext('2d', { alpha: true });
+
+// ==================== ЗАПУСК ВИЗУАЛИЗАЦИИ ====================
+function startVisualization(trackId) {
+  currentTrackId = trackId || 'track-' + Date.now();
+  audioDataQueue = [];
+  currentBatch = [];
+  pendingCaptures = 0;
+
+  socket = new WebSocket(WS_URL);
+  socket.onopen = () => {
+    console.log('🔌 WebSocket подключён');
+    socket.send(JSON.stringify({ type: 'init', trackId: currentTrackId }));
+  };
+}
+
+// ==================== СБОР ДАННЫХ ВО ВРЕМЯ ПРОИГРЫВАНИЯ ====================
 function animate(timestamp) {
   if (!isPlaying) return;
   requestAnimationFrame(animate);
+
   let delta = timestamp - then;
   if (delta > interval) {
     then = timestamp - (delta % interval);
-    //animation logic
-    const freq = getAudioData();
+
+    const freq = getAudioData();                    // ← Uint8Array 64 значения
     const ctx = getCanvasCtx();
     const canvasDimensions = getCanvasDimensions();
+
     clearCanvas();
-    visualizeSpectrum(freq, ctx, canvasDimensions);
-    // === ЗАХВАТ И БАТЧИНГ PNG ===
-    captureAndQueue();
+    visualizeSpectrum(freq, ctx, canvasDimensions); // обычная отрисовка для пользователя
+
+    // Сохраняем данные для оффлайн-рендера
+    audioDataQueue.push(Array.from(freq));          // копируем в обычный массив
   }
 }
 
+// ==================== ЗАПУСК ОФФЛАЙН-РЕНДЕРА ПОСЛЕ ТРЕКА ====================
+player.addEventListener('ended', async () => {
+  isPlaying = false;
+  console.log(`🎬 Трек окончен. Собрано ${audioDataQueue.length} кадров. Начинаем оффлайн-рендер...`);
 
-let socket = null;
-let currentTrackId = null;
-let frameIndex = 0;
-const BATCH_SIZE = 10;
-let currentBatch = [];
+  await startOfflineRendering();
+});
 
-const WS_URL = 'ws://localhost:3000';   // or server IP
+// ==================== ОФФЛАЙН-РЕНДЕР (главная магия) ====================
+async function startOfflineRendering() {
+  if (isOfflineRendering) return;
+  isOfflineRendering = true;
 
-function startVisualization(trackId) {
-  currentTrackId = trackId || 'track-' + Date.now();
-  frameIndex = 0;
-  currentBatch = [];
+  const totalFrames = audioDataQueue.length;
+  let frameIndex = 0;
+  const frameInterval = 1000 / OFFLINE_FPS;
 
-  socket = new WebSocket(WS_URL);
+  console.log(`🚀 Оффлайн-рендер ${OFFLINE_FPS} fps → всего ${totalFrames} кадров`);
 
-  socket.onopen = () => {
-    console.log('🔌 WebSocket подключён');
-    socket.send(JSON.stringify({
-      type: 'init',
-      trackId: currentTrackId
-    }));
-  };
+  while (frameIndex < totalFrames) {
+    const freq = audioDataQueue[frameIndex];
 
-  socket.onclose = () => console.log('🔌 WebSocket закрыт');
+    // Рисуем на скрытом канвасе
+    exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
+    visualizeSpectrum(freq, exportCtx, { w: exportCanvas.width, h: exportCanvas.height });
+
+    // Захватываем PNG
+    await new Promise(resolve => {
+      exportCanvas.toBlob(blob => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          currentBatch.push({
+            index: frameIndex,
+            data: reader.result.split(',')[1]
+          });
+
+          if (currentBatch.length >= BATCH_SIZE) {
+            sendBatch();
+          }
+
+          frameIndex++;
+          resolve();
+        };
+        reader.readAsDataURL(blob);
+      }, 'image/png');
+    });
+
+    // Контролируем скорость (чтобы не убить CPU)
+    await new Promise(r => setTimeout(r, frameInterval));
+  }
+
+  // Отправляем остаток и завершаем
+  sendBatch();
+  sendEndSignal();
+
+  console.log(`✅ Оффлайн-рендер завершён! Сохранено ${totalFrames} кадров.`);
+  isOfflineRendering = false;
 }
 
-// Асинхронный захват (не блокирует отрисовку)
-function captureAndQueue() {
-  canvas.toBlob(blob => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      currentBatch.push({
-        index: frameIndex++,
-        data: reader.result.split(',')[1]   // чистый base64 без data:image/png;base64,
-      });
-
-      if (currentBatch.length >= BATCH_SIZE) {
-        sendBatch();
-      }
-    };
-    reader.readAsDataURL(blob);   // 'image/png' по умолчанию
-  }, 'image/png');                // ← прозрачность гарантирована
-}
-
-// Отправка батча
+// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
 function sendBatch() {
   if (!socket || socket.readyState !== WebSocket.OPEN || currentBatch.length === 0) return;
-
   socket.send(JSON.stringify({
     type: 'batch',
     trackId: currentTrackId,
-    frames: [...currentBatch]   // копия массива
+    frames: [...currentBatch]
   }));
   currentBatch = [];
 }
 
-// При окончании трека
-player.addEventListener('pause', () => {
-  isPlaying = false;
-  sendBatch();                    // отправляем остаток
-});
-
-player.addEventListener('ended', () => {
-  isPlaying = false;
-  sendBatch();
+function sendEndSignal() {
   if (socket && socket.readyState === WebSocket.OPEN) {
     socket.send(JSON.stringify({ type: 'end', trackId: currentTrackId }));
+    console.log('🏁 Отправлено "end" — все кадры на сервере!');
   }
-  console.log('🎬 Трек окончен — все кадры отправлены!');
-});
+}
