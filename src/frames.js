@@ -1,5 +1,5 @@
 import { visualizeSpectrum } from './visualizer.js';
-import { getSample, getTotalSamples, clearStorage } from './storage.js';
+import { getSample, getTotalSamples, clearStorage, batch } from './storage.js';
 
 
 const WS_URL = 'ws://localhost:3000';
@@ -10,7 +10,7 @@ const OFFLINE_FPS = 25;         // ← можно поставить 20 или 3
 let socket = null;
 let currentTrackId = null;
 let isOfflineRendering = false;
-let currentBatch = [];
+//let currentBatch = [];
 
 
 // Скрытый канвас (создаём один раз)
@@ -23,7 +23,8 @@ const exportCtx = exportCanvas.getContext('2d', { alpha: true });
 export function initFraming(trackId) {
   currentTrackId = trackId || 'track-' + Date.now();
   clearStorage();
-  currentBatch = [];
+  //currentBatch = [];
+  batch.reset();
 
   socket = new WebSocket(WS_URL);
   socket.onopen = () => {
@@ -55,12 +56,20 @@ export async function createFrames() {
       exportCanvas.toBlob(blob => {
         const reader = new FileReader();
         reader.onload = () => {
-          currentBatch.push({
+          // currentBatch.push({
+          //   index: frameIndex,
+          //   data: reader.result.split(',')[1]
+          // });
+          batch.add({
             index: frameIndex,
             data: reader.result.split(',')[1]
           });
 
-          if (currentBatch.length >= BATCH_SIZE) {
+          // if (currentBatch.length >= BATCH_SIZE) {
+          //   sendBatch();
+          // }
+
+          if (batch.isFull()) {
             sendBatch();
           }
 
@@ -85,13 +94,20 @@ export async function createFrames() {
 
 // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
 function sendBatch() {
-  if (!socket || socket.readyState !== WebSocket.OPEN || currentBatch.length === 0) return;
+  // if (!socket || socket.readyState !== WebSocket.OPEN || currentBatch.length === 0) return;
+  // socket.send(JSON.stringify({
+  //   type: 'batch',
+  //   trackId: currentTrackId,
+  //   frames: [...currentBatch]
+  // }));
+  // currentBatch = [];
+
+  if (!socket || socket.readyState !== WebSocket.OPEN || batch.len() === 0) return;
   socket.send(JSON.stringify({
     type: 'batch',
     trackId: currentTrackId,
-    frames: [...currentBatch]
+    frames: batch.undload()
   }));
-  currentBatch = [];
 }
 
 function sendEndSignal() {
