@@ -2,7 +2,8 @@ import './style.css'
 import { canvas, getCanvasCtx, clearCanvas, getCanvasDimensions } from './canvas.js';
 import { player, getAudioData } from './audio.js';
 import { visualizeSpectrum } from './visualizer.js';
-import { initFraming, presaveAudioData, createFrames, audioDataQueue } from './frames.js';
+import { initFraming, createFrames } from './frames.js';
+import { saveSample, getTotalSamples } from './storage.js';
 
 
 let fps = 30;
@@ -25,7 +26,7 @@ player.addEventListener('pause', () => {
 // ==================== ЗАПУСК ОФФЛАЙН-РЕНДЕРА ПОСЛЕ ТРЕКА ====================
 player.addEventListener('ended', async () => {
   isPlaying = false;
-  console.log(`🎬 Трек окончен. Собрано ${audioDataQueue.length} кадров. Начинаем оффлайн-рендер...`);
+  console.log(`🎬 Трек окончен. Собрано ${getTotalSamples()} кадров. Начинаем оффлайн-рендер...`);
 
   await createFrames();
 });
@@ -48,6 +49,6 @@ function animate(timestamp) {
     visualizeSpectrum(freq, ctx, canvasDimensions); // обычная отрисовка для пользователя
 
     // Сохраняем данные для оффлайн-рендера
-    presaveAudioData(Array.from(freq));
+    saveSample(Array.from(freq));
   }
 }
