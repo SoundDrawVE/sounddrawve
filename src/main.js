@@ -58,10 +58,9 @@ let preprocessedFreqData = null;
 
 renderBtn.addEventListener('click', async () => {
   await onFileSelected();
-  console.log(preprocessedFreqData);
+  initFraming('track1');
+  await createFrames(preprocessedFreqData);
 });
-
-// Глобальная переменная
 
 
 // При выборе файла (например, в input type="file")
