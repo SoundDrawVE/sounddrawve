@@ -12,7 +12,7 @@ body { padding: 0; margin: 0; }
 
 .canvasContainer {
   display: flex;
-  align-content: center;
+  align-items: center;
 }
 
 .canvas {
@@ -22,4 +22,31 @@ body { padding: 0; margin: 0; }
 .audioContainer {
   position: absolute;
   bottom: 20px;
+}
+
+.renderBtnContainer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 75px;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.renderBtn {
+  width: 60px;
+  height: 60px;
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  color: gray;
+  cursor: pointer;
+}
+
+.renderBtn:hover {
+  color: #F08548;
 }
