@@ -46,27 +46,9 @@ export async function createFrames() {
 
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
     visualizeSpectrum(freq, exportCtx, { w: exportCanvas.width, h: exportCanvas.height });
-
-    // Захватываем PNG
-    await new Promise(resolve => {
-      exportCanvas.toBlob(blob => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          batch.add({
-            index: frameIndex,
-            data: reader.result.split(',')[1]
-          });
-
-          if (batch.isFull()) {
-            sendBatch();
-          }
-
-          frameIndex++;
-          resolve();
-        };
-        reader.readAsDataURL(blob);
-      }, 'image/png');
-    });
+    await capturePNG(exportCanvas, frameIndex, batch);
+    
+    frameIndex += 1;
 
     // Контролируем скорость (чтобы не убить CPU)
     await new Promise(r => setTimeout(r, frameInterval));
@@ -78,6 +60,27 @@ export async function createFrames() {
 
   console.log(`✅ Оффлайн-рендер завершён! Сохранено ${totalFrames} кадров.`);
   isOfflineRendering = false;
+}
+
+
+async function capturePNG(canvas, frameIndex, batch) {
+  await new Promise(resolve => {
+    canvas.toBlob(blob => {
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        batch.add({
+          index: frameIndex,
+          data: reader.result.split(',')[1]
+        });
+
+        if (batch.isFull()) sendBatch();
+        resolve();
+      };
+
+      reader.readAsDataURL(blob);
+    }, 'image/png');
+  });
 }
 
 // ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
