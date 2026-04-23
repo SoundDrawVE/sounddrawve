@@ -31,18 +31,20 @@ export function initFraming(trackId) {
 }
 
 
-export async function createFrames() {
+export async function createFrames(audioSamples) {
   if (isOfflineRendering) return;
   isOfflineRendering = true;
 
-  const totalFrames = queue.totalItems();
+  //const totalFrames = queue.totalItems();
+  const totalFrames = audioSamples.length;
   let frameIndex = 0;
   const frameInterval = 1000 / OFFLINE_FPS;
 
   console.log(`🚀 Оффлайн-рендер ${OFFLINE_FPS} fps → всего ${totalFrames} кадров`);
 
   while (frameIndex < totalFrames) {
-    const freq = queue.getItem(frameIndex);
+    //const freq = queue.getItem(frameIndex);
+    const freq = audioSamples[frameIndex];
 
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
     visualizeSpectrum(freq, exportCtx, { w: exportCanvas.width, h: exportCanvas.height });
