@@ -1,5 +1,6 @@
 import track from './assets/sample.mp3'
 
+
 export const player = document.getElementById('audio');
 player.src = track;
 
@@ -22,15 +23,11 @@ function createAnalyser(fftSize) {
   analyser.connect(audioCtx.destination);
 }
 
+
 export function setFftSize(value) {
   analyser.fftSize = value;
   bufferLength = analyser.frequencyBinCount;
   dataArray = new Uint8Array(bufferLength);
-}
-
-export function setAnalyser(fftSize) {
-  if (audioCtx) return;
-  createAnalyser(fftSize);
 }
 
 export function setTrack(src) {
@@ -45,7 +42,10 @@ export function getAudioData() {
 
 
 player.addEventListener('play', () => {
-  setAnalyser(fftSize);
+  if (!audioCtx) {
+    createAnalyser(fftSize);
+  }
+
   if (audioCtx.state === 'suspended') audioCtx.resume();
 
   // const timer = setInterval(() => {
