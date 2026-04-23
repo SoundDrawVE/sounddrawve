@@ -8,6 +8,7 @@ let analyser;
 let bufferLength;
 let dataArray;
 let source;
+let fftSize = 128;
 
 
 function createAnalyser(fftSize) {
@@ -19,6 +20,12 @@ function createAnalyser(fftSize) {
   source = audioCtx.createMediaElementSource(player);
   source.connect(analyser);
   analyser.connect(audioCtx.destination);
+}
+
+export function setFftSize(value) {
+  analyser.fftSize = value;
+  bufferLength = analyser.frequencyBinCount;
+  dataArray = new Uint8Array(bufferLength);
 }
 
 export function setAnalyser(fftSize) {
@@ -38,7 +45,7 @@ export function getAudioData() {
 
 
 player.addEventListener('play', () => {
-  setAnalyser(128);
+  setAnalyser(fftSize);
   if (audioCtx.state === 'suspended') audioCtx.resume();
 
   // const timer = setInterval(() => {
