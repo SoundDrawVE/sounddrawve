@@ -1,3 +1,6 @@
+import { settings } from './settings.js';
+
+
 const container = document.querySelector('.canvas-container');
 export const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -7,13 +10,26 @@ let w, h;
 function setDimensions() {
   const conWidth = container.clientWidth;
   const conHeight = container.clientHeight;
+  const { aspectRatio } = settings;
 
-  w = conWidth;
-  h = (conWidth / 16) * 9;
+  switch (aspectRatio) {
+    case '16:9': {
+      w = conWidth;
+      h = (conWidth / 16) * 9;
 
-  if (h > conHeight) {
-    h = conHeight;
-    w = (conHeight / 9) * 16;
+      if (h > conHeight) {
+        h = conHeight;
+        w = (conHeight / 9) * 16;
+      }
+
+      break;
+    };
+
+    case '9:16': {
+      h = conHeight;
+      w = (h / 16) * 9;
+      break;
+    }
   }
 
   w = w - w * 0.01;
