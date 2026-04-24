@@ -1,4 +1,4 @@
-const container = document.querySelector('#app');
+const container = document.querySelector('.canvas-container');
 export const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 

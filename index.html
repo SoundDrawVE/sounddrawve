@@ -8,14 +8,22 @@
   </head>
   <body>
     <div id="app">
-      <div class="canvasContainer">
-        <canvas id="canvas" class="canvas"></canvas>
+      <div class="settings-container">Settings</div>
+
+      <div class="app-center">
+        <div class="canvas-container">
+          <canvas id="canvas" class="canvas"></canvas>
+        </div>
+        <div class="audio-container">
+          <audio id="audio" class="audio" controls crossorigin="anonymous"></audio>
+        </div>
       </div>
-      <div class="audioContainer">
-        <audio id="audio" class="audio" controls crossorigin="anonymous"></audio>
-      </div>
-      <div class="renderBtnContainer">
-        <button id="render-btn" class="renderBtn">Render</button>
+
+
+      <div class="menu-container">
+        <div class="btn-container">
+          <button id="render-btn" class="render-btn">Render</button>
+        </div>
       </div>
     </div>
     <script type="module" src="/src/main.js"></script>

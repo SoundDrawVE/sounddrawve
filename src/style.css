@@ -5,13 +5,28 @@ body { padding: 0; margin: 0; }
 #app {
   position: relative;
   height: 100vh;
-  background: #1D1E22;
   display: flex;
-  justify-content: center;
+  background: #1D1E22;
 }
 
-.canvasContainer {
+.settings-container {
+  width: 300px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background: lightgray;
+}
+
+.app-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.canvas-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
   align-items: center;
 }
 
@@ -19,15 +34,21 @@ body { padding: 0; margin: 0; }
   background: #2D2E32;
 }
 
-.audioContainer {
-  position: absolute;
-  bottom: 20px;
+.audio-container {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
 }
 
-.renderBtnContainer {
-  position: absolute;
-  top: 20px;
-  right: 20px;
+.menu-container {
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  background: lightgray;
+}
+
+.btn-container {
   width: 75px;
   height: 75px;
   display: flex;
@@ -37,7 +58,7 @@ body { padding: 0; margin: 0; }
   background: rgba(255, 255, 255, 0.3);
 }
 
-.renderBtn {
+.render-btn {
   width: 60px;
   height: 60px;
   border: none;
@@ -47,6 +68,6 @@ body { padding: 0; margin: 0; }
   cursor: pointer;
 }
 
-.renderBtn:hover {
+.render-btn:hover {
   color: #F08548;
 }
