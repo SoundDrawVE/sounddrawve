@@ -1,5 +1,6 @@
 import { visualizeSpectrum } from './visualizer.js';
 import { queue, batch } from './storage.js';
+import { settings } from './settings.js';
 
 
 const WS_URL = 'ws://localhost:3000';
@@ -13,9 +14,15 @@ let isOfflineRendering = false;
 
 // Скрытый канвас (создаём один раз)
 const exportCanvas = document.createElement('canvas');
-exportCanvas.width = 976;       // ← твой размер
-exportCanvas.height = 549;
+// exportCanvas.width = 976;       // ← твой размер
+// exportCanvas.height = 549;
 const exportCtx = exportCanvas.getContext('2d', { alpha: true });
+
+//console.log(settings.getCanvasExportDimensions());
+function setCanvasDimensions({ w, h }) {
+  exportCanvas.width = w;
+  exportCanvas.height = h;
+}
 
 
 export function initFraming(trackId) {
@@ -32,6 +39,7 @@ export function initFraming(trackId) {
 
 
 export async function createFrames(audioSamples) {
+  if (!isOfflineRendering) setCanvasDimensions(settings.getCanvasExportDimensions());
   if (isOfflineRendering) return;
   isOfflineRendering = true;
 
