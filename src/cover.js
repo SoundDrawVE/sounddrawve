@@ -5,7 +5,7 @@ let presavedSpinner = null;
 
 window.addEventListener('load', removeCover);
 // Force remove loader after 5 seconds if window.load hasn't fired
-setTimeout(removeCover, 5000);
+//setTimeout(removeCover, 5000);
 
 
 export function removeCover() {
