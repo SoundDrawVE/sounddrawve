@@ -66,6 +66,8 @@ player.addEventListener('play', () => {
 export const audioSample1 = [255,255,229,221,230,228,211,173,145,155,172,170,158,160,161,159,159,150,154,161,159,144,155,162,159,156,161,172,168,162,158,154,147,153,158,153,142,151,153,158,171,171,172,167,159,155,150,135,121,89,23,0,0,0,0,0,0,0,0,0,0,0,0,0];
 export const audioSample2 = [153,145,102,124,128,132,143,143,126,114,116,113,110,106,114,128,126,124,140,145,149,145,127,131,137,137,141,140,145,145,156,165,152,139,139,133,133,142,151,144,123,139,141,139,128,119,125,124,119,99,54,30,30,12,0,0,0,0,0,0,0,0,0,0];
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 /**
  * Предварительно собирает frequency data с фиксированным FPS
  * @param {File|Blob} audioFile — выбранный mp3-файл
@@ -89,7 +91,8 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
   const duration = audioBuffer.duration;
   const totalFrames = Math.floor(duration * fps);
 
-  showStatus(`🔬 Предобработка: ${duration.toFixed(2)} сек → ${totalFrames} кадров @ ${fps} fps`)
+  showStatus(`🔬 Предобработка: ${duration.toFixed(2)} сек → ${totalFrames} кадров @ ${fps} fps`);
+  await delay(1000);
 
 
   const analyser = audioContext.createAnalyser();
@@ -120,7 +123,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
         source.stop();
         audioContext.close().catch(() => {});
         showStatus(`✅ Предобработка завершена: ${freqData.length} кадров`);
-        resolve(freqData);
+        setTimeout(() => resolve(freqData), 1000);
         return;
       }
 

@@ -38,6 +38,8 @@ export function initFraming(trackId) {
 }
 
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 export async function createFrames(audioSamples, showStatus = (text) => console.log(text)) {
   if (!isOfflineRendering) setCanvasDimensions(settings.getCanvasExportDimensions());
   if (isOfflineRendering) return;
@@ -49,6 +51,7 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   const frameInterval = 1000 / OFFLINE_FPS;
 
   showStatus(`🚀 Оффлайн-рендер ${OFFLINE_FPS} fps → всего ${totalFrames} кадров`);
+  await delay(1000);
 
   while (frameIndex < totalFrames) {
     //const freq = queue.getItem(frameIndex);
@@ -70,6 +73,7 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   sendEndSignal();
 
   showStatus(`✅ Оффлайн-рендер завершён! Сохранено ${totalFrames} кадров.`);
+  await delay(1000);
   isOfflineRendering = false;
 }
 
