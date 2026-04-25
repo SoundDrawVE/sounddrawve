@@ -4,6 +4,7 @@ export const settings = {
     '16:9': { w: 976, h: 549 },
     '9:16': { w: 549, h: 976 }
   },
+  fftSize: 128,
 
   getCanvasExportDimensions() {
     return {...this.exportCanvasDimensions[this.aspectRatio]};
