@@ -66,6 +66,7 @@ player.addEventListener('play', () => {
 export const audioSample1 = [255,255,229,221,230,228,211,173,145,155,172,170,158,160,161,159,159,150,154,161,159,144,155,162,159,156,161,172,168,162,158,154,147,153,158,153,142,151,153,158,171,171,172,167,159,155,150,135,121,89,23,0,0,0,0,0,0,0,0,0,0,0,0,0];
 export const audioSample2 = [153,145,102,124,128,132,143,143,126,114,116,113,110,106,114,128,126,124,140,145,149,145,127,131,137,137,141,140,145,145,156,165,152,139,139,133,133,142,151,144,123,139,141,139,128,119,125,124,119,99,54,30,30,12,0,0,0,0,0,0,0,0,0,0];
 
+
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
@@ -103,7 +104,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
   source.buffer = audioBuffer;
 
   const gainNode = audioContext.createGain();
-  gainNode.gain.value = 0;                       // без звука
+  gainNode.gain.value = 0; // no sound
 
   source.connect(analyser);
   analyser.connect(gainNode);
@@ -114,7 +115,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
   const freqData = [];
   const intervalMs = 1000 / fps;
   let frameIndex = 0;
-  let lastLoggedPercent = -1;                    // ← для красивого вывода
+  let lastLoggedPercent = -1; // for good output
 
   return new Promise((resolve) => {
     const timer = setInterval(() => {
@@ -131,9 +132,8 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
       analyser.getByteFrequencyData(dataArray);
       freqData.push(Array.from(dataArray));
 
-      // === ВЫВОД ПРОГРЕССА ===
       const percent = Math.round((frameIndex / totalFrames) * 100);
-      if (percent > lastLoggedPercent) {           // выводим только при изменении %
+      if (percent > lastLoggedPercent) { // output only when % changes
         lastLoggedPercent = percent;
         showStatus(`📊 Анализ аудио: ${percent}%`);
       }

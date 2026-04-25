@@ -4,7 +4,7 @@ import { settings } from './settings.js';
 
 
 const WS_URL = 'ws://localhost:3000';
-const OFFLINE_FPS = 25;         // ← можно поставить 20 или 30
+const OFFLINE_FPS = 25; // here we can put 20 or 30
 
 
 let socket = null;
@@ -12,13 +12,10 @@ let currentTrackId = null;
 let isOfflineRendering = false;
 
 
-// Скрытый канвас (создаём один раз)
+// Hidden canvas (created once)
 const exportCanvas = document.createElement('canvas');
-// exportCanvas.width = 976;       // ← твой размер
-// exportCanvas.height = 549;
 const exportCtx = exportCanvas.getContext('2d', { alpha: true });
 
-//console.log(settings.getCanvasExportDimensions());
 function setCanvasDimensions({ w, h }) {
   exportCanvas.width = w;
   exportCanvas.height = h;
@@ -45,7 +42,6 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   if (isOfflineRendering) return;
   isOfflineRendering = true;
 
-  //const totalFrames = queue.totalItems();
   const totalFrames = audioSamples.length;
   let frameIndex = 0;
   const frameInterval = 1000 / OFFLINE_FPS;
@@ -54,7 +50,6 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   await delay(1000);
 
   while (frameIndex < totalFrames) {
-    //const freq = queue.getItem(frameIndex);
     const freq = audioSamples[frameIndex];
 
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
@@ -64,11 +59,11 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
     frameIndex += 1;
     showStatus(`🔬 Создан ${frameIndex} кадр из ${totalFrames}`);
 
-    // Контролируем скорость (чтобы не убить CPU)
+    // Control the speed (to avoid killing the CPU)
     await new Promise(r => setTimeout(r, frameInterval));
   }
 
-  // Отправляем остаток и завершаем
+  // Send the rest and finish
   sendBatch();
   sendEndSignal();
 
@@ -98,7 +93,7 @@ async function capturePNG(canvas, frameIndex, batch) {
   });
 }
 
-// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+
 function sendBatch() {
   if (!socket || socket.readyState !== WebSocket.OPEN || batch.len() === 0) return;
   socket.send(JSON.stringify({
