@@ -37,7 +37,10 @@ export function setTrack(src) {
 }
 
 export function getAudioData() {
-  if (fftSize !== settings.fftSize) setFftSize(settings.fftSize);
+  if (fftSize !== settings.fftSize) {
+    setFftSize(settings.fftSize);
+    fftSize = settings.fftSize;
+  };
   analyser.getByteFrequencyData(dataArray);
   return [...dataArray];
 }
@@ -70,7 +73,7 @@ export const audioSample2 = [153,145,102,124,128,132,143,143,126,114,116,113,110
  * @param {number} fftSize — размер FFT (должен совпадать с твоим)
  * @returns {Promise<Array<number[]>>}
  */
-export async function preprocessFrequencyData(audioFile, fps = 30, fftSize = 128) {
+export async function preprocessFrequencyData(audioFile, fps = 30) {
   let arrayBuffer;
 
   if (!audioFile) {
