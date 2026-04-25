@@ -5,8 +5,49 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sound Draw</title>
+    <style>
+      #cover {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #1D1E22;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .spinner {
+        box-sizing: border-box;
+        border: 4px solid #3A3B40;
+        border-top: 4px solid #2196F3;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        animation: spin 1s linear infinite;
+      }
+
+      .app-state {
+        color: #FFFFFF;
+        font-size: 14px;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); } 
+      }
+    </style>
   </head>
   <body>
+    <div id="cover">
+      <div class="spinner"></div>
+      <div class="app-state">The application is loading...</div>
+    </div>
+
     <div id="app">
       <div class="settings-container">
         <form id="settings-form">

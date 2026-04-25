@@ -87,3 +87,16 @@ async function onFileSelected(file) {
 //     handleFile(file); // Передаем файл как аргумент
 //   }
 // });
+
+
+window.addEventListener('load', removeLoader);
+
+function removeLoader() {
+  const cover = document.getElementById('cover');
+  const spinner = document.querySelector('.spinner');
+  if (spinner) cover.removeChild(spinner);
+  cover.style.display = 'none';
+}
+
+// Force remove loader after 5 seconds if window.load hasn't fired
+setTimeout(removeLoader, 5000);
