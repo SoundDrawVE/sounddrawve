@@ -16,6 +16,7 @@ export function removeCover() {
 
 export function showCover() {
   cover.style.display = '';
+  updateMessage('');
   cover.prepend(presavedSpinner);
 }
 
