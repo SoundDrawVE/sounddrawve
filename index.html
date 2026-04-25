@@ -8,7 +8,19 @@
   </head>
   <body>
     <div id="app">
-      <div class="settings-container">Settings</div>
+      <div class="settings-container">
+        <form id="settings-form">
+          <div>
+            <label>Aspect ratio</label>
+            <div>
+              <input type="radio" id="16:9" name="aspect-ratio" value="16:9" checked="checked">
+              <label for="16:9">16:9</label>
+              <input type="radio" id="9:16" name="aspect-ratio" value="9:16">
+              <label for="9:16">9:16</label>
+            </div>
+          </div>
+        </form>
+      </div>
 
       <div class="app-center">
         <div class="canvas-container">
