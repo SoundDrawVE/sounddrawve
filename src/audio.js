@@ -92,7 +92,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
   const duration = audioBuffer.duration;
   const totalFrames = Math.floor(duration * fps);
 
-  showStatus(`🔬 Предобработка: ${duration.toFixed(2)} сек → ${totalFrames} кадров @ ${fps} fps`);
+  showStatus(`🔬 Preprocessing: ${duration.toFixed(2)} sec → ${totalFrames} frames @ ${fps} fps`);
   await delay(1000);
 
 
@@ -123,7 +123,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
         clearInterval(timer);
         source.stop();
         audioContext.close().catch(() => {});
-        showStatus(`✅ Предобработка завершена: ${freqData.length} кадров`);
+        showStatus(`✅ Preprocessing completed: ${freqData.length} frames`);
         setTimeout(() => resolve(freqData), 1000);
         return;
       }
@@ -135,7 +135,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
       const percent = Math.round((frameIndex / totalFrames) * 100);
       if (percent > lastLoggedPercent) { // output only when % changes
         lastLoggedPercent = percent;
-        showStatus(`📊 Анализ аудио: ${percent}%`);
+        showStatus(`📊 Audio analysis: ${percent}%`);
       }
 
       frameIndex++;

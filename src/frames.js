@@ -29,7 +29,7 @@ export function initFraming(trackId) {
 
   socket = new WebSocket(WS_URL);
   socket.onopen = () => {
-    console.log('🔌 WebSocket подключён');
+    console.log('🔌 WebSocket connected');
     socket.send(JSON.stringify({ type: 'init', trackId: currentTrackId }));
   };
 }
@@ -46,7 +46,7 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   let frameIndex = 0;
   const frameInterval = 1000 / OFFLINE_FPS;
 
-  showStatus(`🚀 Оффлайн-рендер ${OFFLINE_FPS} fps → всего ${totalFrames} кадров`);
+  showStatus(`🚀 Offline rendering ${OFFLINE_FPS} fps → total ${totalFrames} frames`);
   await delay(1000);
 
   while (frameIndex < totalFrames) {
@@ -57,7 +57,7 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
     await capturePNG(exportCanvas, frameIndex, batch);
 
     frameIndex += 1;
-    showStatus(`🔬 Создан ${frameIndex} кадр из ${totalFrames}`);
+    showStatus(`🔬 ${frameIndex} frame created from ${totalFrames}`);
 
     // Control the speed (to avoid killing the CPU)
     await new Promise(r => setTimeout(r, frameInterval));
@@ -67,7 +67,7 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   sendBatch();
   sendEndSignal();
 
-  showStatus(`✅ Оффлайн-рендер завершён! Сохранено ${totalFrames} кадров.`);
+  showStatus(`✅ Offline rendering complete! ${totalFrames} frames saved.`);
   await delay(1000);
   isOfflineRendering = false;
 }
@@ -106,6 +106,6 @@ function sendBatch() {
 function sendEndSignal() {
   if (socket && socket.readyState === WebSocket.OPEN) {
     socket.send(JSON.stringify({ type: 'end', trackId: currentTrackId }));
-    console.log('🏁 Отправлено "end" — все кадры на сервере!');
+    console.log('🏁 Sent "end" - all frames on the server!');
   }
 }
