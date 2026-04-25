@@ -7,8 +7,13 @@ body { padding: 0; margin: 0; }
   --panel-color: #1a1b1b;
   --canvas-color: #2D2E32;
   --primary-text-color: #FFFFFF;
+  --secondary-text-color: #A0A0A0;
   --render-btn-color: #e62739;
   --render-btn-hovered-color: #F44336;
+  --border-color: #3A3B40;
+  --checked-color: #2196F3;
+  --hover-text-color: #C5A059;
+  --hover-border-color: #FF5722;
 }
 
 #app {
@@ -19,13 +24,61 @@ body { padding: 0; margin: 0; }
   color: var(--primary-text-color);
 }
 
+/* --------- settings --------- */
 .settings-container {
   width: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 10px;
   background: var(--panel-color);
+  font-size: 14px;
 }
+
+.settings-form-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.settings-form-item label {
+  color: var(--secondary-text-color);
+  font-size: 12px;
+}
+
+.settings-form-item:hover label {
+  color: var(--hover-text-color);
+}
+
+.settings-form-item > div {
+  padding: 5px;
+}
+
+/* Hide the browser's default radio button */
+.custom-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Style the custom radio button container */
+.checkmark {
+  display: inline-block;
+  padding: 2px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--primary-text-color);
+}
+
+/* On mouse-over, add a grey background color */
+.custom-radio:hover input ~ .checkmark {
+  border-color: var(--hover-border-color);
+}
+
+/* When the radio button is checked, add a blue background */
+.custom-radio input:checked ~ .checkmark {
+  border-color: var(--checked-color);
+}
+/* ------end settings --------- */
+
 
 .app-center {
   flex: 1;

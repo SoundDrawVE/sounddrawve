@@ -10,13 +10,17 @@
     <div id="app">
       <div class="settings-container">
         <form id="settings-form">
-          <div>
-            <label>Aspect ratio</label>
+          <div class="settings-form-item">
+            <label>Aspect ratio:</label>
             <div>
-              <input type="radio" id="16:9" name="aspect-ratio" value="16:9" checked="checked">
-              <label for="16:9">16:9</label>
-              <input type="radio" id="9:16" name="aspect-ratio" value="9:16">
-              <label for="9:16">9:16</label>
+              <label for="16:9" class="custom-radio">
+                <input type="radio" id="16:9" name="aspect-ratio" value="16:9" checked="checked">
+                <span class="checkmark">16:9</span>
+              </label>
+              <label for="9:16" class="custom-radio">
+                <input type="radio" id="9:16" name="aspect-ratio" value="9:16">
+                <span class="checkmark">9:16</span>
+              </label>
             </div>
           </div>
         </form>
