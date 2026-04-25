@@ -73,7 +73,7 @@ export const audioSample2 = [153,145,102,124,128,132,143,143,126,114,116,113,110
  * @param {number} fftSize — размер FFT (должен совпадать с твоим)
  * @returns {Promise<Array<number[]>>}
  */
-export async function preprocessFrequencyData(audioFile, fps = 30) {
+export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = (text) => console.log(text)) {
   let arrayBuffer;
 
   if (!audioFile) {
@@ -89,7 +89,8 @@ export async function preprocessFrequencyData(audioFile, fps = 30) {
   const duration = audioBuffer.duration;
   const totalFrames = Math.floor(duration * fps);
 
-  console.log(`🔬 Предобработка: ${duration.toFixed(2)} сек → ${totalFrames} кадров @ ${fps} fps`);
+  showStatus(`🔬 Предобработка: ${duration.toFixed(2)} сек → ${totalFrames} кадров @ ${fps} fps`)
+
 
   const analyser = audioContext.createAnalyser();
   analyser.fftSize = fftSize;
@@ -118,7 +119,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30) {
         clearInterval(timer);
         source.stop();
         audioContext.close().catch(() => {});
-        console.log(`✅ Предобработка завершена: ${freqData.length} кадров`);
+        showStatus(`✅ Предобработка завершена: ${freqData.length} кадров`);
         resolve(freqData);
         return;
       }
@@ -131,7 +132,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30) {
       const percent = Math.round((frameIndex / totalFrames) * 100);
       if (percent > lastLoggedPercent) {           // выводим только при изменении %
         lastLoggedPercent = percent;
-        console.log(`📊 Анализ аудио: ${percent}%`);
+        showStatus(`📊 Анализ аудио: ${percent}%`);
       }
 
       frameIndex++;

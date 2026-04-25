@@ -4,7 +4,7 @@ import { player, getAudioData, preprocessFrequencyData } from './audio.js';
 import { visualizeSpectrum } from './visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
-import { updateMessage } from './cover.js';
+import { showCover, removeCover, updateMessage } from './cover.js';
 
 
 let fps = 30;
@@ -67,7 +67,9 @@ renderBtn.addEventListener('click', async () => {
 // При выборе файла (например, в input type="file")
 async function onFileSelected(file) {
   try {
-    preprocessedFreqData = await preprocessFrequencyData(file, 30, 128); // твой fftSize
+    showCover();
+    preprocessedFreqData = await preprocessFrequencyData(file, 30, updateMessage); // твой fftSize
+    removeCover();
     console.log('Готово к проигрыванию и рендеру!');
     // можно сразу показать превью или разблокировать кнопку Play
   } catch (e) {

@@ -8,7 +8,7 @@ window.addEventListener('load', removeCover);
 setTimeout(removeCover, 5000);
 
 
-function removeCover() {
+export function removeCover() {
   const spinner = document.querySelector('.spinner');
   if (spinner) presavedSpinner = cover.removeChild(spinner);
   cover.style.display = 'none';
