@@ -38,7 +38,7 @@ export function initFraming(trackId) {
 }
 
 
-export async function createFrames(audioSamples) {
+export async function createFrames(audioSamples, showStatus = (text) => console.log(text)) {
   if (!isOfflineRendering) setCanvasDimensions(settings.getCanvasExportDimensions());
   if (isOfflineRendering) return;
   isOfflineRendering = true;
@@ -48,7 +48,7 @@ export async function createFrames(audioSamples) {
   let frameIndex = 0;
   const frameInterval = 1000 / OFFLINE_FPS;
 
-  console.log(`🚀 Оффлайн-рендер ${OFFLINE_FPS} fps → всего ${totalFrames} кадров`);
+  showStatus(`🚀 Оффлайн-рендер ${OFFLINE_FPS} fps → всего ${totalFrames} кадров`);
 
   while (frameIndex < totalFrames) {
     //const freq = queue.getItem(frameIndex);
@@ -57,8 +57,9 @@ export async function createFrames(audioSamples) {
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
     visualizeSpectrum(freq, exportCtx, { w: exportCanvas.width, h: exportCanvas.height });
     await capturePNG(exportCanvas, frameIndex, batch);
-    
+
     frameIndex += 1;
+    showStatus(`🔬 Создан ${frameIndex} кадр из ${totalFrames}`);
 
     // Контролируем скорость (чтобы не убить CPU)
     await new Promise(r => setTimeout(r, frameInterval));
@@ -68,7 +69,7 @@ export async function createFrames(audioSamples) {
   sendBatch();
   sendEndSignal();
 
-  console.log(`✅ Оффлайн-рендер завершён! Сохранено ${totalFrames} кадров.`);
+  showStatus(`✅ Оффлайн-рендер завершён! Сохранено ${totalFrames} кадров.`);
   isOfflineRendering = false;
 }
 

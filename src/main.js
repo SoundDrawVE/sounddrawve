@@ -60,7 +60,8 @@ let preprocessedFreqData = null;
 renderBtn.addEventListener('click', async () => {
   await onFileSelected();
   initFraming('track1');
-  await createFrames(preprocessedFreqData);
+  await createFrames(preprocessedFreqData, updateMessage);
+  removeCover();
 });
 
 
@@ -69,7 +70,6 @@ async function onFileSelected(file) {
   try {
     showCover();
     preprocessedFreqData = await preprocessFrequencyData(file, 30, updateMessage); // твой fftSize
-    removeCover();
     console.log('Готово к проигрыванию и рендеру!');
     // можно сразу показать превью или разблокировать кнопку Play
   } catch (e) {
