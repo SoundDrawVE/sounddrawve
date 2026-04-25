@@ -1,4 +1,5 @@
-import track from './assets/sample.mp3'
+import track from './assets/sample.mp3';
+import { settings } from './settings.js';
 
 
 export const player = document.getElementById('audio');
@@ -9,7 +10,7 @@ let analyser;
 let bufferLength;
 let dataArray;
 let source;
-let fftSize = 128;
+let fftSize = settings.fftSize;
 
 
 function createAnalyser(fftSize) {
@@ -24,7 +25,7 @@ function createAnalyser(fftSize) {
 }
 
 
-export function setFftSize(value) {
+function setFftSize(value) {
   analyser.fftSize = value;
   bufferLength = analyser.frequencyBinCount;
   dataArray = new Uint8Array(bufferLength);
@@ -36,6 +37,7 @@ export function setTrack(src) {
 }
 
 export function getAudioData() {
+  if (fftSize !== settings.fftSize) setFftSize(settings.fftSize);
   analyser.getByteFrequencyData(dataArray);
   return [...dataArray];
 }
