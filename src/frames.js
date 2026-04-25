@@ -37,6 +37,7 @@ export function initFraming(trackId) {
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+let averageProcTime = 0;
 export async function createFrames(audioSamples, showStatus = (text) => console.log(text)) {
   if (!isOfflineRendering) setCanvasDimensions(settings.getCanvasExportDimensions());
   if (isOfflineRendering) return;
@@ -50,14 +51,24 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   await delay(1000);
 
   while (frameIndex < totalFrames) {
+    const t_now = performance.now();
     const freq = audioSamples[frameIndex];
 
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
     visualizeSpectrum(freq, exportCtx, { w: exportCanvas.width, h: exportCanvas.height });
     await capturePNG(exportCanvas, frameIndex, batch);
 
+    averageProcTime = performance.now() - t_now + frameInterval;
+    let approximateTime = ((totalFrames - frameIndex) * averageProcTime) / 60;
+    let timeUnit = 'sec';
+    if (approximateTime > 60) {
+      approximateTime = approximateTime / 60;
+      timeUnit = 'min';
+    }
+    approximateTime = Math.round(approximateTime);
+
+    showStatus(`🔬 ${frameIndex} frame created from ${totalFrames}, preprocessing: ${approximateTime}${timeUnit} left`);
     frameIndex += 1;
-    showStatus(`🔬 ${frameIndex} frame created from ${totalFrames}`);
 
     // Control the speed (to avoid killing the CPU)
     await new Promise(r => setTimeout(r, frameInterval));
