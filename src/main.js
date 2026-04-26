@@ -5,6 +5,11 @@ import { visualizeSpectrum } from './visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
 import { showCover, removeCover, updateMessage } from './cover.js';
+import { drawCanvas as initColorPicker } from './color.js';
+
+
+// init color picker
+initColorPicker();
 
 
 let fps = 30;
