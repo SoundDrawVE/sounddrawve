@@ -1,3 +1,5 @@
+import { settings } from './settings.js';
+
 export function visualizeSpectrum(freq, ctx, canvasDimensions) {
   let x = 0;
 
@@ -13,7 +15,12 @@ export function visualizeSpectrum(freq, ctx, canvasDimensions) {
       barWidth: (canvasDimensions.w / freq.length) //* 1.19 // * 1.19 to hide zero freq
     };
 
-    ctx.fillStyle = calcColor(options);
+    if (settings.colorType === 'default') {
+      ctx.fillStyle = calcColor(options);
+    } else {
+      ctx.fillStyle = settings.color;
+    }
+
     drawBar(options);
 
     x += options.barWidth;
