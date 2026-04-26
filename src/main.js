@@ -51,6 +51,7 @@ const renderBtn = document.getElementById('render-btn');
 let preprocessedFreqData = null;
 
 renderBtn.addEventListener('click', async () => {
+  player.pause();
   await onFileSelected();
   initFraming('track1');
   await createFrames(preprocessedFreqData, updateMessage);

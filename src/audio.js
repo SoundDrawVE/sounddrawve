@@ -79,8 +79,10 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = (text) => console.log(text)) {
   let arrayBuffer;
 
+  showStatus(`The audio track is loading...`);
+
   if (!audioFile) {
-    const response = await fetch(track);
+    const response = await fetch(player.src);
     arrayBuffer = await response.arrayBuffer();
   } else {
     arrayBuffer = await audioFile.arrayBuffer();
