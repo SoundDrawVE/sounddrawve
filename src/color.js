@@ -47,6 +47,8 @@ function getColor(e) {
     const hexColor = `#${imageData[0].toString(16)}${imageData[1].toString(16)}${imageData[2].toString(16)}`;
 
     updateUI(rgba, hexColor, opacity);
+    const event = new Event('input', { bubbles: true });
+    code.dispatchEvent(event);
 }
 
 function updateUI(rgba, hex, opacity) {
@@ -68,7 +70,6 @@ function updateUI(rgba, hex, opacity) {
 // Listeners
 hueSlider.addEventListener('input', () => {
     currentHue = hueSlider.value;
-    console.log(currentHue);
     drawCanvas();
 });
 
