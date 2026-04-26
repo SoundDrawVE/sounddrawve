@@ -167,6 +167,10 @@ div.color-picker-container {
   padding: 0;
 }
 
+.color-picker-container.hide {
+  display: none;
+}
+
 #colorCanvas {
   cursor: crosshair;
   border-radius: 4px;

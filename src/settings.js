@@ -6,7 +6,7 @@ export const settings = {
   },
   fftSize: 128,
   colorType: 'default',
-  color: '',
+  color: 'rgba(144, 104, 190, 1)',
 
   getCanvasExportDimensions() {
     return {...this.exportCanvasDimensions[this.aspectRatio]};
@@ -34,6 +34,10 @@ form.addEventListener('input', (e) => {
   if (fieldName === 'aspectRatio') {
     window.dispatchEvent(new Event('resize'));
   }
+
+  if (fieldName === 'colorType') {
+    toggleColorPicker();
+  }
 });
 
 window.onload = function() {
@@ -41,6 +45,10 @@ window.onload = function() {
 };
 
 
+const pickerContainer = document.querySelector('.color-picker-container');
+function toggleColorPicker() {
+  pickerContainer.classList.toggle('hide');
+}
 
 function toCamelCase(str) {
   return str.replace(/[-_](.)/g, (_, char) => char.toUpperCase());
