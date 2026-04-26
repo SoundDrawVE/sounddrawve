@@ -15,6 +15,7 @@
     "rollup": "npm:@rollup/wasm-node"
   },
   "dependencies": {
+    "@fontsource/dejavu-serif": "^5.2.5",
     "pureimage": "^0.4.18",
     "ws": "^8.20.0"
   }

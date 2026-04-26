@@ -1,6 +1,11 @@
 * { box-sizing: border-box }
 
-body { padding: 0; margin: 0; }
+body { 
+  padding: 0;
+  margin: 0;
+  font-family: "DejaVu Serif", serif;
+  font-size: 16px;
+}
 
 :root {
   --page-color: #1D1E22;
