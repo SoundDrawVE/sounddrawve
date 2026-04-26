@@ -10,7 +10,7 @@ export function visualizeSpectrum(freq, ctx, canvasDimensions) {
       canvasW: canvasDimensions.w,
       canvasH: canvasDimensions.h,
       shiftX: x,
-      barWidth: (canvasDimensions.w / freq.length) * 1.19 // * 1.19 to hide zero freq
+      barWidth: (canvasDimensions.w / freq.length) //* 1.19 // * 1.19 to hide zero freq
     };
 
     ctx.fillStyle = calcColor(options);
