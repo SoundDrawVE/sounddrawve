@@ -99,9 +99,23 @@
                 <span class="checkmark">select</span>
               </label>
             </div>
+
             <div class="color-picker-container">
-              Color picker
+              <!-- Main SV Square -->
+              <canvas id="colorCanvas" width="250" height="150"></canvas>
+              <div class="controls">
+                <!-- Hue Slider -->
+                <input type="range" id="hueRange" min="0" max="360" value="0" class="picker-slider hue-slider">
+                <!-- Opacity Slider -->
+                <input type="range" id="opacityRange" min="0" max="100" value="100" class="picker-slider opacity-slider">
+                <!-- Result Display -->
+                <div class="picker-result-container">
+                  <div id="colorPreview" class="preview-box"></div>
+                  <input type="text" id="colorCode" readonly>
+                </div>
+              </div>
             </div>
+
           </div>
         </form>
       </div>
