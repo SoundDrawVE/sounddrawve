@@ -35,16 +35,20 @@ body { padding: 0; margin: 0; }
 
 .settings-form-item {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   padding: 10px 0 0 0;
 }
 
 .settings-form-item label {
-  color: var(--secondary-text-color);
   font-size: 12px;
 }
 
-.settings-form-item:hover label {
+.settings-form-item > label {
+  color: var(--secondary-text-color);
+}
+
+.settings-form-item:hover > label {
   color: var(--hover-text-color);
 }
 
@@ -77,6 +81,10 @@ body { padding: 0; margin: 0; }
 /* When the radio button is checked, add a blue background */
 .custom-radio input:checked ~ .checkmark {
   border-color: var(--checked-color);
+}
+
+.color-picker-container {
+  flex-basis: 100%;
 }
 /* ------end settings --------- */
 
