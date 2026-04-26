@@ -5,23 +5,31 @@ export const settings = {
     '9:16': { w: 549, h: 976 }
   },
   fftSize: 128,
+  colorType: 'default',
+  color: '',
 
   getCanvasExportDimensions() {
     return {...this.exportCanvasDimensions[this.aspectRatio]};
   },
 
   setProp(name, value) {
-    console.log(name, value);
     this[name] = value;
   }
 };
 
 const form = document.getElementById('settings-form');
+const selectedColor = document.getElementById('colorCode');
 form.addEventListener('input', (e) => {
   const field = e.target;
   const fieldName = toCamelCase(field.name);
+  let value = field.value;
   
-  settings.setProp(fieldName, field.value);
+  if (fieldName === 'color') {
+    value = selectedColor.value;
+  }
+
+  console.log(fieldName, value);
+  settings.setProp(fieldName, value);
 
   if (fieldName === 'aspectRatio') {
     window.dispatchEvent(new Event('resize'));

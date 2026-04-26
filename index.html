@@ -91,11 +91,11 @@
             <label>Color:</label>
             <div>
               <label for="color-default" class="custom-radio">
-                <input type="radio" id="olor-default" name="color" value="default" checked="checked">
+                <input type="radio" id="color-default" name="colorType" value="default" checked="checked">
                 <span class="checkmark">default</span>
               </label>
               <label for="color-select" class="custom-radio">
-                <input type="radio" id="color-select" name="color" value="select">
+                <input type="radio" id="color-select" name="colorType" value="select">
                 <span class="checkmark">select</span>
               </label>
             </div>
@@ -105,13 +105,13 @@
               <canvas id="colorCanvas" width="250" height="150"></canvas>
               <div class="controls">
                 <!-- Hue Slider -->
-                <input type="range" id="hueRange" min="0" max="360" value="287" class="picker-slider hue-slider">
+                <input type="range" id="hueRange" name="color" min="0" max="360" value="287" class="picker-slider hue-slider">
                 <!-- Opacity Slider -->
-                <input type="range" id="opacityRange" min="0" max="100" value="100" class="picker-slider opacity-slider">
+                <input type="range" id="opacityRange" name="color" min="0" max="100" value="100" class="picker-slider opacity-slider">
                 <!-- Result Display -->
                 <div class="picker-result-container">
                   <div id="colorPreview" class="preview-box"></div>
-                  <input type="text" id="colorCode" readonly>
+                  <input type="text" id="colorCode" name="color" readonly>
                   <div class="picker-result">
                     <div><span id="picker-hex">#feda6a</span></div>
                     <div><span id="picker-opacity">1</span></div>
