@@ -58,7 +58,6 @@ renderBtn.addEventListener('click', async () => {
 });
 
 
-// При выборе файла (например, в input type="file")
 async function onFileSelected(file) {
   try {
     showCover();
@@ -70,16 +69,19 @@ async function onFileSelected(file) {
   }
 }
 
-// function handleFile(file) {
-//   const audioURL = URL.createObjectURL(file);
-//   //const audio = new Audio(audioURL);
-//   //audio.play();
-// }
 
-// // В HTML: <input type="file" id="fileInput" accept="audio/*">
-// document.getElementById('fileInput').addEventListener('change', (event) => {
-//   const file = event.target.files[0];
-//   if (file) {
-//     handleFile(file); // Передаем файл как аргумент
-//   }
-// });
+const uploadTrackBtn = document.getElementById('upload-track-btn');
+const trackInput = document.getElementById('audio-upload');
+
+uploadTrackBtn.addEventListener('click', () => {
+  trackInput.click();
+});
+
+trackInput.addEventListener('change', (e) => {
+  const files = e.target.files;
+  if (files.length === 0) return;
+
+  const fileURL = URL.createObjectURL(files[0]);
+  player.src = fileURL;
+  player.play();
+});
