@@ -192,6 +192,7 @@ div.color-picker-container {
                     linear-gradient(45deg, transparent 75%, #ccc 75%), 
                     linear-gradient(-45deg, transparent 75%, #ccc 75%);
   background-size: 10px 10px;
+  background: linear-gradient(to right, transparent, #9068be);
 }
 
 .preview-box {
@@ -199,14 +200,42 @@ div.color-picker-container {
   height: 40px;
   border: 1px solid #ccc;
   margin-right: 10px;
+  background: #9068be;
 }
 
 .picker-result-container {
   display: flex;
   align-items: center;
   margin-top: 10px;
+  justify-content: space-between;
 }
 
-input[type="text"]#colorCode { flex-grow: 1; padding: 5px; border: 1px solid #ddd; }
+input[type="text"]#colorCode {
+  display: none;
+  flex-grow: 1;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+.picker-result {
+  display: flex;
+  gap: 15px;
+  font-size: 14px;
+}
+
+.picker-result div {
+  padding: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 3px;
+  text-align: center;
+}
+
+.picker-result div:first-child {
+  width: 75px;
+}
+
+.picker-result div:last-child {
+  width: 45px;
+}
 /* --------- end color picker --------- */
 

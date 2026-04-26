@@ -105,13 +105,17 @@
               <canvas id="colorCanvas" width="250" height="150"></canvas>
               <div class="controls">
                 <!-- Hue Slider -->
-                <input type="range" id="hueRange" min="0" max="360" value="0" class="picker-slider hue-slider">
+                <input type="range" id="hueRange" min="0" max="360" value="287" class="picker-slider hue-slider">
                 <!-- Opacity Slider -->
                 <input type="range" id="opacityRange" min="0" max="100" value="100" class="picker-slider opacity-slider">
                 <!-- Result Display -->
                 <div class="picker-result-container">
                   <div id="colorPreview" class="preview-box"></div>
                   <input type="text" id="colorCode" readonly>
+                  <div class="picker-result">
+                    <div><span id="picker-hex">#feda6a</span></div>
+                    <div><span id="picker-opacity">1</span></div>
+                  </div>
                 </div>
               </div>
             </div>

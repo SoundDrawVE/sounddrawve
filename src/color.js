@@ -4,8 +4,10 @@ const hueSlider = document.getElementById('hueRange');
 const opacitySlider = document.getElementById('opacityRange');
 const preview = document.getElementById('colorPreview');
 const code = document.getElementById('colorCode');
+const resultHex = document.getElementById('picker-hex');
+const resultOpacity = document.getElementById('picker-opacity');
 
-let currentHue = 0;
+let currentHue = 287;
 
 export function drawCanvas() {
     const width = canvas.width;
@@ -41,14 +43,23 @@ function getColor(e) {
     const opacity = opacitySlider.value / 100;
     
     const rgba = `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, ${opacity})`;
-    
-    updateUI(rgba);
+
+    const hexColor = `#${imageData[0].toString(16)}${imageData[1].toString(16)}${imageData[2].toString(16)}`;
+
+    updateUI(rgba, hexColor, opacity);
 }
 
-function updateUI(rgba) {
+function updateUI(rgba, hex, opacity) {
+    if (!rgba) rgba ='rgba(144, 104, 190, 1)';
     preview.style.backgroundColor = rgba;
     code.value = rgba;
-    
+    if (hex) {
+        resultHex.textContent = hex;
+        //resultHex.style.color = hex;
+    }
+
+    resultOpacity.textContent = opacity;
+
     // Update opacity slider track color for visual feedback
     const baseColor = `rgb(${rgba.split('(')[1].split(',').slice(0,3).join(',')})`;
     opacitySlider.style.background = `linear-gradient(to right, transparent, ${baseColor})`;
@@ -57,13 +68,15 @@ function updateUI(rgba) {
 // Listeners
 hueSlider.addEventListener('input', () => {
     currentHue = hueSlider.value;
+    console.log(currentHue);
     drawCanvas();
 });
 
 opacitySlider.addEventListener('input', () => {
     // Re-calculate based on last picked color logic
     // For simplicity, we just trigger the UI update
-    updateUI(code.value.replace(/[^,]+(?=\))/, opacitySlider.value / 100));
+    const opacity = opacitySlider.value / 100;
+    updateUI(code.value.replace(/[^,]+(?=\))/, opacity), null, opacity);
 });
 
 canvas.addEventListener('mousedown', (e) => {
