@@ -7,10 +7,13 @@ import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
 import { showCover, removeCover, updateMessage } from './cover.js';
 import { drawCanvas as initColorPicker } from './color.js';
+import { initArea as initVisualizationArea } from './area.js';
 
 
 // init color picker
 initColorPicker();
+// init visualization area
+initVisualizationArea();
 
 
 let fps = 30;

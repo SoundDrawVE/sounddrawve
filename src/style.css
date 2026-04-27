@@ -96,7 +96,10 @@ body {
   flex-direction: column;
 }
 
+
+/* --------- spectrum visualization canvas --------- */
 .canvas-container {
+  position: relative;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -106,6 +109,12 @@ body {
 .canvas {
   background: var(--canvas-color);
 }
+
+.area-container {
+  position: absolute;
+  /*background: rgba(55, 155, 25, 0.5);*/
+}
+/* --------- end spectrum visualization canvas --------- */
 
 .audio-container {
   padding: 10px;
