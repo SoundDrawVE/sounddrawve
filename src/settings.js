@@ -14,6 +14,14 @@ export const settings = {
 
   setProp(name, value) {
     this[name] = value;
+    if (this.callback) {
+      setTimeout(() => this.callback(), 100);
+    };
+  },
+
+  init(callback) {
+    this.callback = callback;
+    this.callback();
   }
 };
 

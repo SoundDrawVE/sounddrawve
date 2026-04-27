@@ -1,13 +1,14 @@
 import "@fontsource/dejavu-serif"; // Defaults to weight 400
 import './style.css';
 import { canvas, getCanvasCtx, clearCanvas, getCanvasDimensions } from './canvas.js';
-import { player, getAudioData, preprocessFrequencyData } from './audio.js';
+import { player, getAudioData, preprocessFrequencyData, audioSample1 } from './audio.js';
 import { visualizeSpectrum } from './visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
 import { showCover, removeCover, updateMessage } from './cover.js';
 import { drawCanvas as initColorPicker } from './color.js';
 import { initArea as initVisualizationArea } from './area.js';
+import { settings } from './settings.js';
 
 
 // init color picker
@@ -15,12 +16,23 @@ initColorPicker();
 // init visualization area
 initVisualizationArea();
 
+let isPlaying = false;
+let testSample;
+
+// init settings - visualize spectrum when settings are changed
+settings.init(() => {
+  if (isPlaying) return
+  const ctx = getCanvasCtx();
+  const canvasDimensions = getCanvasDimensions();
+  clearCanvas();
+  visualizeSpectrum(testSample || audioSample1, ctx, canvasDimensions);
+});
+
 
 let fps = 30;
 let now;
 let then = performance.now();
 let interval = 1000 / fps;
-let isPlaying = false;
 
 
 player.addEventListener('play', () => {
@@ -38,6 +50,7 @@ player.addEventListener('ended', async () => {
 
 
 
+
 function animate(timestamp) {
   if (!isPlaying) return;
   requestAnimationFrame(animate);
@@ -52,6 +65,8 @@ function animate(timestamp) {
 
     clearCanvas();
     visualizeSpectrum(freq, ctx, canvasDimensions);
+
+    testSample = freq;
   }
 }
 
@@ -95,3 +110,11 @@ trackInput.addEventListener('change', (e) => {
   player.src = fileURL;
   player.play();
 });
+
+
+function genTestSample() {
+  const min = 135;
+  const max = 255;
+  const length = 128;
+  return Array.from({ length: length }, () => Math.floor(Math.random() * (max - min + 1)) + min);
+}
