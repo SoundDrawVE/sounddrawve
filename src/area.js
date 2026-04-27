@@ -1,16 +1,31 @@
-const canvasContainer = document.querySelector('.canvas-container');
 const canvas = document.getElementById('canvas');
 const areaContainer = document.querySelector('.area-container');
 const area = document.getElementById('area');
 
 let isDragging = false;
+let isResizing = false;
+let currentResizer = null;
 let areaX = 0;
-let areaY = canvas.offsetHeight - 255;
+let areaY = 0;
+let areaW = 0;
+let areaH = 0;
 let startX, startY;
+const minW = 100, minH = 50;
+
+
+const areaCoords = {
+  x: 0,
+  y: canvas.clientHeight - 255,
+  w: canvas.clientWidth,
+  h: 255
+}
 
 
 area.addEventListener('mousedown', (e) => {
   if (e.target.classList.contains('resizer')) {
+    isResizing = true;
+    currentResizer = e.target;
+    initResize(e);
     return;
   }
 
@@ -26,7 +41,6 @@ document.addEventListener('mousemove', (e) => {
     let newLeft = e.clientX - startX;
     let newTop = e.clientY - startY;
 
-    // Ограничение в пределах контейнера
     const containerRect = areaContainer.getBoundingClientRect();
     const areaRect = area.getBoundingClientRect();
 
@@ -38,16 +52,76 @@ document.addEventListener('mousemove', (e) => {
     area.style.left = newLeft + 'px';
     area.style.top = newTop + 'px';
 
-    areaX = newLeft;
-    areaY = newTop;
+    areaCoords.x = newLeft;
+    areaCoords.y = newTop;
+
+  } else if (isResizing) {
+    doResize(e);
   }
 });
 
 
 document.addEventListener('mouseup', () => {
   isDragging = false;
+  isResizing = false;
   area.style.cursor = 'move';
 });
+
+
+function initResize(e) {
+  startX = e.clientX;
+  startY = e.clientY;
+  areaW = area.offsetWidth;
+  areaH = area.offsetHeight;
+  areaX = area.offsetLeft;
+  areaY = area.offsetTop;
+  // prevent selection
+  e.preventDefault();
+}
+
+
+function doResize(e) {
+  const direction = currentResizer.getAttribute('data-direction');
+  const containerRect = areaContainer.getBoundingClientRect();
+
+  if (direction.includes('right')) {
+    let newWidth = areaW + (e.clientX - startX);
+    if (areaX + newWidth <= containerRect.width && newWidth >= minW) {
+      area.style.width = newWidth + 'px';
+      areaCoords.w = newWidth;
+    }
+  }
+
+  if (direction.includes('left')) {
+    let newWidth = areaW - (e.clientX - startX);
+    let newLeft = areaX + (e.clientX - startX);
+    if (newWidth >= minW && newLeft >= 0) {
+      area.style.width = newWidth + 'px';
+      area.style.left = newLeft + 'px';
+      areaCoords.w = newWidth;
+      areaCoords.x = newLeft;
+    }
+  }
+
+  if (direction.includes('bottom')) {
+    let newHeight = areaH + (e.clientY - startY);
+    if (areaY + newHeight <= containerRect.height && newHeight >= minH) {
+      area.style.height = newHeight + 'px';
+      areaCoords.h = newHeight;
+    }
+  }
+
+  if (direction.includes('top')) {
+    let newHeight = areaH - (e.clientY - startY);
+    let newTop = areaY + (e.clientY - startY);
+    if (newHeight >= minH && newTop >= 0) {
+      area.style.height = newHeight + 'px';
+      area.style.top = newTop + 'px';
+      areaCoords.h = newHeight;
+      areaCoords.y = newTop;
+    }
+  }
+}
 
 
 export function initArea() {
@@ -57,4 +131,11 @@ export function initArea() {
   areaContainer.style.height = canvas.clientHeight + 'px';
 }
 
-window.addEventListener('resize', initArea);
+
+window.addEventListener('resize', () => {
+  initArea();
+  area.style.width = canvas.clientWidth + 'px';
+  area.style.height = 255 + 'px';
+  area.style.left = 0 + 'px';
+  area.style.top = canvas.clientHeight - 255 + 'px';
+});
