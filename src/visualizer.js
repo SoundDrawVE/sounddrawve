@@ -1,7 +1,9 @@
 import { settings } from './settings.js';
 
+
 export function visualizeSpectrum(freq, ctx, canvasDimensions) {
-  let x = 0;
+  const areaCoords = settings.getCoords();
+  let x = areaCoords.x;
 
   for (let i = 0; i < freq.length; i++) {
     const options = {
@@ -11,8 +13,12 @@ export function visualizeSpectrum(freq, ctx, canvasDimensions) {
       ctx: ctx,
       canvasW: canvasDimensions.w,
       canvasH: canvasDimensions.h,
+      areaX: areaCoords.x,
+      areaY: areaCoords.y,
+      areaW: areaCoords.w,
+      areaH: areaCoords.h,
       shiftX: x,
-      barWidth: (canvasDimensions.w / freq.length) //* 1.19 // * 1.19 to hide zero freq
+      barWidth: (areaCoords.w / freq.length) //* 1.19 // * 1.19 to hide zero freq
     };
 
     if (settings.colorType === 'default') {
@@ -28,8 +34,10 @@ export function visualizeSpectrum(freq, ctx, canvasDimensions) {
 }
 
 
-function drawBar({ ctx, value, canvasH, shiftX, barWidth }) {
-  ctx.fillRect(shiftX, canvasH - value, barWidth - 1, value);
+function drawBar({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
+  const k = areaH / 255;
+  const d = canvasH - areaH - areaY;
+  ctx.fillRect(shiftX, canvasH - value * k - d, barWidth - 1, value * k);
 }
 
 
