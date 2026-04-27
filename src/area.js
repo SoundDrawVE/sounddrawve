@@ -1,3 +1,5 @@
+import { settings } from './settings.js';
+
 const canvas = document.getElementById('canvas');
 const areaContainer = document.querySelector('.area-container');
 const area = document.getElementById('area');
@@ -13,11 +15,17 @@ let startX, startY;
 const minW = 100, minH = 50;
 
 
-const areaCoords = {
-  x: 0,
-  y: canvas.clientHeight - 255,
-  w: canvas.clientWidth,
-  h: 255
+let areaCoords = { ...getInitiaCoords() };
+// initial area coords
+settings.setProp('coords', { ...getInitiaCoords() });
+
+function getInitiaCoords() {
+  return {
+    x: 0,
+    y: canvas.clientHeight - 255,
+    w: canvas.clientWidth,
+    h: 255
+  }
 }
 
 
@@ -57,6 +65,10 @@ document.addEventListener('mousemove', (e) => {
 
   } else if (isResizing) {
     doResize(e);
+  }
+
+  if (isDragging || isResizing) {
+    settings.setProp('coords', { ...areaCoords });
   }
 });
 
@@ -138,4 +150,6 @@ window.addEventListener('resize', () => {
   area.style.height = 255 + 'px';
   area.style.left = 0 + 'px';
   area.style.top = canvas.clientHeight - 255 + 'px';
+  settings.setProp('coords', getInitiaCoords());
+  areaCoords = getInitiaCoords();
 });

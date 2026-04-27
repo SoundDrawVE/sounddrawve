@@ -7,15 +7,21 @@ export const settings = {
   fftSize: 128,
   colorType: 'default',
   color: 'rgba(144, 104, 190, 1)',
+  coords: null,
 
   getCanvasExportDimensions() {
     return {...this.exportCanvasDimensions[this.aspectRatio]};
   },
 
+  getCoords() {
+    return { ...this.coords };
+  },
+
   setProp(name, value) {
+    //console.log(name, value);
     this[name] = value;
     if (this.callback) {
-      setTimeout(() => this.callback(), 100);
+      this.callback();
     };
   },
 
@@ -36,7 +42,6 @@ form.addEventListener('input', (e) => {
     value = selectedColor.value;
   }
 
-  console.log(fieldName, value);
   settings.setProp(fieldName, value);
 
   if (fieldName === 'aspectRatio') {
