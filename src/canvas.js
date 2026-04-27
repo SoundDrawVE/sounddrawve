@@ -7,7 +7,7 @@ const ctx = canvas.getContext("2d");
 
 let w, h;
 
-function setDimensions() {
+export function setDimensions() {
   const conWidth = container.clientWidth;
   const conHeight = container.clientHeight;
   const { aspectRatio } = settings;

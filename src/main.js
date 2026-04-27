@@ -1,6 +1,6 @@
 import "@fontsource/dejavu-serif"; // Defaults to weight 400
 import './style.css';
-import { canvas, getCanvasCtx, clearCanvas, getCanvasDimensions } from './canvas.js';
+import { getCanvasCtx, clearCanvas, getCanvasDimensions } from './canvas.js';
 import { player, getAudioData, preprocessFrequencyData, audioSample1 } from './audio.js';
 import { visualizeSpectrum } from './visualizer.js';
 import { initFraming, createFrames } from './frames.js';
@@ -21,7 +21,7 @@ let testSample;
 
 // init settings - visualize spectrum when settings are changed
 settings.init(() => {
-  if (isPlaying) return
+  if (isPlaying) return;
   const ctx = getCanvasCtx();
   const canvasDimensions = getCanvasDimensions();
   clearCanvas();
