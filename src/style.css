@@ -112,8 +112,38 @@ body {
 
 .area-container {
   position: absolute;
-  /*background: rgba(55, 155, 25, 0.5);*/
 }
+
+.area {
+  position: absolute;
+  width: 100%;
+  height: 255px;
+  left: 0;
+  bottom: 0;
+  border: 1px solid #feda6a;
+  cursor: move;
+  user-select: none;
+}
+
+/* resizing marker styles */
+.resizer {
+  width: 10px;
+  height: 10px;
+  background: #fff;
+  border: 1px solid #333;
+  position: absolute;
+  z-index: 10;
+}
+
+/* positioning markers */
+.resizer-r { cursor: e-resize; right: -5px; top: 50%; transform: translateY(-50%); }
+.resizer-b { cursor: s-resize; bottom: -5px; left: 50%; transform: translateX(-50%); }
+.resizer-br { cursor: se-resize; bottom: -5px; right: -5px; }
+.resizer-l { cursor: w-resize; left: -5px; top: 50%; transform: translateY(-50%); }
+.resizer-t { cursor: n-resize; top: -5px; left: 50%; transform: translateX(-50%); }
+.resizer-tl { cursor: nw-resize; top: -5px; left: -5px; }
+.resizer-tr { cursor: ne-resize; top: -5px; right: -5px; }
+.resizer-bl { cursor: sw-resize; bottom: -5px; left: -5px; }
 /* --------- end spectrum visualization canvas --------- */
 
 .audio-container {

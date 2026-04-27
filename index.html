@@ -127,7 +127,18 @@
       <div class="app-center">
         <div class="canvas-container">
           <canvas id="canvas" class="canvas"></canvas>
-          <div class="area-container"></div>
+          <div class="area-container">
+            <div id="area" class="area">
+              <div class="resizer resizer-r" data-direction="right"></div>
+              <div class="resizer resizer-b" data-direction="bottom"></div>
+              <div class="resizer resizer-br" data-direction="bottom-right"></div>
+              <div class="resizer resizer-l" data-direction="left"></div>
+              <div class="resizer resizer-t" data-direction="top"></div>
+              <div class="resizer resizer-tl" data-direction="top-left"></div>
+              <div class="resizer resizer-tr" data-direction="top-right"></div>
+              <div class="resizer resizer-bl" data-direction="bottom-left"></div>
+            </div>
+          </div>
         </div>
         <div class="audio-container">
           <audio id="audio" class="audio" controls crossorigin="anonymous"></audio>
