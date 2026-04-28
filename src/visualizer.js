@@ -3,12 +3,13 @@ import { settings } from './settings.js';
 
 export function visualizeSpectrum(freq, ctx, canvasDimensions) {
   const areaCoords = settings.getCoords();
+  const freqNumber = settings.freqNumber;
   let x = areaCoords.x;
 
-  for (let i = 0; i < freq.length; i++) {
+  for (let i = 0; i < freqNumber; i++) {
     const options = {
       ind: i,
-      dataLen: freq.length,
+      dataLen: freqNumber,
       value: freq[i],
       ctx: ctx,
       canvasW: canvasDimensions.w,
@@ -18,7 +19,7 @@ export function visualizeSpectrum(freq, ctx, canvasDimensions) {
       areaW: areaCoords.w,
       areaH: areaCoords.h,
       shiftX: x,
-      barWidth: (areaCoords.w / freq.length) //* 1.19 // * 1.19 to hide zero freq
+      barWidth: (areaCoords.w / freqNumber)
     };
 
     if (settings.colorType === 'default') {
