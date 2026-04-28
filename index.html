@@ -134,6 +134,25 @@
               </label>
             </div>
           </div>
+
+          <div class="settings-form-item">
+            <label>Number of frequencies:</label>
+            <div>
+              <label for="freq-number-all" class="custom-radio">
+                <input type="radio" id="freq-number-all" name="freq-type" value="all" checked="checked">
+                <span class="checkmark">all</span>
+              </label>
+              <label for="freq-number-select" class="custom-radio">
+                <input type="radio" id="freq-number-select" name="freq-type" value="select">
+                <span class="checkmark">select</span>
+              </label>
+            </div>
+            <div class="freq-number-container hide">
+              <button id="freq-number-decr" data-type="decr">-1</button>
+              <span id="freq-number" data-max="64" data-value="64">64</span>
+              <button id="freq-number-incr" data-type="incr">+1</button>
+            </div>
+          </div>
         </form>
       </div>
 
