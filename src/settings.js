@@ -8,6 +8,8 @@ export const settings = {
   colorType: 'default',
   color: 'rgba(144, 104, 190, 1)',
   coords: null,
+  freqType: 'all',
+  freqNumber: 64,
 
   getCanvasExportDimensions() {
     return {...this.exportCanvasDimensions[this.aspectRatio]};
@@ -33,6 +35,8 @@ export const settings = {
 
 const form = document.getElementById('settings-form');
 const selectedColor = document.getElementById('colorCode');
+const freqNumber = document.getElementById('freq-number');
+
 form.addEventListener('input', (e) => {
   const field = e.target;
   const fieldName = toCamelCase(field.name);
@@ -42,7 +46,15 @@ form.addEventListener('input', (e) => {
     value = selectedColor.value;
   }
 
+  if (fieldName === 'fftSize') {
+    settings.setProp('freqNumber', value / 2);
+    freqNumber.setAttribute('data-max', value / 2);
+    freqNumber.setAttribute('data-value', value / 2);
+    freqNumber.textContent = value / 2;
+  }
+
   settings.setProp(fieldName, value);
+
 
   if (fieldName === 'aspectRatio') {
     window.dispatchEvent(new Event('resize'));
@@ -55,11 +67,45 @@ form.addEventListener('input', (e) => {
   if (fieldName === 'visibilityArea') {
     toggleWaveArea();
   }
+
+  if (fieldName === 'freqType') {
+    toggleFreqNumberContainer();
+  }
 });
+
 
 window.onload = function() {
   form.reset();
 };
+
+
+const freqNumberContainer = document.querySelector('.freq-number-container');
+freqNumberContainer.addEventListener('click', (e) => {
+  const target = e.target;
+  const type = target.dataset.type;
+  if (type) {
+    const max = +freqNumber.dataset.max;
+    const value = +freqNumber.dataset.value;
+    let newValue;
+
+    if (type === 'decr') {
+      newValue = value - 1;
+    } else {
+      newValue = value + 1;
+    }
+
+    if (newValue > 0 && newValue <= max) {
+      settings.setProp('freqNumber', newValue);
+      freqNumber.setAttribute('data-value', newValue);
+      freqNumber.textContent = newValue;
+    }
+  }
+  e.preventDefault();
+});
+
+function toggleFreqNumberContainer() {
+  freqNumberContainer.classList.toggle('hide');
+}
 
 
 const pickerContainer = document.querySelector('.color-picker-container');
