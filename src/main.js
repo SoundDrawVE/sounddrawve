@@ -1,7 +1,7 @@
 import "@fontsource/dejavu-serif"; // Defaults to weight 400
 import './style.css';
 import { getCanvasCtx, clearCanvas, getCanvasDimensions } from './canvas.js';
-import { player, getAudioData, preprocessFrequencyData, audioSample1 } from './audio.js';
+import { player, getAudioData, preprocessFrequencyData, audioSamples } from './audio.js';
 import { visualizeSpectrum } from './visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
@@ -17,7 +17,6 @@ initColorPicker();
 initVisualizationArea();
 
 let isPlaying = false;
-let testSample;
 
 // init settings - visualize spectrum when settings are changed
 settings.init(() => {
@@ -25,7 +24,7 @@ settings.init(() => {
   const ctx = getCanvasCtx();
   const canvasDimensions = getCanvasDimensions();
   clearCanvas();
-  visualizeSpectrum(testSample || audioSample1, ctx, canvasDimensions);
+  visualizeSpectrum(audioSamples[settings.fftSize], ctx, canvasDimensions);
 });
 
 
@@ -65,8 +64,6 @@ function animate(timestamp) {
 
     clearCanvas();
     visualizeSpectrum(freq, ctx, canvasDimensions);
-
-    testSample = freq;
   }
 }
 
