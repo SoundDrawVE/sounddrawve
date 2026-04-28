@@ -116,6 +116,10 @@ body {
   position: absolute;
 }
 
+.area-container.hide {
+  display: none;
+}
+
 .area {
   position: absolute;
   width: 100%;

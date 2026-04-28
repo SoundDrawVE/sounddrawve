@@ -18,7 +18,7 @@ export const settings = {
   },
 
   setProp(name, value) {
-    //console.log(name, value);
+    console.log(name, value);
     this[name] = value;
     if (this.callback) {
       this.callback();
@@ -51,6 +51,10 @@ form.addEventListener('input', (e) => {
   if (fieldName === 'colorType') {
     toggleColorPicker();
   }
+
+  if (fieldName === 'visibilityArea') {
+    toggleWaveArea();
+  }
 });
 
 window.onload = function() {
@@ -61,6 +65,11 @@ window.onload = function() {
 const pickerContainer = document.querySelector('.color-picker-container');
 function toggleColorPicker() {
   pickerContainer.classList.toggle('hide');
+}
+
+const soundWaveArea = document.querySelector('.area-container');
+function toggleWaveArea() {
+  soundWaveArea.classList.toggle('hide');
 }
 
 function toCamelCase(str) {
