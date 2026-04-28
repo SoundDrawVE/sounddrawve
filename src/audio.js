@@ -1,4 +1,4 @@
-import track from './assets/sample.mp3';
+import track from './assets/track.mp3';
 import { settings } from './settings.js';
 
 
