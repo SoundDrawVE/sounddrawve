@@ -69,6 +69,13 @@ form.addEventListener('input', (e) => {
   }
 
   if (fieldName === 'freqType') {
+    if (value === 'all') {
+      settings.setProp('freqNumber', +freqNumber.dataset.max);
+      freqNumber.setAttribute('data-max', +freqNumber.dataset.max);
+      freqNumber.setAttribute('data-value', +freqNumber.dataset.max);
+      freqNumber.textContent = +freqNumber.dataset.max;
+    }
+
     toggleFreqNumberContainer();
   }
 });
