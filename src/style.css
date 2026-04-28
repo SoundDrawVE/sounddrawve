@@ -89,6 +89,20 @@ body {
 .custom-radio input:checked ~ .checkmark {
   border-color: var(--checked-color);
 }
+
+.freq-number-container {
+  margin-top: 10px;
+  flex-basis: 100%;
+  background: var(--canvas-color);
+}
+
+.freq-number-container span {
+  padding: 0 5px;
+}
+
+.freq-number-container.hide {
+  display: none;
+}
 /* ------end settings --------- */
 
 
