@@ -28,10 +28,18 @@ export function visualizeSpectrum(freq, ctx, canvasDimensions) {
       ctx.fillStyle = settings.color;
     }
 
-    drawBar(options);
+    drawStripe(options);
 
     x += options.barWidth;
   }
+}
+
+
+function drawStripe({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
+  const gap = 5, stripeH = 3;
+  const k = areaH / 255;
+  const d = canvasH - areaH - areaY;
+  ctx.fillRect(shiftX, canvasH - value * k - d, barWidth - 1, stripeH);
 }
 
 
