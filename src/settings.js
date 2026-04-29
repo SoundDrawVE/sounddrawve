@@ -10,6 +10,8 @@ export const settings = {
   coords: null,
   freqType: 'all',
   freqNumber: 64,
+  visualizationType: 'bars',
+
 
   getCanvasExportDimensions() {
     return {...this.exportCanvasDimensions[this.aspectRatio]};

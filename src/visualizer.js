@@ -28,7 +28,11 @@ export function visualizeSpectrum(freq, ctx, canvasDimensions) {
       ctx.fillStyle = settings.color;
     }
 
-    drawStripe(options);
+    if (settings.visualizationType === 'bars') {
+      drawBar(options);
+    } else if (settings.visualizationType === 'stripes') {
+      drawStripe(options);
+    }
 
     x += options.barWidth;
   }
