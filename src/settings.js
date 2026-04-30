@@ -17,7 +17,15 @@ export const settings = {
 
 
   getCanvasExportDimensions() {
-    return {...this.exportCanvasDimensions[this.aspectRatio]};
+    return { ...this.exportCanvasDimensions[this.aspectRatio] };
+  },
+
+  getCanvasDimensions() {
+    if (this.mode === 'render') {
+      return { ...this.exportCanvasDimensions[this.aspectRatio] };
+    } else {
+      return { ...this.canvasDimensions };
+    }
   },
 
   getCoords(mode) {

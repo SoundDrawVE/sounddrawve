@@ -55,7 +55,7 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
     const freq = audioSamples[frameIndex];
 
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
-    visualizeSpectrum(freq, exportCtx, { w: exportCanvas.width, h: exportCanvas.height });
+    visualizeSpectrum(freq, exportCtx);
     await capturePNG(exportCanvas, frameIndex, batch);
 
     averageProcTime = performance.now() - t_now + frameInterval;

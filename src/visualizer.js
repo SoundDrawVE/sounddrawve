@@ -1,9 +1,10 @@
 import { settings } from './settings.js';
 
 
-export function visualizeSpectrum(freq, ctx, canvasDimensions) {
+export function visualizeSpectrum(freq, ctx) {
   const areaCoords = settings.getCoords();
   const freqNumber = settings.freqNumber;
+  const canvasDimensions = settings.getCanvasDimensions();
   let x = areaCoords.x;
 
   for (let i = 0; i < freqNumber; i++) {
