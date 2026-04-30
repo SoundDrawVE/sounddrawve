@@ -1,5 +1,6 @@
 export const settings = {
   aspectRatio: '16:9',
+  canvasDimensions: null,
   exportCanvasDimensions: {
     '16:9': { w: 976, h: 549 },
     '9:16': { w: 549, h: 976 }
@@ -8,17 +9,30 @@ export const settings = {
   colorType: 'default',
   color: 'rgba(144, 104, 190, 1)',
   coords: null,
+  //exportCoords: null,
   freqType: 'all',
   freqNumber: 64,
   visualizationType: 'bars',
+  mode: 'visualize',
 
 
   getCanvasExportDimensions() {
     return {...this.exportCanvasDimensions[this.aspectRatio]};
   },
 
-  getCoords() {
-    return { ...this.coords };
+  getCoords(mode) {
+    const coords = { ... this.coords };
+    if (this.mode === 'render') {
+      const renderH = this.exportCanvasDimensions[this.aspectRatio].h;
+      const h = this.canvasDimensions.h;
+      const k = renderH / h;
+      for (let prop in coords) {
+        coords[prop] *= k;
+      }
+      return coords;
+    } else {
+      return coords;
+   }
   },
 
   setProp(name, value) {
@@ -34,6 +48,7 @@ export const settings = {
     this.callback();
   }
 };
+
 
 const form = document.getElementById('settings-form');
 const selectedColor = document.getElementById('colorCode');

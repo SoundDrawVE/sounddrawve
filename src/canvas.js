@@ -37,7 +37,7 @@ export function setDimensions() {
 
   canvas.width = w;
   canvas.height = h;
-
+  settings.setProp('canvasDimensions', { w, h });
 }
 
 setDimensions();
