@@ -30,9 +30,11 @@ export function visualizeSpectrum(freq, ctx) {
     }
 
     if (settings.visualizationType === 'bars') {
-      drawDrop(options);
+      drawBar(options);
     } else if (settings.visualizationType === 'stripes') {
       drawStripe(options);
+    } else if (settings.visualizationType === 'drops') {
+      drawDrop(options);
     }
 
     x += options.barWidth;
