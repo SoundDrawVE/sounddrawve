@@ -19,12 +19,15 @@ initVisualizationArea();
 let isPlaying = false;
 
 // init settings - visualize spectrum when settings are changed
-settings.init(() => {
+function visualizeStaticSpectrum() {
   if (isPlaying) return;
   const ctx = getCanvasCtx();
   clearCanvas();
   visualizeSpectrum(audioSamples[settings.fftSize], ctx);
-});
+}
+
+visualizeStaticSpectrum();
+settings.onChange(visualizeStaticSpectrum);
 
 
 let fps = 30;

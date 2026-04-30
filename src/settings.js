@@ -14,6 +14,7 @@ export const settings = {
   freqNumber: 64,
   visualizationType: 'bars',
   mode: 'visualize',
+  callbacks: [],
 
 
   getCanvasExportDimensions() {
@@ -46,14 +47,11 @@ export const settings = {
   setProp(name, value) {
     console.log(name, value);
     this[name] = value;
-    if (this.callback) {
-      this.callback();
-    };
+    this.callbacks.forEach(f => f());
   },
 
-  init(callback) {
-    this.callback = callback;
-    this.callback();
+  onChange(fn) {
+    this.callbacks.push(fn);
   }
 };
 
