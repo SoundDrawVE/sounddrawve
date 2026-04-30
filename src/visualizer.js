@@ -1,4 +1,5 @@
 import { settings } from './settings.js';
+import droplet from './assets/droplet2.png';
 
 
 export function visualizeSpectrum(freq, ctx) {
@@ -33,8 +34,8 @@ export function visualizeSpectrum(freq, ctx) {
       drawBar(options);
     } else if (settings.visualizationType === 'stripes') {
       drawStripe(options);
-    } else if (settings.visualizationType === 'drops') {
-      drawDrop(options);
+    } else if (settings.visualizationType === 'droplets') {
+      drawDroplet(options);
     }
 
     x += options.barWidth;
@@ -60,19 +61,32 @@ const tmpData = {
 settings.onChange(() => tmpData.reset());
 
 
-function drawDrop({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY, shiftX }) {
+const dropletImg = new Image();
+dropletImg.src = droplet;
+dropletImg.onload = () => { console.log('droplet img loaded!'); }
+
+function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY, shiftX }) {
   const k = (areaW * areaH) /(canvasW * canvasH);
   const maxSpeed = 5;
-  let flakeCoords = tmpData.getValue(ind);
+  const areaK = value * 0.0001 * Math.exp(k);
+  const imgW = dropletImg.width * areaK;
+  const imgH = dropletImg.height * areaK;
+  const angleRad = 25 * Math.PI / 180;
 
+  let flakeCoords = tmpData.getValue(ind);
   if (!flakeCoords) {
     flakeCoords = calcInitialCoords();
   }
 
   updateCoords();
-  ctx.beginPath();
-  ctx.arc(flakeCoords.x, flakeCoords.y, flakeCoords.r, 0, 2 * Math.PI);
-  ctx.fill();
+  // ctx.beginPath();
+  // ctx.arc(flakeCoords.x, flakeCoords.y, flakeCoords.r, 0, 2 * Math.PI);
+  // ctx.fill();
+  ctx.save();
+  ctx.translate(flakeCoords.x, flakeCoords.y);
+  ctx.rotate(angleRad);
+  ctx.drawImage(dropletImg, -imgW / 2 , -imgH / 2, imgW, imgH);
+  ctx.restore();
   tmpData.setValue(ind, flakeCoords);
 
   function updateCoords() {
@@ -86,7 +100,7 @@ function drawDrop({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, area
     flakeCoords.x -= speedX;
     flakeCoords.y += speedY;
 
-    if (flakeCoords.x < areaX || flakeCoords.y > areaY + areaH) {
+    if (flakeCoords.x < areaX + imgW / 2 || flakeCoords.y > areaY + areaH - imgH / 2) {
       flakeCoords = calcInitialCoords();
     }
   }
@@ -95,7 +109,7 @@ function drawDrop({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, area
     return {
       x: randInt(areaX, areaX + areaW),
       y: randInt(areaY, areaY + areaH),
-      r: value * 0.015 * Math.exp(k)
+      // r: value * 0.015 * Math.exp(k)
     };
   }
 }
