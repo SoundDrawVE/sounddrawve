@@ -31,7 +31,8 @@ export function visualizeSpectrum(freq, ctx) {
     }
 
     if (settings.visualizationType === 'bars') {
-      drawBar(options);
+      //drawBar(options);
+      drawBarcap(options);
     } else if (settings.visualizationType === 'stripes') {
       drawStripe(options);
     } else if (settings.visualizationType === 'droplets') {
@@ -110,6 +111,38 @@ function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, a
       x: randInt(areaX, areaX + areaW),
       y: randInt(areaY, areaY + areaH),
       // r: value * 0.015 * Math.exp(k)
+    };
+  }
+}
+
+
+function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
+  const k = areaH / 255;
+  const d = canvasH - areaH - areaY;
+  const capH = 3;
+  const barH = value * k - capH * 2;
+  const barY = canvasH - barH - d;
+
+  let capCoords = tmpData.getValue(ind);
+  if (!capCoords) capCoords = calcInitialCoords();
+  updateCoords();
+  // draw
+  ctx.fillRect(shiftX, barY, barWidth - 1, barH);
+  ctx.fillRect(capCoords.x, capCoords.y, capCoords.w, capCoords.h);
+  tmpData.setValue(ind, capCoords);
+
+  function updateCoords() {
+    capCoords.y += 1;
+    if (capCoords.y > barY - capH * 2) capCoords.y = barY - capH * 2;
+    if (capCoords.y > canvasH - d - capH * 2) capCoords.y = canvasH - d - capH * 2;
+  }
+
+  function calcInitialCoords() {
+    return {
+      x: shiftX,
+      y: barY - capH * 2,
+      w: barWidth - 1,
+      h: capH
     };
   }
 }
