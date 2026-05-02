@@ -31,7 +31,8 @@ export function visualizeSpectrum(freq, ctx) {
     }
 
     if (settings.visualizationType === 'bars') {
-      drawBar(options);
+      // drawBar(options);
+      drawPulsatingCircle(options);
     } else if (settings.visualizationType === 'stripes') {
       drawStripe(options);
     } else if (settings.visualizationType === 'barcap') {
@@ -145,6 +146,36 @@ function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth }
       y: barY - capH - gap,
       w: barWidth - 1,
       h: capH
+    };
+  }
+}
+
+
+function drawPulsatingCircle({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY }) {
+  const k = (areaW * areaH) /(canvasW * canvasH);
+  let coords = tmpData.getValue(ind);
+  if (!coords) coords = calcInitialCoords();
+  updateCoords();
+
+  ctx.beginPath();
+  ctx.arc(coords.x, coords.y, coords.r, 0, 2 * Math.PI);
+  ctx.fill();
+  ctx.strokeStyle = ctx.fillStyle;
+  ctx.beginPath();
+  ctx.arc(coords.x, coords.y, coords.r + 5, 0, 2 * Math.PI);
+  ctx.stroke();
+
+  tmpData.setValue(ind, coords);
+
+  function updateCoords() {
+    coords.r = value * 0.015 * Math.exp(k);
+  }
+
+  function calcInitialCoords() {
+    return {
+      x: randInt(areaX, areaX + areaW),
+      y: randInt(areaY, areaY + areaH),
+      r: 0
     };
   }
 }
