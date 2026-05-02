@@ -31,14 +31,15 @@ export function visualizeSpectrum(freq, ctx) {
     }
 
     if (settings.visualizationType === 'bars') {
-      // drawBar(options);
-      drawPulsatingCircle(options);
+      drawBar(options);
     } else if (settings.visualizationType === 'stripes') {
       drawStripe(options);
     } else if (settings.visualizationType === 'barcap') {
       drawBarcap(options);
     } else if (settings.visualizationType === 'droplets') {
       drawDroplet(options);
+    } else if (settings.visualizationType === 'pulsecircle') {
+      drawPulsatingCircle(options);
     }
 
     x += options.barWidth;
