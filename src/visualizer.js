@@ -120,8 +120,9 @@ function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, a
 function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
   const k = areaH / 255;
   const d = canvasH - areaH - areaY;
-  const capH = 3;
-  const barH = value * k - capH * 2;
+  const capH = 3, gap = 3;
+  let barH = value * k;
+  if (barH > capH + gap) barH -= capH + gap;
   const barY = canvasH - barH - d;
 
   let capCoords = tmpData.getValue(ind);
@@ -134,14 +135,14 @@ function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth }
 
   function updateCoords() {
     capCoords.y += 1;
-    if (capCoords.y > barY - capH * 2) capCoords.y = barY - capH * 2;
-    if (capCoords.y > canvasH - d - capH * 2) capCoords.y = canvasH - d - capH * 2;
+    if (capCoords.y > barY - capH - gap) capCoords.y = barY - capH - gap;
+    if (capCoords.y > canvasH - d - capH - gap) capCoords.y = canvasH - d - capH - gap;
   }
 
   function calcInitialCoords() {
     return {
       x: shiftX,
-      y: barY - capH * 2,
+      y: barY - capH - gap,
       w: barWidth - 1,
       h: capH
     };
