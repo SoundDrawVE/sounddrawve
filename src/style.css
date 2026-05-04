@@ -28,6 +28,7 @@ body {
   display: flex;
   background: var(--page-color);
   color: var(--primary-text-color);
+  overflow: hidden;
 }
 
 /* --------- settings --------- */
