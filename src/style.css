@@ -127,6 +127,7 @@ body {
 /* EXPAND */
 .expand {
   margin-top: 10px;
+  margin-bottom: 5px;
   display: none;
   flex-wrap: wrap;
   gap: 8px;
@@ -220,8 +221,11 @@ body {
 }
 
 .freq-number-container {
-  margin-top: 10px;
   flex-basis: 100%;
+  margin-top: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 12px;
   background: var(--canvas-color);
 }
 
@@ -232,6 +236,8 @@ body {
 .freq-number-container.hide {
   display: none;
 }
+
+
 
 div.visualization-options {
   /*padding: 0;*/

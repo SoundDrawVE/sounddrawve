@@ -133,18 +133,24 @@
                 <path d="M16 18h2V8h-2z"/>
               </svg>
               <div class="label">Frequencies</div>
-              <div class="value">64</div>
-              <!-- <label>Number of frequencies:</label> -->
-              <!-- <div>
+              <div class="value">ALL</div>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 6l6 6-6 6"/>
+              </svg>
+            </div>
+            <div class="expand">
+              <div class="option active">
                 <label for="freq-number-all" class="custom-radio">
                   <input type="radio" id="freq-number-all" name="freq-type" value="all" checked="checked">
-                  <span class="checkmark">all</span>
+                  <span class="checkmark">ALL</span>
                 </label>
+              </div>
+              <div class="option">
                 <label for="freq-number-select" class="custom-radio">
                   <input type="radio" id="freq-number-select" name="freq-type" value="select">
-                  <span class="checkmark">select</span>
+                  <span class="checkmark">Select</span>
                 </label>
-              </div> -->
+              </div>
               <div class="freq-number-container hide">
                 <button id="freq-number-decr" data-type="decr">-1</button>
                 <span id="freq-number" data-max="64" data-value="64">64</span>
