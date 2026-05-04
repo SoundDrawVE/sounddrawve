@@ -75,19 +75,33 @@ body {
   opacity: 0.4;
 }
 
+.group-item {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.group-item.active {
+  margin-bottom: 10px;
+  background-color: rgba(255,255,255,0.05);
+}
+
 /* ITEM */
 .item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
+  padding: 5px 7px;
   border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  /*transition: all 0.2s ease;*/
 }
 
 .item:hover {
   background: rgba(255,255,255,0.05);
+}
+
+.group-item.active .item:hover {
+  background: transparent;
 }
 
 .item.active {

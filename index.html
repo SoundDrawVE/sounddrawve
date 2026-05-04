@@ -54,227 +54,240 @@
         <form id="settings-form">
           <div class="group">
             <div class="group-title">Output</div>
-            <div class="settings-form-item item">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
-                <rect x="3" y="6" width="18" height="12" rx="2"/>
-                <path d="M8 10h2M14 10h2"/>
-                <path d="M12 9v6"/>
-              </svg>
-              <div class="label">Aspect Ratio</div>
-              <div class="value">16:9</div>
-              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 6l6 6-6 6"/>
-              </svg>
-            </div>
-            <div class="expand">
-              <div class="option active">
-                <label for="16:9" class="custom-radio">
-                  <input type="radio" id="16:9" name="aspect-ratio" value="16:9" checked="checked">
-                  <span class="checkmark">16:9</span>
-                </label>
+            <div class="group-item">
+              <div class="settings-form-item item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
+                  <rect x="3" y="6" width="18" height="12" rx="2"/>
+                  <path d="M8 10h2M14 10h2"/>
+                  <path d="M12 9v6"/>
+                </svg>
+                <div class="label">Aspect Ratio</div>
+                <div class="value">16:9</div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6l6 6-6 6"/>
+                </svg>
               </div>
-              <div class="option">
-                <label for="9:16" class="custom-radio">
-                  <input type="radio" id="9:16" name="aspect-ratio" value="9:16">
-                  <span class="checkmark">9:16</span>
-                </label>
+              <div class="expand">
+                <div class="option active">
+                  <label for="16:9" class="custom-radio">
+                    <input type="radio" id="16:9" name="aspect-ratio" value="16:9" checked="checked">
+                    <span class="checkmark">16:9</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="9:16" class="custom-radio">
+                    <input type="radio" id="9:16" name="aspect-ratio" value="9:16">
+                    <span class="checkmark">9:16</span>
+                  </label>
+                </div>
               </div>
             </div>
+            
           </div>
           
           <div class="group">
             <div class="group-title">Audio Analysis</div>
-            <div class="settings-form-item item">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
-                <path d="M3 18V6"/>
-                <path d="M7 16V8"/>
-                <path d="M11 20V4"/>
-                <path d="M15 14V10"/>
-                <path d="M19 17V7"/>
-              </svg>
-              <div class="label">FFT Size</div>
-              <div class="value">128</div>
-              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 6l6 6-6 6"/>
-              </svg>
-            </div>
-            <div class="expand">
-              <div class="option">
-                <label for="fft-32" class="custom-radio">
-                  <input type="radio" id="fft-32" name="fft-size" value="32">
-                  <span class="checkmark">32</span>
-                </label>
+            <div class="group-item">
+              <div class="settings-form-item item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
+                  <path d="M3 18V6"/>
+                  <path d="M7 16V8"/>
+                  <path d="M11 20V4"/>
+                  <path d="M15 14V10"/>
+                  <path d="M19 17V7"/>
+                </svg>
+                <div class="label">FFT Size</div>
+                <div class="value">128</div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6l6 6-6 6"/>
+                </svg>
               </div>
-              <div class="option">
-                <label for="fft-64" class="custom-radio">
-                  <input type="radio" id="fft-64" name="fft-size" value="64">
-                  <span class="checkmark">64</span>
-                </label>
-              </div>
-              <div class="option active">
-                <label for="fft-128" class="custom-radio">
-                  <input type="radio" id="fft-128" name="fft-size" value="128" checked="checked">
-                  <span class="checkmark">128</span>
-                </label>
-              </div>
-              <div class="option">
-                <label for="fft-256" class="custom-radio">
-                  <input type="radio" id="fft-256" name="fft-size" value="256">
-                  <span class="checkmark">256</span>
-                </label>
+              <div class="expand">
+                <div class="option">
+                  <label for="fft-32" class="custom-radio">
+                    <input type="radio" id="fft-32" name="fft-size" value="32">
+                    <span class="checkmark">32</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="fft-64" class="custom-radio">
+                    <input type="radio" id="fft-64" name="fft-size" value="64">
+                    <span class="checkmark">64</span>
+                  </label>
+                </div>
+                <div class="option active">
+                  <label for="fft-128" class="custom-radio">
+                    <input type="radio" id="fft-128" name="fft-size" value="128" checked="checked">
+                    <span class="checkmark">128</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="fft-256" class="custom-radio">
+                    <input type="radio" id="fft-256" name="fft-size" value="256">
+                    <span class="checkmark">256</span>
+                  </label>
+                </div>
               </div>
             </div>
 
-            <div class="settings-form-item item">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
-                <path d="M4 18h2V10H4z"/>
-                <path d="M8 18h2V6H8z"/>
-                <path d="M12 18h2V12h-2z"/>
-                <path d="M16 18h2V8h-2z"/>
-              </svg>
-              <div class="label">Frequencies</div>
-              <div class="value">ALL</div>
-              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 6l6 6-6 6"/>
-              </svg>
-            </div>
-            <div class="expand">
-              <div class="option active">
-                <label for="freq-number-all" class="custom-radio">
-                  <input type="radio" id="freq-number-all" name="freq-type" value="all" checked="checked">
-                  <span class="checkmark">ALL</span>
-                </label>
+            <div class="group-item">
+              <div class="settings-form-item item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
+                  <path d="M4 18h2V10H4z"/>
+                  <path d="M8 18h2V6H8z"/>
+                  <path d="M12 18h2V12h-2z"/>
+                  <path d="M16 18h2V8h-2z"/>
+                </svg>
+                <div class="label">Frequencies</div>
+                <div class="value">ALL</div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6l6 6-6 6"/>
+                </svg>
               </div>
-              <div class="option">
-                <label for="freq-number-select" class="custom-radio">
-                  <input type="radio" id="freq-number-select" name="freq-type" value="select">
-                  <span class="checkmark">Select</span>
-                </label>
-              </div>
-              <div class="freq-number-container hide">
-                <button id="freq-number-decr" data-type="decr">-1</button>
-                <span id="freq-number" data-max="64" data-value="64">64</span>
-                <button id="freq-number-incr" data-type="incr">+1</button>
+              <div class="expand">
+                <div class="option active">
+                  <label for="freq-number-all" class="custom-radio">
+                    <input type="radio" id="freq-number-all" name="freq-type" value="all" checked="checked">
+                    <span class="checkmark">ALL</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="freq-number-select" class="custom-radio">
+                    <input type="radio" id="freq-number-select" name="freq-type" value="select">
+                    <span class="checkmark">Select</span>
+                  </label>
+                </div>
+                <div class="freq-number-container hide">
+                  <button id="freq-number-decr" data-type="decr">-1</button>
+                  <span id="freq-number" data-max="64" data-value="64">64</span>
+                  <button id="freq-number-incr" data-type="incr">+1</button>
+                </div>
               </div>
             </div>
           </div>
           
           <div class="group">
             <div class="group-title">Visual</div>
-            <div class="settings-form-item item">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
-                <circle cx="12" cy="12" r="5"/>
-                <circle cx="18" cy="6" r="1.5"/>
-                <circle cx="6" cy="18" r="1.5"/>
-              </svg>
-              <div class="label">Color</div>
-              <div class="value">Default</div>
-              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 6l6 6-6 6"/>
-              </svg>
-            </div>
-            <div class="expand">
-              <div class="option active">
-                <label for="color-default" class="custom-radio">
-                  <input type="radio" id="color-default" name="colorType" value="default" checked="checked">
-                  <span class="checkmark">Default</span>
-                </label>
+            <div class="group-item">
+              <div class="settings-form-item item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
+                  <circle cx="12" cy="12" r="5"/>
+                  <circle cx="18" cy="6" r="1.5"/>
+                  <circle cx="6" cy="18" r="1.5"/>
+                </svg>
+                <div class="label">Color</div>
+                <div class="value">Default</div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6l6 6-6 6"/>
+                </svg>
               </div>
-              <div class="option">
-                <label for="color-select" class="custom-radio">
-                  <input type="radio" id="color-select" name="colorType" value="select">
-                  <span class="checkmark">Select</span>
-                </label>
-              </div>
-              <div class="color-picker-container hide">
-                <!-- Main SV Square -->
-                <canvas id="colorCanvas" width="230" height="150"></canvas>
-                <div class="controls">
-                  <!-- Hue Slider -->
-                  <input type="range" id="hueRange" name="color" min="0" max="360" value="287" class="picker-slider hue-slider">
-                  <!-- Opacity Slider -->
-                  <input type="range" id="opacityRange" name="color" min="0" max="100" value="100" class="picker-slider opacity-slider">
-                  <!-- Result Display -->
-                  <div class="picker-result-container">
-                    <div id="colorPreview" class="preview-box"></div>
-                    <input type="text" id="colorCode" name="color" readonly>
-                    <div class="picker-result">
-                      <div><span id="picker-hex">#feda6a</span></div>
-                      <div><span id="picker-opacity">1</span></div>
+              <div class="expand">
+                <div class="option active">
+                  <label for="color-default" class="custom-radio">
+                    <input type="radio" id="color-default" name="colorType" value="default" checked="checked">
+                    <span class="checkmark">Default</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="color-select" class="custom-radio">
+                    <input type="radio" id="color-select" name="colorType" value="select">
+                    <span class="checkmark">Select</span>
+                  </label>
+                </div>
+                <div class="color-picker-container hide">
+                  <!-- Main SV Square -->
+                  <canvas id="colorCanvas" width="230" height="150"></canvas>
+                  <div class="controls">
+                    <!-- Hue Slider -->
+                    <input type="range" id="hueRange" name="color" min="0" max="360" value="287" class="picker-slider hue-slider">
+                    <!-- Opacity Slider -->
+                    <input type="range" id="opacityRange" name="color" min="0" max="100" value="100" class="picker-slider opacity-slider">
+                    <!-- Result Display -->
+                    <div class="picker-result-container">
+                      <div id="colorPreview" class="preview-box"></div>
+                      <input type="text" id="colorCode" name="color" readonly>
+                      <div class="picker-result">
+                        <div><span id="picker-hex">#feda6a</span></div>
+                        <div><span id="picker-opacity">1</span></div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="settings-form-item item">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <path d="M3 9h18M9 3v18"/>
-              </svg>
-              <div class="label">Wave Area</div>
-              <div class="value">ON</div>
-              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 6l6 6-6 6"/>
-              </svg>
-            </div>
-            <div class="expand">
-              <div class="option active">
-                <label for="area-on" class="custom-radio">
-                  <input type="radio" id="area-on" name="visibility-area" value="on" checked="checked">
-                  <span class="checkmark">ON</span>
-                </label>
+            <div class="group-item">
+              <div class="settings-form-item item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/>
+                  <path d="M3 9h18M9 3v18"/>
+                </svg>
+                <div class="label">Wave Area</div>
+                <div class="value">ON</div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6l6 6-6 6"/>
+                </svg>
               </div>
-              <div class="option">
-                <label for="area-off" class="custom-radio">
-                  <input type="radio" id="area-off" name="visibility-area" value="off">
-                  <span class="checkmark">OFF</span>
-                </label>
+              <div class="expand">
+                <div class="option active">
+                  <label for="area-on" class="custom-radio">
+                    <input type="radio" id="area-on" name="visibility-area" value="on" checked="checked">
+                    <span class="checkmark">ON</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="area-off" class="custom-radio">
+                    <input type="radio" id="area-off" name="visibility-area" value="off">
+                    <span class="checkmark">OFF</span>
+                  </label>
+                </div>
               </div>
             </div>
 
-            <div class="settings-form-item item">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
-                <path d="M4 18h3V9H4z"/>
-                <path d="M10 18h3V5h-3z"/>
-                <path d="M16 18h3V12h-3z"/>
-              </svg>
-              <div class="label">Visualization</div>
-              <div class="value">Bars</div>
-              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 6l6 6-6 6"/>
-              </svg>
-            </div>
-            <div class="expand">
-              <div class="option active">
-                <label for="visualization-bars" class="custom-radio">
-                  <input type="radio" id="visualization-bars" name="visualization-type" value="bars" checked="checked">
-                  <span class="checkmark">Bars</span>
-                </label>
+            <div class="group-item">
+              <div class="settings-form-item item">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
+                  <path d="M4 18h3V9H4z"/>
+                  <path d="M10 18h3V5h-3z"/>
+                  <path d="M16 18h3V12h-3z"/>
+                </svg>
+                <div class="label">Visualization</div>
+                <div class="value">Bars</div>
+                <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9 6l6 6-6 6"/>
+                </svg>
               </div>
-              <div class="option">
-                <label for="visualization-stripes" class="custom-radio">
-                  <input type="radio" id="visualization-stripes" name="visualization-type" value="stripes">
-                  <span class="checkmark">Stripes</span>
-                </label>
-              </div>
-              <div class="option">
-                <label for="visualization-barcap" class="custom-radio">
-                  <input type="radio" id="visualization-barcap" name="visualization-type" value="barcap">
-                  <span class="checkmark">Barcap</span>
-                </label>
-              </div>
-              <div class="option">
-                <label for="visualization-droplets" class="custom-radio">
-                  <input type="radio" id="visualization-droplets" name="visualization-type" value="droplets">
-                  <span class="checkmark">Droplets</span>
-                </label>
-              </div>
-              <div class="option">
-                <label for="visualization-pulsecircle" class="custom-radio">
-                  <input type="radio" id="visualization-pulsecircle" name="visualization-type" value="pulsecircle">
-                  <span class="checkmark">Pulsating circles</span>
-                </label>
+              <div class="expand">
+                <div class="option active">
+                  <label for="visualization-bars" class="custom-radio">
+                    <input type="radio" id="visualization-bars" name="visualization-type" value="bars" checked="checked">
+                    <span class="checkmark">Bars</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="visualization-stripes" class="custom-radio">
+                    <input type="radio" id="visualization-stripes" name="visualization-type" value="stripes">
+                    <span class="checkmark">Stripes</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="visualization-barcap" class="custom-radio">
+                    <input type="radio" id="visualization-barcap" name="visualization-type" value="barcap">
+                    <span class="checkmark">Barcap</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="visualization-droplets" class="custom-radio">
+                    <input type="radio" id="visualization-droplets" name="visualization-type" value="droplets">
+                    <span class="checkmark">Droplets</span>
+                  </label>
+                </div>
+                <div class="option">
+                  <label for="visualization-pulsecircle" class="custom-radio">
+                    <input type="radio" id="visualization-pulsecircle" name="visualization-type" value="pulsecircle">
+                    <span class="checkmark">Pulsating circles</span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -320,8 +333,10 @@
         if (settingsItem) {
           const expand = settingsItem.nextElementSibling;
           const chevron = settingsItem.querySelector('.chevron');
+          const groupItem = settingsItem.parentNode;
           if (expand) expand.classList.toggle('open');
           if (chevron) chevron.classList.toggle('open');
+          if (groupItem) groupItem.classList.toggle('active');
         }
 
         const itemOption = e.target.closest('.option');
