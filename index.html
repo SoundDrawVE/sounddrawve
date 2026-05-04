@@ -204,6 +204,9 @@
               </svg>
               <div class="label">Visualization</div>
               <div class="value">Bars</div>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 6l6 6-6 6"/>
+              </svg>
               <!-- <label>Visualization:</label>
               <div class="visualization-options">
                 <label for="visualization-bars" class="custom-radio">
@@ -227,6 +230,38 @@
                   <span class="checkmark">pulsating circles</span>
                 </label>
               </div> -->
+            </div>
+            <div class="expand">
+              <div class="option active">
+                <label for="visualization-bars" class="custom-radio">
+                  <input type="radio" id="visualization-bars" name="visualization-type" value="bars" checked="checked">
+                  <span class="checkmark">Bars</span>
+                </label>
+              </div>
+              <div class="option">
+                <label for="visualization-stripes" class="custom-radio">
+                  <input type="radio" id="visualization-stripes" name="visualization-type" value="stripes">
+                  <span class="checkmark">Stripes</span>
+                </label>
+              </div>
+              <div class="option">
+                <label for="visualization-barcap" class="custom-radio">
+                  <input type="radio" id="visualization-barcap" name="visualization-type" value="barcap">
+                  <span class="checkmark">Barcap</span>
+                </label>
+              </div>
+              <div class="option">
+                <label for="visualization-droplets" class="custom-radio">
+                  <input type="radio" id="visualization-droplets" name="visualization-type" value="droplets">
+                  <span class="checkmark">Droplets</span>
+                </label>
+              </div>
+              <div class="option">
+                <label for="visualization-pulsecircle" class="custom-radio">
+                  <input type="radio" id="visualization-pulsecircle" name="visualization-type" value="pulsecircle">
+                  <span class="checkmark">Pulsating circles</span>
+                </label>
+              </div>
             </div>
           </div>
         </form>
@@ -264,6 +299,9 @@
         </div>
       </div>
     </div>
+
+
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

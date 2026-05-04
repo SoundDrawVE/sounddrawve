@@ -112,6 +112,61 @@ body {
   opacity: 0.5;
 }
 
+/* CHEVRON */
+.chevron {
+  width: 16px;
+  height: 16px;
+  opacity: 0.5;
+  transition: transform 0.25s ease;
+}
+
+.chevron.open {
+  transform: rotate(90deg);
+}
+
+/* EXPAND */
+.expand {
+  margin-top: 10px;
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.expand.open {
+  display: flex;
+}
+
+/* INLINE OPTIONS */
+.option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.03);
+  transition: 0.2s;
+  font-size: 12px;
+}
+
+.option:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.option.active {
+  background: rgba(255,255,255,0.15);
+}
+
+/* icons inside options */
+.option i {
+  width: 14px;
+  height: 14px;
+}
+
+
+
+
+
 
 .settings-form-item {
 /*  display: flex;
@@ -121,19 +176,19 @@ body {
 }
 
 .settings-form-item label {
-  font-size: 12px;
+  /*font-size: 12px;*/
 }
 
 .settings-form-item > label {
-  color: var(--secondary-text-color);
+  /*color: var(--secondary-text-color);*/
 }
 
 .settings-form-item:hover > label {
-  color: var(--hover-text-color);
+  /*color: var(--hover-text-color);*/
 }
 
 .settings-form-item > div {
-  padding: 5px;
+  /*padding: 5px;*/
 }
 
 /* Hide the browser's default radio button */
@@ -145,22 +200,22 @@ body {
 
 /* Style the custom radio button container */
 .checkmark {
-  display: inline-block;
+  /*display: inline-block;
   padding: 2px;
   border: 1px solid var(--border-color);
   border-radius: 5px;
+  color: var(--primary-text-color);*/
   cursor: pointer;
-  color: var(--primary-text-color);
 }
 
 /* On mouse-over, add a grey background color */
 .custom-radio:hover input ~ .checkmark {
-  border-color: var(--hover-border-color);
+  /*border-color: var(--hover-border-color);*/
 }
 
 /* When the radio button is checked, add a blue background */
 .custom-radio input:checked ~ .checkmark {
-  border-color: var(--checked-color);
+  /*border-color: var(--checked-color);*/
 }
 
 .freq-number-container {
@@ -178,12 +233,12 @@ body {
 }
 
 div.visualization-options {
-  padding: 0;
+  /*padding: 0;*/
 }
 
 .visualization-options > label {
-  display: inline-block;
-  margin: 3px 3px 3px 0;
+  /*display: inline-block;*/
+  /*margin: 3px 3px 3px 0;*/
 }
 /* ------end settings --------- */
 
