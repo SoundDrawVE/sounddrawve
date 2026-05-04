@@ -141,7 +141,6 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 10px;
   border-radius: 5px;
   cursor: pointer;
   background: rgba(255,255,255,0.03);
@@ -205,6 +204,8 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 5px;
   color: var(--primary-text-color);*/
+  display: inline-block;
+  padding: 6px 10px;
   cursor: pointer;
 }
 
