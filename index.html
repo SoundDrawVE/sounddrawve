@@ -300,7 +300,30 @@
       </div>
     </div>
 
+    <script>
+      document.getElementById('settings-form').addEventListener('click', (e) => {
+        const settingsItem = e.target.closest('.item');
+        if (settingsItem) {
+          const expand = settingsItem.nextElementSibling;
+          const chevron = settingsItem.querySelector('.chevron');
+          if (expand) expand.classList.toggle('open');
+          if (chevron) chevron.classList.toggle('open');
+        }
 
+        const itemOption = e.target.closest('.option');
+        if (itemOption) {
+          const text = itemOption.querySelector('.checkmark').textContent;
+          const expand = itemOption.parentNode
+          const settingsItem = expand.previousElementSibling;
+          if (settingsItem) {
+            const value = settingsItem.querySelector('.value');
+            value.textContent = text.length > 9 ? `${text.slice(0, 6)}...` : text;
+            expand.querySelectorAll('.option').forEach(el => el.classList.remove('active'));
+            itemOption.classList.add('active');
+          }
+        }
+      });
+    </script>
 
     <script type="module" src="/src/main.js"></script>
   </body>
