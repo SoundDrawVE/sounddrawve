@@ -52,132 +52,138 @@
       <div class="settings-container sidebar">
         <h2>Settings</h2>
         <form id="settings-form">
-          <div class="settings-form-item">
-            <label>Aspect ratio:</label>
-            <div>
-              <label for="16:9" class="custom-radio">
-                <input type="radio" id="16:9" name="aspect-ratio" value="16:9" checked="checked">
-                <span class="checkmark">16:9</span>
-              </label>
-              <label for="9:16" class="custom-radio">
-                <input type="radio" id="9:16" name="aspect-ratio" value="9:16">
-                <span class="checkmark">9:16</span>
-              </label>
+          <div class="group">
+            <div class="group-title">Output</div>
+            <div class="settings-form-item">
+              <label>Aspect ratio:</label>
+              <div>
+                <label for="16:9" class="custom-radio">
+                  <input type="radio" id="16:9" name="aspect-ratio" value="16:9" checked="checked">
+                  <span class="checkmark">16:9</span>
+                </label>
+                <label for="9:16" class="custom-radio">
+                  <input type="radio" id="9:16" name="aspect-ratio" value="9:16">
+                  <span class="checkmark">9:16</span>
+                </label>
+              </div>
             </div>
           </div>
-
-          <div class="settings-form-item">
-            <label>FFT size:</label>
-            <div>
-              <label for="fft-32" class="custom-radio">
-                <input type="radio" id="fft-32" name="fft-size" value="32">
-                <span class="checkmark">32</span>
-              </label>
-              <label for="fft-64" class="custom-radio">
-                <input type="radio" id="fft-64" name="fft-size" value="64">
-                <span class="checkmark">64</span>
-              </label>
-              <label for="fft-128" class="custom-radio">
-                <input type="radio" id="fft-128" name="fft-size" value="128" checked="checked">
-                <span class="checkmark">128</span>
-              </label>
-              <label for="fft-256" class="custom-radio">
-                <input type="radio" id="fft-256" name="fft-size" value="256">
-                <span class="checkmark">256</span>
-              </label>
+          
+          <div class="group">
+            <div class="group-title">Audio Analysis</div>
+            <div class="settings-form-item">
+              <label>FFT size:</label>
+              <div>
+                <label for="fft-32" class="custom-radio">
+                  <input type="radio" id="fft-32" name="fft-size" value="32">
+                  <span class="checkmark">32</span>
+                </label>
+                <label for="fft-64" class="custom-radio">
+                  <input type="radio" id="fft-64" name="fft-size" value="64">
+                  <span class="checkmark">64</span>
+                </label>
+                <label for="fft-128" class="custom-radio">
+                  <input type="radio" id="fft-128" name="fft-size" value="128" checked="checked">
+                  <span class="checkmark">128</span>
+                </label>
+                <label for="fft-256" class="custom-radio">
+                  <input type="radio" id="fft-256" name="fft-size" value="256">
+                  <span class="checkmark">256</span>
+                </label>
+              </div>
+            </div>
+            <div class="settings-form-item">
+              <label>Number of frequencies:</label>
+              <div>
+                <label for="freq-number-all" class="custom-radio">
+                  <input type="radio" id="freq-number-all" name="freq-type" value="all" checked="checked">
+                  <span class="checkmark">all</span>
+                </label>
+                <label for="freq-number-select" class="custom-radio">
+                  <input type="radio" id="freq-number-select" name="freq-type" value="select">
+                  <span class="checkmark">select</span>
+                </label>
+              </div>
+              <div class="freq-number-container hide">
+                <button id="freq-number-decr" data-type="decr">-1</button>
+                <span id="freq-number" data-max="64" data-value="64">64</span>
+                <button id="freq-number-incr" data-type="incr">+1</button>
+              </div>
             </div>
           </div>
+          
+          <div class="group">
+            <div class="group-title">Visual</div>
+            <div class="settings-form-item">
+              <label>Color:</label>
+              <div>
+                <label for="color-default" class="custom-radio">
+                  <input type="radio" id="color-default" name="colorType" value="default" checked="checked">
+                  <span class="checkmark">default</span>
+                </label>
+                <label for="color-select" class="custom-radio">
+                  <input type="radio" id="color-select" name="colorType" value="select">
+                  <span class="checkmark">select</span>
+                </label>
+              </div>
 
-          <div class="settings-form-item">
-            <label>Color:</label>
-            <div>
-              <label for="color-default" class="custom-radio">
-                <input type="radio" id="color-default" name="colorType" value="default" checked="checked">
-                <span class="checkmark">default</span>
-              </label>
-              <label for="color-select" class="custom-radio">
-                <input type="radio" id="color-select" name="colorType" value="select">
-                <span class="checkmark">select</span>
-              </label>
-            </div>
-
-            <div class="color-picker-container hide">
-              <!-- Main SV Square -->
-              <canvas id="colorCanvas" width="250" height="150"></canvas>
-              <div class="controls">
-                <!-- Hue Slider -->
-                <input type="range" id="hueRange" name="color" min="0" max="360" value="287" class="picker-slider hue-slider">
-                <!-- Opacity Slider -->
-                <input type="range" id="opacityRange" name="color" min="0" max="100" value="100" class="picker-slider opacity-slider">
-                <!-- Result Display -->
-                <div class="picker-result-container">
-                  <div id="colorPreview" class="preview-box"></div>
-                  <input type="text" id="colorCode" name="color" readonly>
-                  <div class="picker-result">
-                    <div><span id="picker-hex">#feda6a</span></div>
-                    <div><span id="picker-opacity">1</span></div>
+              <div class="color-picker-container hide">
+                <!-- Main SV Square -->
+                <canvas id="colorCanvas" width="250" height="150"></canvas>
+                <div class="controls">
+                  <!-- Hue Slider -->
+                  <input type="range" id="hueRange" name="color" min="0" max="360" value="287" class="picker-slider hue-slider">
+                  <!-- Opacity Slider -->
+                  <input type="range" id="opacityRange" name="color" min="0" max="100" value="100" class="picker-slider opacity-slider">
+                  <!-- Result Display -->
+                  <div class="picker-result-container">
+                    <div id="colorPreview" class="preview-box"></div>
+                    <input type="text" id="colorCode" name="color" readonly>
+                    <div class="picker-result">
+                      <div><span id="picker-hex">#feda6a</span></div>
+                      <div><span id="picker-opacity">1</span></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          <div class="settings-form-item">
-            <label>Sound wave area:</label>
-            <div>
-              <label for="area-on" class="custom-radio">
-                <input type="radio" id="area-on" name="visibility-area" value="on" checked="checked">
-                <span class="checkmark">on</span>
-              </label>
-              <label for="area-off" class="custom-radio">
-                <input type="radio" id="area-off" name="visibility-area" value="off">
-                <span class="checkmark">off</span>
-              </label>
+            <div class="settings-form-item">
+              <label>Sound wave area:</label>
+              <div>
+                <label for="area-on" class="custom-radio">
+                  <input type="radio" id="area-on" name="visibility-area" value="on" checked="checked">
+                  <span class="checkmark">on</span>
+                </label>
+                <label for="area-off" class="custom-radio">
+                  <input type="radio" id="area-off" name="visibility-area" value="off">
+                  <span class="checkmark">off</span>
+                </label>
+              </div>
             </div>
-          </div>
-
-          <div class="settings-form-item">
-            <label>Number of frequencies:</label>
-            <div>
-              <label for="freq-number-all" class="custom-radio">
-                <input type="radio" id="freq-number-all" name="freq-type" value="all" checked="checked">
-                <span class="checkmark">all</span>
-              </label>
-              <label for="freq-number-select" class="custom-radio">
-                <input type="radio" id="freq-number-select" name="freq-type" value="select">
-                <span class="checkmark">select</span>
-              </label>
-            </div>
-            <div class="freq-number-container hide">
-              <button id="freq-number-decr" data-type="decr">-1</button>
-              <span id="freq-number" data-max="64" data-value="64">64</span>
-              <button id="freq-number-incr" data-type="incr">+1</button>
-            </div>
-          </div>
-
-          <div class="settings-form-item">
-            <label>Visualization:</label>
-            <div class="visualization-options">
-              <label for="visualization-bars" class="custom-radio">
-                <input type="radio" id="visualization-bars" name="visualization-type" value="bars" checked="checked">
-                <span class="checkmark">bars</span>
-              </label>
-              <label for="visualization-stripes" class="custom-radio">
-                <input type="radio" id="visualization-stripes" name="visualization-type" value="stripes">
-                <span class="checkmark">stripes</span>
-              </label>
-              <label for="visualization-barcap" class="custom-radio">
-                <input type="radio" id="visualization-barcap" name="visualization-type" value="barcap">
-                <span class="checkmark">barcap</span>
-              </label>
-              <label for="visualization-droplets" class="custom-radio">
-                <input type="radio" id="visualization-droplets" name="visualization-type" value="droplets">
-                <span class="checkmark">droplets</span>
-              </label>
-              <label for="visualization-pulsecircle" class="custom-radio">
-                <input type="radio" id="visualization-pulsecircle" name="visualization-type" value="pulsecircle">
-                <span class="checkmark">pulsating circles</span>
-              </label>
+            <div class="settings-form-item">
+              <label>Visualization:</label>
+              <div class="visualization-options">
+                <label for="visualization-bars" class="custom-radio">
+                  <input type="radio" id="visualization-bars" name="visualization-type" value="bars" checked="checked">
+                  <span class="checkmark">bars</span>
+                </label>
+                <label for="visualization-stripes" class="custom-radio">
+                  <input type="radio" id="visualization-stripes" name="visualization-type" value="stripes">
+                  <span class="checkmark">stripes</span>
+                </label>
+                <label for="visualization-barcap" class="custom-radio">
+                  <input type="radio" id="visualization-barcap" name="visualization-type" value="barcap">
+                  <span class="checkmark">barcap</span>
+                </label>
+                <label for="visualization-droplets" class="custom-radio">
+                  <input type="radio" id="visualization-droplets" name="visualization-type" value="droplets">
+                  <span class="checkmark">droplets</span>
+                </label>
+                <label for="visualization-pulsecircle" class="custom-radio">
+                  <input type="radio" id="visualization-pulsecircle" name="visualization-type" value="pulsecircle">
+                  <span class="checkmark">pulsating circles</span>
+                </label>
+              </div>
             </div>
           </div>
         </form>
