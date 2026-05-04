@@ -168,21 +168,27 @@
                 <circle cx="6" cy="18" r="1.5"/>
               </svg>
               <div class="label">Color</div>
-              <div class="value">#FF4D6D</div>
-              <!-- <label>Color:</label>
-              <div>
+              <div class="value">Default</div>
+              <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 6l6 6-6 6"/>
+              </svg>
+            </div>
+            <div class="expand">
+              <div class="option active">
                 <label for="color-default" class="custom-radio">
                   <input type="radio" id="color-default" name="colorType" value="default" checked="checked">
-                  <span class="checkmark">default</span>
+                  <span class="checkmark">Default</span>
                 </label>
+              </div>
+              <div class="option">
                 <label for="color-select" class="custom-radio">
                   <input type="radio" id="color-select" name="colorType" value="select">
-                  <span class="checkmark">select</span>
+                  <span class="checkmark">Select</span>
                 </label>
-              </div> -->
+              </div>
               <div class="color-picker-container hide">
                 <!-- Main SV Square -->
-                <canvas id="colorCanvas" width="250" height="150"></canvas>
+                <canvas id="colorCanvas" width="230" height="150"></canvas>
                 <div class="controls">
                   <!-- Hue Slider -->
                   <input type="range" id="hueRange" name="color" min="0" max="360" value="287" class="picker-slider hue-slider">
@@ -200,6 +206,7 @@
                 </div>
               </div>
             </div>
+
             <div class="settings-form-item item">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.6">
                 <rect x="3" y="3" width="18" height="18" rx="2"/>
