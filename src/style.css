@@ -212,6 +212,7 @@ body {
   position: absolute;
   opacity: 0;
   cursor: pointer;
+  z-index: -1;
 }
 
 /* Style the custom radio button container */

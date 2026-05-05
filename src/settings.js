@@ -78,13 +78,8 @@ form.addEventListener('input', (e) => {
 
   settings.setProp(fieldName, value);
 
-
   if (fieldName === 'aspectRatio') {
     window.dispatchEvent(new Event('resize'));
-  }
-
-  if (fieldName === 'colorType') {
-    toggleColorPicker();
   }
 
   if (fieldName === 'visibilityArea') {
@@ -98,8 +93,6 @@ form.addEventListener('input', (e) => {
       freqNumber.setAttribute('data-value', +freqNumber.dataset.max);
       freqNumber.textContent = +freqNumber.dataset.max;
     }
-
-    toggleFreqNumberContainer();
   }
 });
 
@@ -133,15 +126,6 @@ freqNumberContainer.addEventListener('click', (e) => {
   e.preventDefault();
 });
 
-function toggleFreqNumberContainer() {
-  freqNumberContainer.classList.toggle('hide');
-}
-
-
-const pickerContainer = document.querySelector('.color-picker-container');
-function toggleColorPicker() {
-  pickerContainer.classList.toggle('hide');
-}
 
 const soundWaveArea = document.querySelector('.area-container');
 function toggleWaveArea() {
