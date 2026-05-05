@@ -85,13 +85,6 @@ form.addEventListener('input', (e) => {
 });
 
 
-window.onload = function() {
-  form.reset();
-};
-
-
-
-
 function toCamelCase(str) {
   return str.replace(/[-_](.)/g, (_, char) => char.toUpperCase());
 }

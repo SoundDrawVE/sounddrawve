@@ -73,3 +73,10 @@ freqNumberContainer.addEventListener('click', (e) => {
   }
   e.preventDefault();
 });
+
+
+// Reset form when page is loaded
+const form = document.getElementById('settings-form');
+window.onload = function() {
+  form.reset();
+};
