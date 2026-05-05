@@ -82,10 +82,6 @@ form.addEventListener('input', (e) => {
     window.dispatchEvent(new Event('resize'));
   }
 
-  if (fieldName === 'visibilityArea') {
-    toggleWaveArea();
-  }
-
   if (fieldName === 'freqType') {
     if (value === 'all') {
       settings.setProp('freqNumber', +freqNumber.dataset.max);
@@ -126,11 +122,6 @@ freqNumberContainer.addEventListener('click', (e) => {
   e.preventDefault();
 });
 
-
-const soundWaveArea = document.querySelector('.area-container');
-function toggleWaveArea() {
-  soundWaveArea.classList.toggle('hide');
-}
 
 function toCamelCase(str) {
   return str.replace(/[-_](.)/g, (_, char) => char.toUpperCase());

@@ -82,7 +82,6 @@
                 </div>
               </div>
             </div>
-            
           </div>
           
           <div class="group">
@@ -232,13 +231,13 @@
                 <div class="option active">
                   <label for="area-on" class="custom-radio">
                     <input type="radio" id="area-on" name="visibility-area" value="on" checked="checked">
-                    <span class="checkmark">ON</span>
+                    <span class="checkmark" data-name="visibility-area">ON</span>
                   </label>
                 </div>
                 <div class="option">
                   <label for="area-off" class="custom-radio">
                     <input type="radio" id="area-off" name="visibility-area" value="off">
-                    <span class="checkmark">OFF</span>
+                    <span class="checkmark" data-name="visibility-area">OFF</span>
                   </label>
                 </div>
               </div>
@@ -361,6 +360,11 @@
           if (!lastElm.classList.contains('option')) {
             lastElm.classList.toggle('hide');
           }
+        }
+
+        // Toggle visualization area
+        if (e.target.dataset.name && e.target.dataset.name === 'visibility-area') {
+          document.querySelector('.area-container').classList.toggle('hide');
         }
       });
     </script>
