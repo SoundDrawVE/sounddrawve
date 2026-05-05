@@ -45,6 +45,16 @@ document.getElementById('settings-form').addEventListener('click', (e) => {
       window.dispatchEvent(new Event('resize', { bubbles: true }));
     }, 100);
   }
+
+  // Update frequencies number when fft size is changed
+  if (e.target.dataset.name && e.target.dataset.name === 'fft-size') {
+    const freqNumber = document.getElementById('freq-number');
+    const input = e.target.previousElementSibling;
+    const newValue = input.value / 2;
+    freqNumber.setAttribute('data-max', newValue);
+    freqNumber.setAttribute('data-value', newValue);
+    freqNumber.textContent = newValue;
+  }
 });
 
 

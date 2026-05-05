@@ -67,9 +67,6 @@ form.addEventListener('input', (e) => {
 
   if (fieldName === 'fftSize') {
     settings.setProp('freqNumber', value / 2);
-    freqNumber.setAttribute('data-max', value / 2);
-    freqNumber.setAttribute('data-value', value / 2);
-    freqNumber.textContent = value / 2;
   }
 
   settings.setProp(fieldName, value);
