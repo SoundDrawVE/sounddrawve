@@ -62,8 +62,8 @@ const freqNumber = document.getElementById('freq-number');
 
 form.addEventListener('input', (e) => {
   const field = e.target;
-  const fieldName = toCamelCase(field.name);
-  let value = field.value;
+  const fieldName = toCamelCase(field.name || field.dataset.name);
+  let value = field.value || field.dataset.value;
   
   if (fieldName === 'color') {
     value = selectedColor.value;
@@ -98,29 +98,6 @@ window.onload = function() {
 };
 
 
-const freqNumberContainer = document.querySelector('.freq-number-container');
-freqNumberContainer.addEventListener('click', (e) => {
-  const target = e.target;
-  const type = target.dataset.type;
-  if (type) {
-    const max = +freqNumber.dataset.max;
-    const value = +freqNumber.dataset.value;
-    let newValue;
-
-    if (type === 'decr') {
-      newValue = value - 1;
-    } else {
-      newValue = value + 1;
-    }
-
-    if (newValue > 0 && newValue <= max) {
-      settings.setProp('freqNumber', newValue);
-      freqNumber.setAttribute('data-value', newValue);
-      freqNumber.textContent = newValue;
-    }
-  }
-  e.preventDefault();
-});
 
 
 function toCamelCase(str) {

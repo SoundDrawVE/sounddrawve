@@ -38,3 +38,30 @@ document.getElementById('settings-form').addEventListener('click', (e) => {
     document.querySelector('.area-container').classList.toggle('hide');
   }
 });
+
+
+const freqNumberContainer = document.querySelector('.freq-number-container');
+const freqNumber = document.getElementById('freq-number');
+freqNumberContainer.addEventListener('click', (e) => {
+  const target = e.target;
+  const type = target.dataset.type;
+  if (type) {
+    const max = +freqNumber.dataset.max;
+    const value = +freqNumber.dataset.value;
+    let newValue;
+
+    if (type === 'decr') {
+      newValue = value - 1;
+    } else {
+      newValue = value + 1;
+    }
+
+    if (newValue > 0 && newValue <= max) {
+      freqNumber.setAttribute('data-value', newValue);
+      freqNumber.textContent = newValue;
+      const event = new Event('input', { bubbles: true });
+      freqNumber.dispatchEvent(event);
+    }
+  }
+  e.preventDefault();
+});
