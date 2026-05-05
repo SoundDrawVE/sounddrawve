@@ -37,6 +37,14 @@ document.getElementById('settings-form').addEventListener('click', (e) => {
   if (e.target.dataset.name && e.target.dataset.name === 'visibility-area') {
     document.querySelector('.area-container').classList.toggle('hide');
   }
+
+  // Dispatch a resize event if the aspect ratio option is selected
+  if (e.target.dataset.name && e.target.dataset.name === 'aspect-ratio') {
+    // Wait for the aspect ratio value to update
+    setTimeout(() => {
+      window.dispatchEvent(new Event('resize', { bubbles: true }));
+    }, 100);
+  }
 });
 
 

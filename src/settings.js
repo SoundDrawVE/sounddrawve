@@ -45,7 +45,7 @@ export const settings = {
   },
 
   setProp(name, value) {
-    console.log(name, value);
+    //console.log(name, value);
     this[name] = value;
     this.callbacks.forEach(f => f());
   },
@@ -64,6 +64,7 @@ form.addEventListener('input', (e) => {
   const field = e.target;
   const fieldName = toCamelCase(field.name || field.dataset.name);
   let value = field.value || field.dataset.value;
+  console.log(value, '<--input');
   
   if (fieldName === 'color') {
     value = selectedColor.value;
@@ -77,10 +78,6 @@ form.addEventListener('input', (e) => {
   }
 
   settings.setProp(fieldName, value);
-
-  if (fieldName === 'aspectRatio') {
-    window.dispatchEvent(new Event('resize'));
-  }
 
   if (fieldName === 'freqType') {
     if (value === 'all') {
