@@ -57,8 +57,6 @@ export const settings = {
 
 
 const form = document.getElementById('settings-form');
-const freqNumber = document.getElementById('freq-number');
-
 form.addEventListener('input', (e) => {
   const field = e.target;
   const fieldName = toCamelCase(field.name || field.dataset.name);
@@ -67,18 +65,11 @@ form.addEventListener('input', (e) => {
 
   if (fieldName === 'fftSize') {
     settings.setProp('freqNumber', value / 2);
+  } else if (fieldName === 'freqType' && value === 'all') {
+    settings.setProp('freqNumber', settings.fftSize / 2);
   }
 
   settings.setProp(fieldName, value);
-
-  if (fieldName === 'freqType') {
-    if (value === 'all') {
-      settings.setProp('freqNumber', +freqNumber.dataset.max);
-      freqNumber.setAttribute('data-max', +freqNumber.dataset.max);
-      freqNumber.setAttribute('data-value', +freqNumber.dataset.max);
-      freqNumber.textContent = +freqNumber.dataset.max;
-    }
-  }
 });
 
 

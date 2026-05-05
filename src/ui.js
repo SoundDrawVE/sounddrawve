@@ -55,6 +55,17 @@ document.getElementById('settings-form').addEventListener('click', (e) => {
     freqNumber.setAttribute('data-value', newValue);
     freqNumber.textContent = newValue;
   }
+
+  // Update frequencies number when the all option is selected
+  if (e.target.dataset.name && e.target.dataset.name === 'freq-type') {
+    const value = e.target.dataset.value;
+    if (value === 'all') {
+      const freqNumber = document.getElementById('freq-number');
+      freqNumber.setAttribute('data-max', freqNumber.dataset.max);
+      freqNumber.setAttribute('data-value', freqNumber.dataset.max);
+      freqNumber.textContent = freqNumber.dataset.max;
+    }
+  }
 });
 
 
