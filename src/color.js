@@ -68,16 +68,20 @@ function updateUI(rgba, hex, opacity) {
 }
 
 // Listeners
-hueSlider.addEventListener('input', () => {
+hueSlider.addEventListener('input', (e) => {
     currentHue = hueSlider.value;
     drawCanvas();
+    e.stopPropagation();
 });
 
-opacitySlider.addEventListener('input', () => {
+opacitySlider.addEventListener('input', (e) => {
     // Re-calculate based on last picked color logic
     // For simplicity, we just trigger the UI update
     const opacity = opacitySlider.value / 100;
     updateUI(code.value.replace(/[^,]+(?=\))/, opacity), null, opacity);
+    e.stopPropagation();
+    const event = new Event('input', { bubbles: true });
+    code.dispatchEvent(event);
 });
 
 canvas.addEventListener('mousedown', (e) => {

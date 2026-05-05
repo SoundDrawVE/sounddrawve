@@ -45,7 +45,7 @@ export const settings = {
   },
 
   setProp(name, value) {
-    //console.log(name, value);
+    console.log(name, value);
     this[name] = value;
     this.callbacks.forEach(f => f());
   },
@@ -57,18 +57,13 @@ export const settings = {
 
 
 const form = document.getElementById('settings-form');
-const selectedColor = document.getElementById('colorCode');
 const freqNumber = document.getElementById('freq-number');
 
 form.addEventListener('input', (e) => {
   const field = e.target;
   const fieldName = toCamelCase(field.name || field.dataset.name);
   let value = field.value || field.dataset.value;
-  console.log(value, '<--input');
-  
-  if (fieldName === 'color') {
-    value = selectedColor.value;
-  }
+
 
   if (fieldName === 'fftSize') {
     settings.setProp('freqNumber', value / 2);
