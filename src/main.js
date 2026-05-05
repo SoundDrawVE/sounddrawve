@@ -10,6 +10,7 @@ import { showCover, removeCover, updateMessage } from './cover.js';
 import { drawCanvas as initColorPicker } from './color.js';
 import { initArea as initVisualizationArea } from './area.js';
 import { settings } from './settings.js';
+import {} from './ui.js';
 
 
 // init color picker
