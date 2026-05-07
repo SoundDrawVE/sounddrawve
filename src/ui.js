@@ -66,8 +66,6 @@ document.getElementById('settings-form').addEventListener('click', (e) => {
       freqNumber.textContent = freqNumber.dataset.max;
     }
   }
-
-  e.preventDefault();
 });
 
 
