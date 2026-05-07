@@ -295,7 +295,7 @@
 
       <div class="app-center">
         <div class="canvas-container">
-          <canvas id="canvas" class="canvas"></canvas>
+          <canvas id="canvas" class="canvas uploaded-img-bg"></canvas>
           <div class="area-container">
             <div id="area" class="area">
               <div class="resizer resizer-r" data-direction="right"></div>
@@ -318,6 +318,10 @@
       <div class="menu-container">
         <div class="btn-container">
           <button id="render-btn" class="render-btn">Render</button>
+        </div>
+        <div class="btn-container">
+          <button id="upload-img-btn" class="render-btn upload-track-btn upload-img-btn">Upload image</button>
+          <input type="file" id="img-upload" accept="image/*" style="display: none;">
         </div>
         <div class="btn-container">
           <button id="upload-track-btn" class="render-btn upload-track-btn">Upload track</button>
