@@ -2,8 +2,8 @@ export const settings = {
   aspectRatio: '16:9',
   canvasDimensions: null,
   exportCanvasDimensions: {
-    '16:9': { w: 976, h: 549 },
-    '9:16': { w: 549, h: 976 }
+    '16:9': { w: 1280, h: 720 },
+    '9:16': { w: 720, h: 1280 } // { w: 549, h: 976 }
   },
   fftSize: 128,
   colorType: 'default',
