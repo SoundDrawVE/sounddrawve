@@ -120,3 +120,24 @@ function genTestSample() {
   const length = 128;
   return Array.from({ length: length }, () => Math.floor(Math.random() * (max - min + 1)) + min);
 }
+
+
+const uploadimgBtn = document.getElementById('upload-img-btn');
+const imgInput = document.getElementById('img-upload');
+uploadimgBtn.addEventListener('click', (e) => {
+  imgInput.click();
+});
+
+const canvasContainer = document.querySelector('.canvas');
+imgInput.addEventListener('change', (e) => {
+  const files = e.target.files;
+  if (files.length === 0) return;
+  const imgURL = URL.createObjectURL(files[0]);
+  const tempImage = new Image();
+  tempImage.src = imgURL;
+  tempImage.onload = () => {
+    canvasContainer.style.backgroundImage = `url('${imgURL}')`;
+    //console.log(tempImage.naturalWidth, tempImage.naturalHeight);
+    URL.revokeObjectURL(imgURL);
+  };
+});
