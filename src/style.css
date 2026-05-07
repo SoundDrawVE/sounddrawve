@@ -1,6 +1,7 @@
 * { box-sizing: border-box }
 
-body { 
+body {
+  height: 100vh;
   padding: 0;
   margin: 0;
   font-family: "Inter", "DejaVu Serif", serif;
@@ -24,7 +25,7 @@ body {
 
 #app {
   position: relative;
-  height: 100vh;
+  height: 100%;
   display: flex;
   background: var(--page-color);
   color: var(--primary-text-color);
@@ -44,7 +45,7 @@ body {
 /* SIDEBAR */
 .sidebar {
   width: 280px;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 20px;
