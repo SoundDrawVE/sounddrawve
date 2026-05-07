@@ -283,8 +283,14 @@ div.visualization-options {
   align-items: center;
 }
 
+.uploaded-img-bg {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .canvas {
-  background: var(--canvas-color);
+  background-color: var(--canvas-color);
 }
 
 .area-container {
@@ -380,6 +386,10 @@ div.visualization-options {
   border-radius: 5px;
   background: var(--upload-track-btn-color);
   font-size: 11px;
+}
+
+.upload-img-btn {
+  background: #18b341;
 }
 
 /* --------- color picker --------- */
