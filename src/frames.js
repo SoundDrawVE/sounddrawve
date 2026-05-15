@@ -4,7 +4,7 @@ import { settings } from './settings.js';
 
 
 const WS_URL = 'ws://localhost:3000';
-const OFFLINE_FPS = 25; // here we can put 20 or 30
+const OFFLINE_FPS = 30; // here we can put 20 or 30
 
 
 let socket = null;
