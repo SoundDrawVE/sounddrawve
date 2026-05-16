@@ -6,9 +6,9 @@ body {
   margin: 0;
   font-family: "Inter", "DejaVu Serif", serif;
   font-size: 16px;
-  scroll-margin-top: 100vh;
+  /*scroll-margin-top: 100vh;
   overflow-anchor: none;
-  overscroll-behavior: contain;
+  overscroll-behavior: contain;*/
 }
 
 :root {
@@ -31,7 +31,7 @@ body {
   display: flex;
   background: var(--page-color);
   color: var(--primary-text-color);
-  /*overflow: hidden;*/
+  overflow: hidden;
 }
 
 /* --------- settings --------- */

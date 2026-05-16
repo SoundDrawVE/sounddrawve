@@ -66,6 +66,14 @@ document.getElementById('settings-form').addEventListener('click', (e) => {
       freqNumber.textContent = freqNumber.dataset.max;
     }
   }
+
+  // prevent the page scrolling to an element with an id attribute
+  e.preventDefault();
+  if (e.target.classList.contains('checkmark')) {
+    const input = e.target.previousElementSibling;
+    const event = new Event('input', { bubbles: true });
+    input.dispatchEvent(event);
+  }
 });
 
 
