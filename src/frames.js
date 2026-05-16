@@ -37,7 +37,7 @@ export function initFraming(trackId) {
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-let averageProcTime = 0;
+let averageProcTime = OFFLINE_FPS;
 export async function createFrames(audioSamples, showStatus = (text) => console.log(text)) {
   if (!isOfflineRendering) setCanvasDimensions(settings.getCanvasExportDimensions());
   if (isOfflineRendering) return;
@@ -58,20 +58,12 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
     visualizeSpectrum(freq, exportCtx);
     await capturePNG(exportCanvas, frameIndex, batch);
 
-    averageProcTime = performance.now() - t_now + frameInterval;
-    let approximateTime = ((totalFrames - frameIndex) * averageProcTime) / 60;
-    let timeUnit = 'sec';
-    if (approximateTime > 60) {
-      approximateTime = approximateTime / 60;
-      timeUnit = 'min';
-    }
-    approximateTime = Math.round(approximateTime);
-
-    showStatus(`🔬 ${frameIndex} frame created from ${totalFrames}, preprocessing: ${approximateTime}${timeUnit} left`);
+    showStatus(createStatusMsg(frameIndex, averageProcTime, totalFrames));
     frameIndex += 1;
 
     // Control the speed (to avoid killing the CPU)
     await new Promise(r => setTimeout(r, frameInterval));
+    averageProcTime = performance.now() - t_now;
   }
 
   // Send the rest and finish
@@ -81,6 +73,19 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   showStatus(`✅ Offline rendering complete! ${totalFrames} frames saved.`);
   await delay(1000);
   isOfflineRendering = false;
+}
+
+
+function createStatusMsg(frameIndex, frameInterval, totalFrames) {
+  const leftFrames = totalFrames - frameIndex;
+  let leftTime = leftFrames * frameInterval / 1000;
+  let timeUnit = 'sec';
+  if (leftTime > 60) {
+    leftTime = leftTime / 60;
+    timeUnit = 'min';
+  }
+  leftTime = Math.round(leftTime);
+  return `🔬 ${frameIndex} frame created from ${totalFrames}, preprocessing: ${leftTime}${timeUnit} left`;
 }
 
 
