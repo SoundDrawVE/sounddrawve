@@ -12,7 +12,7 @@ let areaY = 0;
 let areaW = 0;
 let areaH = 0;
 let startX, startY;
-const minW = 100, minH = 50;
+const minW = 50, minH = 25;
 
 
 let areaCoords = { ...getInitiaCoords() };
