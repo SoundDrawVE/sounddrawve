@@ -193,7 +193,7 @@ function drawStripe({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
 function drawBar({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
   const k = areaH / 255;
   const d = canvasH - areaH - areaY;
-  ctx.fillRect(shiftX, canvasH - value * k - d, barWidth - 1, value * k);
+  ctx.fillRect(shiftX, canvasH - value * k - d - 2, barWidth - 1, value * k + 2);
 }
 
 
