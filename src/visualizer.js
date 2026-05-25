@@ -28,6 +28,8 @@ export function visualizeSpectrum(freq, ctx) {
       ctx.fillStyle = calcColor(options);
     } else if (settings.colorType === 'rainbow') {
       ctx.fillStyle = rainbowColor(options);
+    } else if (settings.colorType === 'enhanced') {
+      ctx.fillStyle = enhanceColor(settings.color, options.value);
     } else {
       ctx.fillStyle = settings.color;
     }
@@ -246,6 +248,33 @@ function rainbowColor({ ctx, value, canvasH, areaH, areaY }) {
   });
 
   return gradient;
+}
+
+
+function enhanceColor(color, value) {
+  //const rgbaStr = "rgba(144, 104, 190, 1)";
+  const channels = color.match(/[\d.]+/g); 
+  // Возвращает массив: ["144", "104", "190", "1"]
+
+  const r = +channels[0]; // 144
+  const g = +channels[1]; // 104
+  const b = +channels[2]; // 190
+  const a = +channels[3]; // 1
+
+  const threshold = 5;
+  let gap = Math.floor(value * 7 / 255);
+
+  // if (gap < 3) {
+  //   gap = gap * (-1) * (threshold / 3);
+  // } else {
+  //   gap = gap * threshold;
+  // }
+
+  gap = gap * threshold;
+
+  const enhancedChannels = [r, g, b].map(ch => ch + gap > 254 ? 255 : ch + gap);
+
+  return `rgba(${enhancedChannels.join(',')},${a})`;
 }
 
 
