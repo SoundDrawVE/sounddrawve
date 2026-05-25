@@ -481,3 +481,17 @@ input[type="text"]#colorCode {
 }
 /* --------- end color picker --------- */
 
+
+.rainbow-text {
+  background-image: linear-gradient(to right, #e81416, #ffa500, #faeb36, #79c314, #487de7, #4b369d, #70369d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.rainbow-bg {
+  background: linear-gradient(to right, #e81416, #ffa500, #faeb36, #79c314, #487de7, #4b369d, #70369d);
+  height: 100px;
+  width: 100%;
+}

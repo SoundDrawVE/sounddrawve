@@ -26,6 +26,8 @@ export function visualizeSpectrum(freq, ctx) {
 
     if (settings.colorType === 'default') {
       ctx.fillStyle = calcColor(options);
+    } else if (settings.colorType === 'rainbow') {
+      ctx.fillStyle = rainbowColor(options);
     } else {
       ctx.fillStyle = settings.color;
     }
@@ -199,6 +201,51 @@ function drawBar({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
 
 function calcColor({ ind, dataLen, value }) {
   return `rgb(${value + 25}, ${250 * (ind / dataLen)}, ${50})`;
+}
+
+// Red #e81416 rgb(232, 20, 22)
+// Orange  #ffa500 rgb(255, 165, 0)
+// Yellow  #faeb36 rgb(250, 235, 54)
+// Green #79c314 rgb(121, 195, 20)
+// Blue  #487de7 rgb(72, 125, 231)
+// Indigo  #4b369d rgb(75, 54, 157)
+// Violet  #70369d rgb(112, 54, 157)
+function rainbowColor({ ctx, value, canvasH, areaH, areaY }) {
+  const ROYGBIV = {
+    Red: { hex: '#e81416', rgb: { r: 232, g: 20, b: 22 } },
+    Orange: { hex: '#ffa500', rgb: { r: 255, g: 165, b: 0 } },
+    Yellow: { hex: '#faeb36', rgb: { r: 250, g: 235, b: 54 } },
+    Green: { hex: '#79c314', rgb: { r: 121, g: 195, b: 20 } },
+    Blue: { hex: '#487de7', rgb: { r: 72, g: 125, b: 231 } },
+    Indigo: { hex: '#4b369d', rgb: { r: 75, g: 54, b: 157 } },
+    Violet: { hex: '#70369d', rgb: { r: 112, g: 54, b: 157 } }
+  };
+
+  const keys = ['Red', 'Orange', 'Yellow', 'Green', 'Blue', 'Indigo', 'Violet'];
+
+  const index = Math.floor(value * 7 / 255);
+  const activeColorsKeys = keys.slice(0, index + 1);
+  const activeColors = activeColorsKeys.map(key => ROYGBIV[key].hex);
+
+  if (activeColors.length === 1) return activeColors[0];
+
+  const k = areaH / 255;
+  const d = canvasH - areaH - areaY;
+  const rectHeight = value * k + 2;
+  const rectY = canvasH - value * k - d - 2; // Y-координата верхнего края прямоугольника
+
+  // Создаем градиент снизу вверх: 
+  // startY = rectY + rectHeight (нижняя точка), endY = rectY (верхняя точка)
+  let gradient = ctx.createLinearGradient(0, rectY + rectHeight, 0, rectY);
+
+  // Добавляем цвета в градиент
+  activeColors.forEach((color, i) => {
+    // Вычисляем позицию цвета от 0 до 1 (снизу вверх)
+    let position = i / (activeColors.length - 1);
+    gradient.addColorStop(position, color);
+  });
+
+  return gradient;
 }
 
 
