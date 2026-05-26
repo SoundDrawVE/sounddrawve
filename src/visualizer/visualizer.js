@@ -1,4 +1,6 @@
 import { settings } from '../settings.js';
+import drawBars from './bars.js';
+
 import droplet from '../assets/droplet2.png';
 
 
@@ -35,28 +37,20 @@ export function visualizeSpectrum(freq, ctx) {
     pulsecircle: drawPulsatingCircle
   };
 
+  const colorFns = {
+    'default': calcColor,
+    'rainbow': rainbowColor,
+    'enhanced': enhanceColor,
+    'select': (options) => options.color
+  };
+
 
   for (let i = 0; i < freqNumber; i++) {
     options.ind = i;
     options.value = freq[i];
     options.shiftX = x;
 
-    let color;
-    switch (settings.colorType) {
-      case 'default':
-        color = calcColor(options);
-        break;
-      case 'rainbow':
-        color = rainbowColor(options);
-        break;
-      case 'enhanced':
-        color = enhanceColor(options);
-        break;
-      default:
-        color = settings.color;
-    }
-
-    ctx.fillStyle = color;
+    ctx.fillStyle = colorFns[settings.colorType](options);
     drawFns[settings.visualizationType](options);
 
     x += options.barWidth;
