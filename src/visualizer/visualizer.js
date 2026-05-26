@@ -27,7 +27,14 @@ export function visualizeSpectrum(freq, ctx) {
     color: settings.color
   };
 
-  
+  const drawFns = {
+    bars: drawBar,
+    stripes: drawStripe,
+    barcap: drawBarcap,
+    droplets: drawDroplet,
+    pulsecircle: drawPulsatingCircle
+  };
+
 
   for (let i = 0; i < freqNumber; i++) {
     options.ind = i;
@@ -50,19 +57,7 @@ export function visualizeSpectrum(freq, ctx) {
     }
 
     ctx.fillStyle = color;
-
-
-    if (settings.visualizationType === 'bars') {
-      drawBar(options);
-    } else if (settings.visualizationType === 'stripes') {
-      drawStripe(options);
-    } else if (settings.visualizationType === 'barcap') {
-      drawBarcap(options);
-    } else if (settings.visualizationType === 'droplets') {
-      drawDroplet(options);
-    } else if (settings.visualizationType === 'pulsecircle') {
-      drawPulsatingCircle(options);
-    }
+    drawFns[settings.visualizationType](options);
 
     x += options.barWidth;
   }
