@@ -22,7 +22,8 @@ export function visualizeSpectrum(freq, ctx) {
       areaH: areaCoords.h,
       shiftX: x,
       barWidth: (areaCoords.w / freqNumber),
-      hFactor: areaCoords.h / 255 // height scaling factor
+      hFactor: areaCoords.h / 255, // height scaling factor
+      aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h) // area scaling factor
     };
 
     if (settings.colorType === 'default') {
@@ -80,10 +81,9 @@ const dropletImg = new Image();
 dropletImg.src = droplet;
 dropletImg.onload = () => { console.log('droplet img loaded!'); }
 
-function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY, shiftX }) {
-  const k = (areaW * areaH) /(canvasW * canvasH);
+function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY, shiftX, aFactor }) {
   const maxSpeed = 5;
-  const areaK = value * 0.0001 * Math.exp(k);
+  const areaK = value * 0.0001 * Math.exp(aFactor);
   const imgW = dropletImg.width * areaK;
   const imgH = dropletImg.height * areaK;
   const angleRad = 25 * Math.PI / 180;
@@ -124,7 +124,7 @@ function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, a
     return {
       x: randInt(areaX, areaX + areaW),
       y: randInt(areaY, areaY + areaH),
-      // r: value * 0.015 * Math.exp(k)
+      // r: value * 0.015 * Math.exp(aFactor)
     };
   }
 }
@@ -162,8 +162,7 @@ function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth, 
 }
 
 
-function drawPulsatingCircle({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY }) {
-  const k = (areaW * areaH) /(canvasW * canvasH);
+function drawPulsatingCircle({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY, aFactor }) {
   let coords = tmpData.getValue(ind);
   if (!coords) coords = calcInitialCoords();
   updateCoords();
@@ -179,7 +178,7 @@ function drawPulsatingCircle({ ind, ctx, value, canvasW, canvasH, areaW, areaH, 
   tmpData.setValue(ind, coords);
 
   function updateCoords() {
-    coords.r = value * 0.015 * Math.exp(k);
+    coords.r = value * 0.015 * Math.exp(aFactor);
   }
 
   function calcInitialCoords() {
