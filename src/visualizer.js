@@ -21,7 +21,8 @@ export function visualizeSpectrum(freq, ctx) {
       areaW: areaCoords.w,
       areaH: areaCoords.h,
       shiftX: x,
-      barWidth: (areaCoords.w / freqNumber)
+      barWidth: (areaCoords.w / freqNumber),
+      hFactor: areaCoords.h / 255 // height scaling factor
     };
 
     if (settings.colorType === 'default') {
@@ -67,6 +68,12 @@ const tmpData = {
 };
 
 settings.onChange(() => tmpData.reset());
+
+
+function drawBar({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth, hFactor }) {
+  const d = canvasH - areaH - areaY;
+  ctx.fillRect(shiftX, canvasH - value * hFactor - d - 2, barWidth - 1, value * hFactor + 2);
+}
 
 
 const dropletImg = new Image();
@@ -123,11 +130,10 @@ function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, a
 }
 
 
-function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
-  const k = areaH / 255;
+function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth, hFactor }) {
   const d = canvasH - areaH - areaY;
   const capH = 3, gap = 3;
-  let barH = value * k;
+  let barH = value * hFactor;
   if (barH > capH + gap) barH -= capH + gap;
   const barY = canvasH - barH - d;
 
@@ -186,18 +192,10 @@ function drawPulsatingCircle({ ind, ctx, value, canvasW, canvasH, areaW, areaH, 
 }
 
 
-function drawStripe({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
+function drawStripe({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth, hFactor }) {
   const gap = 5, stripeH = 3;
-  const k = areaH / 255;
   const d = canvasH - areaH - areaY;
-  ctx.fillRect(shiftX, canvasH - value * k - d, barWidth - 1, stripeH);
-}
-
-
-function drawBar({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth }) {
-  const k = areaH / 255;
-  const d = canvasH - areaH - areaY;
-  ctx.fillRect(shiftX, canvasH - value * k - d - 2, barWidth - 1, value * k + 2);
+  ctx.fillRect(shiftX, canvasH - value * hFactor - d, barWidth - 1, stripeH);
 }
 
 
