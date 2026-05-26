@@ -23,7 +23,8 @@ export function visualizeSpectrum(freq, ctx) {
     shiftX: null,
     barWidth: (areaCoords.w / freqNumber),
     hFactor: areaCoords.h / 255, // height scaling factor
-    aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h) // area scaling factor
+    aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h), // area scaling factor
+    color: settings.color
   };
 
   
@@ -42,7 +43,7 @@ export function visualizeSpectrum(freq, ctx) {
         color = rainbowColor(options);
         break;
       case 'enhanced':
-        color = enhanceColor(settings.color, options.value);
+        color = enhanceColor(options);
         break;
       default:
         color = settings.color;
@@ -258,7 +259,7 @@ function rainbowColor({ ctx, value, canvasH, areaBottom, hFactor }) {
 }
 
 
-function enhanceColor(color, value) {
+function enhanceColor({ color, value }) {
   //const rgbaStr = "rgba(144, 104, 190, 1)";
   const channels = color.match(/[\d.]+/g); 
   // Возвращает массив: ["144", "104", "190", "1"]
