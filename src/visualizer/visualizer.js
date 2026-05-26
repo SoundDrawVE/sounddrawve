@@ -1,5 +1,5 @@
-import { settings } from './settings.js';
-import droplet from './assets/droplet2.png';
+import { settings } from '../settings.js';
+import droplet from '../assets/droplet2.png';
 
 
 export function visualizeSpectrum(freq, ctx) {

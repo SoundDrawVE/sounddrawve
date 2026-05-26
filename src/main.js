@@ -3,7 +3,7 @@ import "@fontsource/inter";
 import './style.css';
 import { getCanvasCtx, clearCanvas } from './canvas.js';
 import { player, getAudioData, preprocessFrequencyData, audioSamples } from './audio.js';
-import { visualizeSpectrum } from './visualizer.js';
+import { visualizeSpectrum } from './visualizer/visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
 import { showCover, removeCover, updateMessage } from './cover.js';

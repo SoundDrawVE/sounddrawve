@@ -1,4 +1,4 @@
-import { visualizeSpectrum } from './visualizer.js';
+import { visualizeSpectrum } from './visualizer/visualizer.js';
 import { queue, batch } from './storage.js';
 import { settings } from './settings.js';
 
