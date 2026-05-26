@@ -26,20 +26,30 @@ export function visualizeSpectrum(freq, ctx) {
     aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h) // area scaling factor
   };
 
+  
+
   for (let i = 0; i < freqNumber; i++) {
     options.ind = i;
     options.value = freq[i];
     options.shiftX = x;
 
-    if (settings.colorType === 'default') {
-      ctx.fillStyle = calcColor(options);
-    } else if (settings.colorType === 'rainbow') {
-      ctx.fillStyle = rainbowColor(options);
-    } else if (settings.colorType === 'enhanced') {
-      ctx.fillStyle = enhanceColor(settings.color, options.value);
-    } else {
-      ctx.fillStyle = settings.color;
+    let color;
+    switch (settings.colorType) {
+      case 'default':
+        color = calcColor(options);
+        break;
+      case 'rainbow':
+        color = rainbowColor(options);
+        break;
+      case 'enhanced':
+        color = enhanceColor(settings.color, options.value);
+        break;
+      default:
+        color = settings.color;
     }
+
+    ctx.fillStyle = color;
+
 
     if (settings.visualizationType === 'bars') {
       drawBar(options);
