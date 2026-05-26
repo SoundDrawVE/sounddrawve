@@ -8,24 +8,28 @@ export function visualizeSpectrum(freq, ctx) {
   const canvasDimensions = settings.getCanvasDimensions();
   let x = areaCoords.x;
 
+  const options = {
+    ind: null,
+    dataLen: freqNumber,
+    value: null,
+    ctx: ctx,
+    canvasW: canvasDimensions.w,
+    canvasH: canvasDimensions.h,
+    areaX: areaCoords.x,
+    areaY: areaCoords.y,
+    areaW: areaCoords.w,
+    areaH: areaCoords.h,
+    areaBottom: canvasDimensions.h - areaCoords.h - areaCoords.y,
+    shiftX: null,
+    barWidth: (areaCoords.w / freqNumber),
+    hFactor: areaCoords.h / 255, // height scaling factor
+    aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h) // area scaling factor
+  };
+
   for (let i = 0; i < freqNumber; i++) {
-    const options = {
-      ind: i,
-      dataLen: freqNumber,
-      value: freq[i],
-      ctx: ctx,
-      canvasW: canvasDimensions.w,
-      canvasH: canvasDimensions.h,
-      areaX: areaCoords.x,
-      areaY: areaCoords.y,
-      areaW: areaCoords.w,
-      areaH: areaCoords.h,
-      areaBottom: canvasDimensions.h - areaCoords.h - areaCoords.y,
-      shiftX: x,
-      barWidth: (areaCoords.w / freqNumber),
-      hFactor: areaCoords.h / 255, // height scaling factor
-      aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h) // area scaling factor
-    };
+    options.ind = i;
+    options.value = freq[i];
+    options.shiftX = x;
 
     if (settings.colorType === 'default') {
       ctx.fillStyle = calcColor(options);
