@@ -20,6 +20,7 @@ export function visualizeSpectrum(freq, ctx) {
       areaY: areaCoords.y,
       areaW: areaCoords.w,
       areaH: areaCoords.h,
+      areaBottom: canvasDimensions.h - areaCoords.h - areaCoords.y,
       shiftX: x,
       barWidth: (areaCoords.w / freqNumber),
       hFactor: areaCoords.h / 255, // height scaling factor
@@ -71,9 +72,8 @@ const tmpData = {
 settings.onChange(() => tmpData.reset());
 
 
-function drawBar({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth, hFactor }) {
-  const d = canvasH - areaH - areaY;
-  ctx.fillRect(shiftX, canvasH - value * hFactor - d - 2, barWidth - 1, value * hFactor + 2);
+function drawBar({ ctx, value, canvasH, areaBottom, shiftX, barWidth, hFactor }) {
+  ctx.fillRect(shiftX, canvasH - value * hFactor - areaBottom - 2, barWidth - 1, value * hFactor + 2);
 }
 
 
@@ -130,12 +130,11 @@ function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, a
 }
 
 
-function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth, hFactor }) {
-  const d = canvasH - areaH - areaY;
+function drawBarcap({ ind, ctx, value, canvasH, areaBottom, shiftX, barWidth, hFactor }) {
   const capH = 3, gap = 3;
   let barH = value * hFactor;
   if (barH > capH + gap) barH -= capH + gap;
-  const barY = canvasH - barH - d;
+  const barY = canvasH - barH - areaBottom;
 
   let capCoords = tmpData.getValue(ind);
   if (!capCoords) capCoords = calcInitialCoords();
@@ -148,7 +147,7 @@ function drawBarcap({ ind, ctx, value, canvasH, areaH, areaY, shiftX, barWidth, 
   function updateCoords() {
     capCoords.y += 1;
     if (capCoords.y > barY - capH - gap) capCoords.y = barY - capH - gap;
-    if (capCoords.y > canvasH - d - capH - gap) capCoords.y = canvasH - d - capH - gap;
+    if (capCoords.y > canvasH - areaBottom - capH - gap) capCoords.y = canvasH - areaBottom - capH - gap;
   }
 
   function calcInitialCoords() {
@@ -191,10 +190,9 @@ function drawPulsatingCircle({ ind, ctx, value, canvasW, canvasH, areaW, areaH, 
 }
 
 
-function drawStripe({ ctx, value, canvasH, areaH, areaY, shiftX, barWidth, hFactor }) {
+function drawStripe({ ctx, value, canvasH, areaBottom, shiftX, barWidth, hFactor }) {
   const gap = 5, stripeH = 3;
-  const d = canvasH - areaH - areaY;
-  ctx.fillRect(shiftX, canvasH - value * hFactor - d, barWidth - 1, stripeH);
+  ctx.fillRect(shiftX, canvasH - value * hFactor - areaBottom, barWidth - 1, stripeH);
 }
 
 
@@ -209,7 +207,7 @@ function calcColor({ ind, dataLen, value }) {
 // Blue  #487de7 rgb(72, 125, 231)
 // Indigo  #4b369d rgb(75, 54, 157)
 // Violet  #70369d rgb(112, 54, 157)
-function rainbowColor({ ctx, value, canvasH, areaH, areaY }) {
+function rainbowColor({ ctx, value, canvasH, areaBottom, hFactor }) {
   const ROYGBIV = {
     Red: { hex: '#e81416', rgb: { r: 232, g: 20, b: 22 } },
     Orange: { hex: '#ffa500', rgb: { r: 255, g: 165, b: 0 } },
@@ -228,10 +226,8 @@ function rainbowColor({ ctx, value, canvasH, areaH, areaY }) {
 
   if (activeColors.length === 1) return activeColors[0];
 
-  const k = areaH / 255;
-  const d = canvasH - areaH - areaY;
-  const rectHeight = value * k + 2;
-  const rectY = canvasH - value * k - d - 2; // Y-координата верхнего края прямоугольника
+  const rectHeight = value * hFactor + 2;
+  const rectY = canvasH - value * hFactor - areaBottom - 2; // Y-координата верхнего края прямоугольника
 
   // Создаем градиент снизу вверх: 
   // startY = rectY + rectHeight (нижняя точка), endY = rectY (верхняя точка)
