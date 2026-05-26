@@ -1,7 +1,28 @@
 import { settings } from '../settings.js';
 import drawBars from './bars.js';
+import drawStripes from './stripes.js';
+import drawBarcaps from './barcaps.js';
+import drawDroplets from './droplets.js';
+import drawCircles from './circles.js';
 
-import droplet from '../assets/droplet2.png';
+
+const tmpData = {
+  data: [],
+
+  reset() { 
+    this.data = [];
+  },
+
+  getValue(ind) {
+    return this.data[ind];
+  },
+
+  setValue(ind, value) {
+    this.data[ind] = value;
+  }
+};
+
+settings.onChange(() => tmpData.reset());
 
 
 export function visualizeSpectrum(freq, ctx) {
@@ -29,14 +50,6 @@ export function visualizeSpectrum(freq, ctx) {
     color: settings.color
   };
 
-  const drawFns = {
-    bars: drawBar,
-    stripes: drawStripe,
-    barcap: drawBarcap,
-    droplets: drawDroplet,
-    pulsecircle: drawPulsatingCircle
-  };
-
   const colorFns = {
     'default': calcColor,
     'rainbow': rainbowColor,
@@ -44,159 +57,18 @@ export function visualizeSpectrum(freq, ctx) {
     'select': (options) => options.color
   };
 
+  const drawFns = {
+    'bars': drawBars,
+    'stripes': drawStripes,
+    'barcap': drawBarcaps,
+    'droplets': drawDroplets,
+    'pulsecircle': drawCircles
+  };
 
-  for (let i = 0; i < freqNumber; i++) {
-    options.ind = i;
-    options.value = freq[i];
-    options.shiftX = x;
+  const colorFn = colorFns[settings.colorType];
+  const drawFn = drawFns[settings.visualizationType];
 
-    ctx.fillStyle = colorFns[settings.colorType](options);
-    drawFns[settings.visualizationType](options);
-
-    x += options.barWidth;
-  }
-}
-
-const tmpData = {
-  data: [],
-
-  reset() { 
-    this.data = [];
-  },
-
-  getValue(ind) {
-    return this.data[ind];
-  },
-
-  setValue(ind, value) {
-    this.data[ind] = value;
-  }
-};
-
-settings.onChange(() => tmpData.reset());
-
-
-function drawBar({ ctx, value, canvasH, areaBottom, shiftX, barWidth, hFactor }) {
-  ctx.fillRect(shiftX, canvasH - value * hFactor - areaBottom - 2, barWidth - 1, value * hFactor + 2);
-}
-
-
-const dropletImg = new Image();
-dropletImg.src = droplet;
-dropletImg.onload = () => { console.log('droplet img loaded!'); }
-
-function drawDroplet({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY, shiftX, aFactor }) {
-  const maxSpeed = 5;
-  const areaK = value * 0.0001 * Math.exp(aFactor);
-  const imgW = dropletImg.width * areaK;
-  const imgH = dropletImg.height * areaK;
-  const angleRad = 25 * Math.PI / 180;
-
-  let flakeCoords = tmpData.getValue(ind);
-  if (!flakeCoords) {
-    flakeCoords = calcInitialCoords();
-  }
-
-  updateCoords();
-  // ctx.beginPath();
-  // ctx.arc(flakeCoords.x, flakeCoords.y, flakeCoords.r, 0, 2 * Math.PI);
-  // ctx.fill();
-  ctx.save();
-  ctx.translate(flakeCoords.x, flakeCoords.y);
-  ctx.rotate(angleRad);
-  ctx.drawImage(dropletImg, -imgW / 2 , -imgH / 2, imgW, imgH);
-  ctx.restore();
-  tmpData.setValue(ind, flakeCoords);
-
-  function updateCoords() {
-    let speedY = value * maxSpeed / 255;
-    let speedX = speedY / 3;
-    if (speedY < 1) {
-      speedY = 1;
-      speedX = 1 / 3;
-    }
-
-    flakeCoords.x -= speedX;
-    flakeCoords.y += speedY;
-
-    if (flakeCoords.x < areaX + imgW / 2 || flakeCoords.y > areaY + areaH - imgH / 2) {
-      flakeCoords = calcInitialCoords();
-    }
-  }
-
-  function calcInitialCoords() {
-    return {
-      x: randInt(areaX, areaX + areaW),
-      y: randInt(areaY, areaY + areaH),
-      // r: value * 0.015 * Math.exp(aFactor)
-    };
-  }
-}
-
-
-function drawBarcap({ ind, ctx, value, canvasH, areaBottom, shiftX, barWidth, hFactor }) {
-  const capH = 3, gap = 3;
-  let barH = value * hFactor;
-  if (barH > capH + gap) barH -= capH + gap;
-  const barY = canvasH - barH - areaBottom;
-
-  let capCoords = tmpData.getValue(ind);
-  if (!capCoords) capCoords = calcInitialCoords();
-  updateCoords();
-  // draw
-  ctx.fillRect(shiftX, barY, barWidth - 1, barH);
-  ctx.fillRect(capCoords.x, capCoords.y, capCoords.w, capCoords.h);
-  tmpData.setValue(ind, capCoords);
-
-  function updateCoords() {
-    capCoords.y += 1;
-    if (capCoords.y > barY - capH - gap) capCoords.y = barY - capH - gap;
-    if (capCoords.y > canvasH - areaBottom - capH - gap) capCoords.y = canvasH - areaBottom - capH - gap;
-  }
-
-  function calcInitialCoords() {
-    return {
-      x: shiftX,
-      y: barY - capH - gap,
-      w: barWidth - 1,
-      h: capH
-    };
-  }
-}
-
-
-function drawPulsatingCircle({ ind, ctx, value, canvasW, canvasH, areaW, areaH, areaX, areaY, aFactor }) {
-  let coords = tmpData.getValue(ind);
-  if (!coords) coords = calcInitialCoords();
-  updateCoords();
-
-  ctx.beginPath();
-  ctx.arc(coords.x, coords.y, coords.r, 0, 2 * Math.PI);
-  ctx.fill();
-  ctx.strokeStyle = ctx.fillStyle;
-  ctx.beginPath();
-  ctx.arc(coords.x, coords.y, coords.r + 5, 0, 2 * Math.PI);
-  ctx.stroke();
-
-  tmpData.setValue(ind, coords);
-
-  function updateCoords() {
-    coords.r = value * 0.015 * Math.exp(aFactor);
-  }
-
-  function calcInitialCoords() {
-    return {
-      x: randInt(areaX, areaX + areaW),
-      y: randInt(areaY, areaY + areaH),
-      r: 0
-    };
-  }
-}
-
-
-function drawStripe({ ctx, value, canvasH, areaBottom, shiftX, barWidth, hFactor }) {
-  const gap = 5, stripeH = 3;
-  ctx.fillRect(shiftX, canvasH - value * hFactor - areaBottom, barWidth - 1, stripeH);
+  drawFn(ctx, freq, options, colorFn, tmpData);
 }
 
 
@@ -272,10 +144,4 @@ function enhanceColor({ color, value }) {
   const enhancedChannels = [r, g, b].map(ch => ch + gap > 254 ? 255 : ch + gap);
 
   return `rgba(${enhancedChannels.join(',')},${a})`;
-}
-
-
-function randInt(min, max) {
-  let rand = min - 0.5 + Math.random() * (max - min + 1);
-  return Math.round(rand);
 }
