@@ -26,6 +26,15 @@ const tmpData = {
 settings.onChange(() => tmpData.reset());
 
 
+const drawFns = {
+  'bars': drawBars,
+  'stripes': drawStripes,
+  'barcap': drawBarcaps,
+  'droplets': drawDroplets,
+  'pulsecircle': drawCircles
+};
+
+
 export function visualizeSpectrum(freq, ctx) {
   const areaCoords = settings.getCoords();
   const freqNumber = settings.freqNumber;
@@ -49,14 +58,6 @@ export function visualizeSpectrum(freq, ctx) {
     hFactor: areaCoords.h / 255, // height scaling factor
     aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h), // area scaling factor
     color: settings.color
-  };
-
-  const drawFns = {
-    'bars': drawBars,
-    'stripes': drawStripes,
-    'barcap': drawBarcaps,
-    'droplets': drawDroplets,
-    'pulsecircle': drawCircles
   };
 
   const colorFn = getColorFn(settings.colorType);
