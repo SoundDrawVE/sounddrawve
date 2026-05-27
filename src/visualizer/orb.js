@@ -2,11 +2,12 @@ import { avg, getBass } from './utils.js';
 
 
 export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30) {
-  const { dataLen, areaX, areaY, areaW, areaH } = options;
+  const { dataLen, areaX, areaY, areaW, areaH, aFactor } = options;
 
   const cx = areaX + areaW / 2;
   const cy = areaY + areaH / 2;
   const radius = Math.min(areaW, areaH) * 0.22;
+  //const radius = (areaW * areaH / Math.max(areaW, areaH)) * Math.exp(aFactor) * 0.2;
 
   ctx.save();
   ctx.translate(cx, cy);
@@ -25,14 +26,12 @@ export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30
 }
 
 
-function drawRay({ ctx, ind, value, dataLen, radius, time }) {
-  const v = value / 255;
+function drawRay({ ctx, ind, value, dataLen, aFactor, radius, time }) {
+  //const v = value / 255;
+  const v = value * aFactor;
   const angle = (ind / dataLen) * Math.PI * 2;
-
-  const dynamicRadius =
-    radius +
-    v * 120 +
-    Math.sin(time * 0.002 + ind * 0.15) * 8;
+  //const dynamicRadius = radius + v * 120 + Math.sin(time * 0.002 + ind * 0.15) * 8;
+  const dynamicRadius = radius + v * 1.2 + Math.sin(time * 0.002 + ind * 0.15) * (aFactor * 15);
 
   const x1 = Math.cos(angle) * radius;
   const y1 = Math.sin(angle) * radius;
