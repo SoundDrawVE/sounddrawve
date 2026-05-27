@@ -32,7 +32,8 @@ const drawFns = {
   'stripes': drawStripes,
   'barcap': drawBarcaps,
   'droplets': drawDroplets,
-  'pulsecircle': drawCircles
+  'pulsecircle': drawCircles,
+  'orb': drawOrb
 };
 
 
@@ -65,7 +66,5 @@ export function visualizeSpectrum(freq, ctx) {
   const colorFn = getColorFn(settings.colorType);
   const drawFn = drawFns[settings.visualizationType];
 
-  //drawFn(ctx, freq, options, colorFn, tmpData);
-
-  drawOrb(ctx, freq, options, colorFn, tmpData);
+  drawFn(ctx, freq, options, colorFn, tmpData);
 }
