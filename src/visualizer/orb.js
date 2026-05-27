@@ -8,8 +8,6 @@ export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30
   const cy = areaY + areaH / 2;
   const radius = Math.min(areaW, areaH) * 0.22;
 
-  const bass = getBass(freqs);
-
   ctx.save();
   ctx.translate(cx, cy);
   ctx.lineWidth = 2;
@@ -23,28 +21,7 @@ export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30
     drawRay(options);
   }
 
-  // ядро
-  const glow = radius * (1 + bass * 0.5);
-
-  const grad = ctx.createRadialGradient(
-    0,
-    0,
-    0,
-    0,
-    0,
-    glow
-  );
-
-  grad.addColorStop(0, "rgba(255,255,255,0.9)");
-  grad.addColorStop(1, "rgba(255,255,255,0)");
-
-  ctx.fillStyle = grad;
-
-  ctx.beginPath();
-  ctx.arc(0, 0, glow, 0, Math.PI * 2);
-  ctx.fill();
-
-  ctx.restore();
+  drawCore(ctx, freqs, radius);
 }
 
 
@@ -71,4 +48,30 @@ function drawRay({ ctx, ind, value, dataLen, radius, time }) {
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
   ctx.stroke();
+}
+
+
+function drawCore(ctx, freqs, radius) {
+  const bass = getBass(freqs);
+  const glow = radius * (1 + bass * 0.5);
+
+  const grad = ctx.createRadialGradient(
+    0,
+    0,
+    0,
+    0,
+    0,
+    glow
+  );
+
+  grad.addColorStop(0, "rgba(255,255,255,0.9)");
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+
+  ctx.fillStyle = grad;
+
+  ctx.beginPath();
+  ctx.arc(0, 0, glow, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
 }
