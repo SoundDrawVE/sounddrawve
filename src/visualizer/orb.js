@@ -15,29 +15,12 @@ export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30
   ctx.lineWidth = 2;
 
   for (let i = 0; i < dataLen; i++) {
-    const v = freqs[i] / 255;
+    options.ind = i;
+    options.value = freqs[i];
+    options.time = time;
+    options.radius = radius;
 
-    const angle = (i / dataLen) * Math.PI * 2;
-
-    const dynamicRadius =
-      radius +
-      v * 120 +
-      Math.sin(time * 0.002 + i * 0.15) * 8;
-
-    const x1 = Math.cos(angle) * radius;
-    const y1 = Math.sin(angle) * radius;
-
-    const x2 = Math.cos(angle) * dynamicRadius;
-    const y2 = Math.sin(angle) * dynamicRadius;
-
-    const hue = i / dataLen * 360 + time * 0.03;
-
-    ctx.strokeStyle = `hsla(${hue},100%,60%,0.85)`;
-
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
+    drawRay(options);
   }
 
   // ядро
@@ -62,4 +45,30 @@ export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30
   ctx.fill();
 
   ctx.restore();
+}
+
+
+function drawRay({ ctx, ind, value, dataLen, radius, time }) {
+  const v = value / 255;
+  const angle = (ind / dataLen) * Math.PI * 2;
+
+  const dynamicRadius =
+    radius +
+    v * 120 +
+    Math.sin(time * 0.002 + ind * 0.15) * 8;
+
+  const x1 = Math.cos(angle) * radius;
+  const y1 = Math.sin(angle) * radius;
+
+  const x2 = Math.cos(angle) * dynamicRadius;
+  const y2 = Math.sin(angle) * dynamicRadius;
+
+  const hue = ind / dataLen * 360 + time * 0.03;
+
+  ctx.strokeStyle = `hsla(${hue},100%,60%,0.85)`;
+
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
 }
