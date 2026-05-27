@@ -5,6 +5,7 @@ import drawBarcaps from './barcaps.js';
 import drawDroplets from './droplets.js';
 import drawCircles from './circles.js';
 import getColorFn from './colors.js';
+import drawOrb from './orb.js';
 
 
 const tmpData = {
@@ -57,11 +58,14 @@ export function visualizeSpectrum(freq, ctx) {
     barWidth: (areaCoords.w / freqNumber),
     hFactor: areaCoords.h / 255, // height scaling factor
     aFactor: (areaCoords.w * areaCoords.h) / (canvasDimensions.w * canvasDimensions.h), // area scaling factor
-    color: settings.color
+    color: settings.color,
+    colorType: settings.colorType
   };
 
   const colorFn = getColorFn(settings.colorType);
   const drawFn = drawFns[settings.visualizationType];
 
-  drawFn(ctx, freq, options, colorFn, tmpData);
+  //drawFn(ctx, freq, options, colorFn, tmpData);
+
+  drawOrb(ctx, freq, options, colorFn, tmpData);
 }

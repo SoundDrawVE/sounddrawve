@@ -2,7 +2,7 @@ import { avg, getBass } from './utils.js';
 
 
 export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30) {
-  const { dataLen, areaX, areaY, areaW, areaH, aFactor } = options;
+  const { dataLen, areaX, areaY, areaW, areaH, aFactor, colorType } = options;
 
   const cx = areaX + areaW / 2;
   const cy = areaY + areaH / 2;
@@ -13,20 +13,26 @@ export default function drawOrb(ctx, freqs, options, colorFn, tmpData, time = 30
   ctx.translate(cx, cy);
   ctx.lineWidth = 2;
 
+  let color;
   for (let i = 0; i < dataLen; i++) {
     options.ind = i;
     options.value = freqs[i];
     options.time = time;
     options.radius = radius;
 
-    drawRay(options);
+    if (colorType !== 'default') {
+      color = colorFn(options);
+    }
+
+    drawRay(options, color);
   }
 
-  drawCore(ctx, freqs, radius);
+  drawCore(ctx, freqs, radius, color);
 }
 
 
-function drawRay({ ctx, ind, value, dataLen, aFactor, radius, time }) {
+function drawRay(options, color) {
+  const { ctx, ind, value, dataLen, aFactor, radius, time } = options;
   //const v = value / 255;
   const v = value * aFactor;
   const angle = (ind / dataLen) * Math.PI * 2;
@@ -41,7 +47,12 @@ function drawRay({ ctx, ind, value, dataLen, aFactor, radius, time }) {
 
   const hue = ind / dataLen * 360 + time * 0.03;
 
-  ctx.strokeStyle = `hsla(${hue},100%,60%,0.85)`;
+  if (!color) {
+    ctx.strokeStyle = `hsla(${hue},100%,60%,0.85)`;
+  } else {
+    ctx.strokeStyle = color;
+    console.log(color);
+  }
 
   ctx.beginPath();
   ctx.moveTo(x1, y1);
@@ -50,7 +61,7 @@ function drawRay({ ctx, ind, value, dataLen, aFactor, radius, time }) {
 }
 
 
-function drawCore(ctx, freqs, radius) {
+function drawCore(ctx, freqs, radius, color) {
   const bass = getBass(freqs);
   const glow = radius * (1 + bass * 0.5);
 
