@@ -12,3 +12,7 @@ export function avg(arr, start = 0, end = arr.length) {
 export function getBass(freq) {
   return avg(freq, 0, freq.length * 0.08) / 255;
 }
+
+export function getMids(freq) {
+  return avg(freq, freq.length * 0.08, freq.length * 0.35) / 255;
+}
