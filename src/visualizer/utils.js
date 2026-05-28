@@ -36,3 +36,14 @@ export function rgbaToHsl(r, g, b) {
     }
     return { h: h * 360, s: s * 100, l: l * 100 };
 }
+
+export function getColorChannels(rgba) {
+  const channels = rgba.match(/[\d.]+/g); 
+
+  const r = +channels[0];
+  const g = +channels[1];
+  const b = +channels[2];
+  const a = +channels[3];
+
+  return { r, g, b, a };
+}
