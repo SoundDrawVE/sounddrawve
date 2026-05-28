@@ -7,6 +7,8 @@ import drawCircles from './circles.js';
 import getColorFn from './colors.js';
 import drawOrb from './orb.js';
 
+import drawPlasma from './plasmawave.js';
+
 
 const tmpData = {
   data: [],
@@ -66,5 +68,7 @@ export function visualizeSpectrum(freq, ctx) {
   const colorFn = getColorFn(settings.colorType);
   const drawFn = drawFns[settings.visualizationType];
 
-  drawFn(ctx, freq, options, colorFn, tmpData);
+  //drawFn(ctx, freq, options, colorFn, tmpData);
+
+  drawPlasma(ctx, freq, options, colorFn, tmpData);
 }

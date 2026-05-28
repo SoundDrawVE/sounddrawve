@@ -1,19 +1,21 @@
 import { getBass, getMids } from './utils.js';
 
 
-export default function drawPlasma(ctx, freq, rect, time = 30) {
-  const { x, y, width, height } = rect;
+export default function drawPlasma(ctx, freqs, options, colorFn, tmpData, time = 30) {
+  const {areaX, areaY, areaW, areaH, aFactor } = options;
 
-  const bass = getBass(freq);
-  const mids = getMids(freq);
-  const cell = 10;
+  const bass = getBass(freqs);
+  const mids = getMids(freqs);
+  let cell = 20 * aFactor;
   const gap = 1;
 
-  for (let px = 0; px < width; px += cell) {
-    for (let py = 0; py < height; py += cell) {
+  if (cell < 5) cell = 5;
 
-      const nx = px / width;
-      const ny = py / height;
+  for (let px = 0; px < areaW; px += cell) {
+    for (let py = 0; py < areaH; py += cell) {
+
+      const nx = px / areaW;
+      const ny = py / areaH;
 
       const v =
         Math.sin(nx * 10 + time * 0.0015) +
@@ -36,8 +38,8 @@ export default function drawPlasma(ctx, freq, rect, time = 30) {
       ctx.fillStyle = `hsla(${hue},${saturation}%,${lightness}%,${alpha})`;
 
       ctx.fillRect(
-        x + px,
-        y + py,
+        areaX + px,
+        areaY + py,
         cell - gap,
         cell - gap
       );
