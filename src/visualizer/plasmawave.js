@@ -25,17 +25,7 @@ export default function drawPlasma(ctx, freqs, options, colorFn, tmpData, time =
       const intensity =
         (v * 0.5 + 0.5) * (0.4 + bass * 1.4);
 
-      const hue =
-        220 +
-        intensity * 120 +
-        mids * 100 +
-        Math.sin(time * 0.001) * 40;
-
-      const saturation = 100;
-      const lightness = 40 + intensity * 40;
-      const alpha = 0.7;
-
-      ctx.fillStyle = `hsla(${hue},${saturation}%,${lightness}%,${alpha})`;
+      ctx.fillStyle = calcDefaultColor(intensity, mids, time);
 
       ctx.fillRect(
         areaX + px,
@@ -45,4 +35,19 @@ export default function drawPlasma(ctx, freqs, options, colorFn, tmpData, time =
       );
     }
   }
+}
+
+
+function calcDefaultColor(intensity, mids, time) {
+  const hue =
+    220 +
+    intensity * 120 +
+    mids * 100 +
+    Math.sin(time * 0.001) * 40;
+
+  const saturation = 100;
+  const lightness = 40 + intensity * 40;
+  const alpha = 0.7;
+
+  return `hsla(${hue},${saturation}%,${lightness}%,${alpha})`;
 }
