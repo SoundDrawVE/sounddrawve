@@ -6,9 +6,8 @@ export default function drawPlasma(ctx, freq, rect, time = 30) {
 
   const bass = getBass(freq);
   const mids = getMids(freq);
-
-
-  const cell = 5;
+  const cell = 10;
+  const gap = 1;
 
   for (let px = 0; px < width; px += cell) {
     for (let py = 0; py < height; py += cell) {
@@ -30,15 +29,17 @@ export default function drawPlasma(ctx, freq, rect, time = 30) {
         mids * 100 +
         Math.sin(time * 0.001) * 40;
 
+      const saturation = 100;
+      const lightness = 40 + intensity * 40;
       const alpha = 0.7;
 
-      ctx.fillStyle = `hsla(${hue},100%,${40 + intensity * 40}%,${alpha})`;
+      ctx.fillStyle = `hsla(${hue},${saturation}%,${lightness}%,${alpha})`;
 
       ctx.fillRect(
         x + px,
         y + py,
-        cell,
-        cell
+        cell - gap,
+        cell - gap
       );
     }
   }
