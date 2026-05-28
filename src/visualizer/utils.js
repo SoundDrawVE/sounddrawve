@@ -5,7 +5,7 @@ export function randInt(min, max) {
 
 export function avg(arr, start = 0, end = arr.length) {
   let s = 0;
-  for (let i = start; i < end; i++) s += arr[i];
+  for (let i = Math.round(start); i < end; i++) s += arr[i];
   return s / (end - start);
 }
 
