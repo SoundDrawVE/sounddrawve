@@ -1,8 +1,8 @@
-import { getBass, getMids } from './utils.js';
+import { getBass, getMids, getColorChannels, rgbaToHsl } from './utils.js';
 
 
 export default function drawPlasma(ctx, freqs, options, colorFn, tmpData, time = 30) {
-  const {areaX, areaY, areaW, areaH, aFactor } = options;
+  const {areaX, areaY, areaW, areaH, aFactor, colorType, color } = options;
 
   const bass = getBass(freqs);
   const mids = getMids(freqs);
@@ -25,7 +25,11 @@ export default function drawPlasma(ctx, freqs, options, colorFn, tmpData, time =
       const intensity =
         (v * 0.5 + 0.5) * (0.4 + bass * 1.4);
 
-      ctx.fillStyle = calcDefaultColor(intensity, mids, time);
+      if (colorType !== 'default') {
+        ctx.fillStyle = calcCustomColor(intensity, mids, time, color);
+      } else {
+        ctx.fillStyle = calcDefaultColor(intensity, mids, time);
+      }
 
       ctx.fillRect(
         areaX + px,
@@ -35,6 +39,25 @@ export default function drawPlasma(ctx, freqs, options, colorFn, tmpData, time =
       );
     }
   }
+}
+
+
+function calcCustomColor(intensity, mids, time, color) {
+  const userColor = getColorChannels(color);
+  const base = rgbaToHsl(userColor.r, userColor.g, userColor.b);
+
+  const k = 0.5;
+
+  const hue = 
+    ( base.h + 
+      intensity * 120 * k + mids * 100 * k + 
+      Math.sin(time * 0.001) * 40 ) % 360;
+
+  const saturation = base.s; 
+  const lightness = Math.min(100, base.l + intensity * (100 - base.l) * 0.8);
+  const alpha = userColor.a;
+
+  return `hsla(${hue}, ${saturation}%, ${lightness}%, ${alpha})`;
 }
 
 
