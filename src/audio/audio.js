@@ -5,11 +5,12 @@ import { settings } from '../settings.js';
 export const player = document.getElementById('audio');
 player.src = track;
 
+let fftSize = settings.fftSize;
+
 let audioCtx; 
 let analyser;
 let freqData;
 let source;
-let fftSize = settings.fftSize;
 let timeData;
 
 
@@ -31,16 +32,20 @@ function setFftSize(value) {
   timeData = new Uint8Array(analyser.fftSize);
 }
 
+function updateFftSize() {
+  if (fftSize !== settings.fftSize) {
+    setFftSize(settings.fftSize);
+    fftSize = settings.fftSize;
+  };
+}
+
 export function setTrack(src) {
   player.src = src;
   player.play();
 }
 
 export function getAudioData() {
-  if (fftSize !== settings.fftSize) {
-    setFftSize(settings.fftSize);
-    fftSize = settings.fftSize;
-  };
+  updateFftSize();
   analyser.getByteFrequencyData(freqData);
   analyser.getByteTimeDomainData(timeData);
   return {
