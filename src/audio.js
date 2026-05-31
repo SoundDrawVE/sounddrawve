@@ -79,7 +79,7 @@ const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
  * @param {number} fftSize — размер FFT (должен совпадать с твоим)
  * @returns {Promise<Array<number[]>>}
  */
-export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = (text) => console.log(text)) {
+export async function preprocessAudioData(audioFile, fps = 30, showStatus = (text) => console.log(text)) {
   let arrayBuffer;
 
   showStatus(`The audio track is loading...`);
@@ -118,6 +118,7 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
   source.start(0);
 
   const freqData = [];
+  const timeData = [];
   const intervalMs = 1000 / fps;
   let frameIndex = 0;
   let lastLoggedPercent = -1; // for good output
@@ -129,13 +130,17 @@ export async function preprocessFrequencyData(audioFile, fps = 30, showStatus = 
         source.stop();
         audioContext.close().catch(() => {});
         showStatus(`✅ Preprocessing completed: ${freqData.length} frames`);
-        setTimeout(() => resolve(freqData), 1000);
+        setTimeout(() => resolve({ freqData, timeData }), 1000);
         return;
       }
 
       const dataArray = new Uint8Array(bufferLength);
+      const tData = new Uint8Array(analyser.fftSize);
+
       analyser.getByteFrequencyData(dataArray);
+      analyser.getByteTimeDomainData(tData);
       freqData.push(Array.from(dataArray));
+      timeData.push(Array.from(timeData));
 
       const percent = Math.round((frameIndex / totalFrames) * 100);
       if (percent > lastLoggedPercent) { // output only when % changes

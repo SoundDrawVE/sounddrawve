@@ -2,7 +2,7 @@ import "@fontsource/dejavu-serif"; // Defaults to weight 400
 import "@fontsource/inter";
 import './style.css';
 import { getCanvasCtx, clearCanvas } from './canvas.js';
-import { player, getAudioData, preprocessFrequencyData, audioSamples } from './audio.js';
+import { player, getAudioData, preprocessAudioData, audioSamples } from './audio.js';
 import { visualizeSpectrum } from './visualizer/visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
@@ -72,14 +72,14 @@ function animate(timestamp) {
 
 
 const renderBtn = document.getElementById('render-btn');
-let preprocessedFreqData = null;
+let preprocessedAudioData = null;
 
 renderBtn.addEventListener('click', async () => {
   settings.setProp('mode', 'render');
   player.pause();
   await onFileSelected();
   initFraming('track1');
-  await createFrames(preprocessedFreqData, updateMessage);
+  await createFrames(preprocessedAudioData.freqData, updateMessage);
   removeCover();
   settings.setProp('mode', 'visualize');
 });
@@ -88,7 +88,7 @@ renderBtn.addEventListener('click', async () => {
 async function onFileSelected(file) {
   try {
     showCover();
-    preprocessedFreqData = await preprocessFrequencyData(file, 30, updateMessage); // твой fftSize
+    preprocessedAudioData = await preprocessAudioData(file, 30, updateMessage); // твой fftSize
     console.log('Готово к проигрыванию и рендеру!');
     // можно сразу показать превью или разблокировать кнопку Play
   } catch (e) {
