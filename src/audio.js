@@ -11,6 +11,7 @@ let bufferLength;
 let dataArray;
 let source;
 let fftSize = settings.fftSize;
+let timeData;
 
 
 function createAnalyser(fftSize) {
@@ -19,6 +20,7 @@ function createAnalyser(fftSize) {
   analyser.fftSize = fftSize;
   bufferLength = analyser.frequencyBinCount;
   dataArray = new Uint8Array(bufferLength);
+  timeData = new Uint8Array(analyser.fftSize);
   source = audioCtx.createMediaElementSource(player);
   source.connect(analyser);
   analyser.connect(audioCtx.destination);
@@ -29,6 +31,7 @@ function setFftSize(value) {
   analyser.fftSize = value;
   bufferLength = analyser.frequencyBinCount;
   dataArray = new Uint8Array(bufferLength);
+  timeData = new Uint8Array(analyser.fftSize);
 }
 
 export function setTrack(src) {
@@ -42,7 +45,11 @@ export function getAudioData() {
     fftSize = settings.fftSize;
   };
   analyser.getByteFrequencyData(dataArray);
-  return [...dataArray];
+  analyser.getByteTimeDomainData(timeData);
+  return {
+    fregs: [...dataArray],
+    timeData: [...timeData]
+  };
 }
 
 

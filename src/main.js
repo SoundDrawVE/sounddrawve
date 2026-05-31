@@ -62,11 +62,11 @@ function animate(timestamp) {
   if (delta > interval) {
     then = timestamp - (delta % interval);
 
-    const freq = getAudioData();
+    const freqs = getAudioData().fregs;
     const ctx = getCanvasCtx();
 
     clearCanvas();
-    visualizeSpectrum(freq, ctx);
+    visualizeSpectrum(freqs, ctx);
   }
 }
 
