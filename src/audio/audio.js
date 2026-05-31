@@ -7,8 +7,7 @@ player.src = track;
 
 let audioCtx; 
 let analyser;
-let bufferLength;
-let dataArray;
+let freqData;
 let source;
 let fftSize = settings.fftSize;
 let timeData;
@@ -18,8 +17,7 @@ function createAnalyser(fftSize) {
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
   analyser = audioCtx.createAnalyser(); 
   analyser.fftSize = fftSize;
-  bufferLength = analyser.frequencyBinCount;
-  dataArray = new Uint8Array(bufferLength);
+  freqData = new Uint8Array(analyser.frequencyBinCount);
   timeData = new Uint8Array(analyser.fftSize);
   source = audioCtx.createMediaElementSource(player);
   source.connect(analyser);
@@ -29,8 +27,7 @@ function createAnalyser(fftSize) {
 
 function setFftSize(value) {
   analyser.fftSize = value;
-  bufferLength = analyser.frequencyBinCount;
-  dataArray = new Uint8Array(bufferLength);
+  freqData = new Uint8Array(analyser.frequencyBinCount);
   timeData = new Uint8Array(analyser.fftSize);
 }
 
@@ -44,10 +41,10 @@ export function getAudioData() {
     setFftSize(settings.fftSize);
     fftSize = settings.fftSize;
   };
-  analyser.getByteFrequencyData(dataArray);
+  analyser.getByteFrequencyData(freqData);
   analyser.getByteTimeDomainData(timeData);
   return {
-    freqs: [...dataArray],
+    freqs: [...freqData],
     timeData: [...timeData]
   };
 }
@@ -103,7 +100,6 @@ export async function preprocessAudioData(audioFile, fps = 30, showStatus = (tex
 
   const analyser = audioContext.createAnalyser();
   analyser.fftSize = fftSize;
-  const bufferLength = analyser.frequencyBinCount;
 
   const source = audioContext.createBufferSource();
   source.buffer = audioBuffer;
@@ -134,12 +130,12 @@ export async function preprocessAudioData(audioFile, fps = 30, showStatus = (tex
         return;
       }
 
-      const dataArray = new Uint8Array(bufferLength);
+      const fData = new Uint8Array(analyser.frequencyBinCount);
       const tData = new Uint8Array(analyser.fftSize);
 
-      analyser.getByteFrequencyData(dataArray);
+      analyser.getByteFrequencyData(fData);
       analyser.getByteTimeDomainData(tData);
-      freqData.push(Array.from(dataArray));
+      freqData.push(Array.from(fData));
       timeData.push(Array.from(timeData));
 
       const percent = Math.round((frameIndex / totalFrames) * 100);
