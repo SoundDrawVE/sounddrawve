@@ -2,7 +2,8 @@ import "@fontsource/dejavu-serif"; // Defaults to weight 400
 import "@fontsource/inter";
 import './style.css';
 import { getCanvasCtx, clearCanvas } from './canvas.js';
-import { player, getAudioData, preprocessAudioData, audioSamples } from './audio/audio.js';
+import { player, getAudioData, preprocessAudioData } from './audio/audio.js';
+import { sampleData } from './audio/sampleData.js';
 import { visualizeSpectrum } from './visualizer/visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';
@@ -25,7 +26,7 @@ function visualizeStaticSpectrum() {
   if (isPlaying) return;
   const ctx = getCanvasCtx();
   clearCanvas();
-  visualizeSpectrum(audioSamples[settings.fftSize], ctx);
+  visualizeSpectrum(sampleData.freqs[settings.fftSize], ctx);
 }
 
 visualizeStaticSpectrum();
