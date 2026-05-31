@@ -47,7 +47,7 @@ export function getAudioData() {
   analyser.getByteFrequencyData(dataArray);
   analyser.getByteTimeDomainData(timeData);
   return {
-    fregs: [...dataArray],
+    freqs: [...dataArray],
     timeData: [...timeData]
   };
 }
