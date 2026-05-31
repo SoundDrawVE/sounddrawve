@@ -15,7 +15,7 @@ export default function drawOscilloscope(ctx, freqs, options, colorFn, tmpData, 
       const v = timeData[i] / 255;
 
       const px = areaX + (i / timeData.length) * areaW;
-      const py = areaY + areaH / 2 + (v - 0.5) * areaH * 0.8;
+      const py = areaY + areaH / 2 + (v - 0.5) * areaH * 1.8;
 
       if (i === 0) ctx.moveTo(px, py);
       else ctx.lineTo(px, py);
