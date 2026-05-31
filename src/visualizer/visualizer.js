@@ -7,6 +7,7 @@ import drawCircles from './circles.js';
 import getColorFn from './colors.js';
 import drawOrb from './orb.js';
 import drawPlasma from './plasmawave.js';
+import drawOscilloscope from './oscilloscope.js';
 
 
 const tmpData = {
@@ -35,7 +36,8 @@ const drawFns = {
   'droplets': drawDroplets,
   'pulsecircle': drawCircles,
   'orb': drawOrb,
-  'plasmawave': drawPlasma
+  'plasmawave': drawPlasma,
+  'oscilloscope': drawOscilloscope
 };
 
 
@@ -68,5 +70,5 @@ export function visualizeSpectrum(ctx, freqs, timeData) {
   const colorFn = getColorFn(settings.colorType);
   const drawFn = drawFns[settings.visualizationType];
 
-  drawFn(ctx, freqs, options, colorFn, tmpData);
+  drawFn(ctx, freqs, options, colorFn, tmpData, 30, timeData);
 }

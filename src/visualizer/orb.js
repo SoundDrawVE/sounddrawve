@@ -51,7 +51,6 @@ function drawRay(options, color) {
     ctx.strokeStyle = `hsla(${hue},100%,60%,0.85)`;
   } else {
     ctx.strokeStyle = color;
-    console.log(color);
   }
 
   ctx.beginPath();
