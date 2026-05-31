@@ -2,7 +2,7 @@ import "@fontsource/dejavu-serif"; // Defaults to weight 400
 import "@fontsource/inter";
 import './style.css';
 import { getCanvasCtx, clearCanvas } from './canvas.js';
-import { player, getAudioData, preprocessAudioData, audioSamples } from './audio.js';
+import { player, getAudioData, preprocessAudioData, audioSamples } from './audio/audio.js';
 import { visualizeSpectrum } from './visualizer/visualizer.js';
 import { initFraming, createFrames } from './frames.js';
 import { queue } from './storage.js';

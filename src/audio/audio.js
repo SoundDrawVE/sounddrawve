@@ -1,5 +1,5 @@
-import track from './assets/track.mp3';
-import { settings } from './settings.js';
+import track from '../assets/track.mp3';
+import { settings } from '../settings.js';
 
 
 export const player = document.getElementById('audio');
