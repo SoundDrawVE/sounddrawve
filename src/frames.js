@@ -43,7 +43,7 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
   if (isOfflineRendering) return;
   isOfflineRendering = true;
 
-  const totalFrames = audioSamples.length;
+  const totalFrames = audioSamples.freqData.length;
   let frameIndex = 0;
   const frameInterval = 1000 / OFFLINE_FPS;
 
@@ -52,10 +52,11 @@ export async function createFrames(audioSamples, showStatus = (text) => console.
 
   while (frameIndex < totalFrames) {
     const t_now = performance.now();
-    const freq = audioSamples[frameIndex];
+    const freqs = audioSamples.freqData[frameIndex];
+    const timeData = audioSamples.timeData[frameIndex];
 
     exportCtx.clearRect(0, 0, exportCanvas.width, exportCanvas.height);
-    visualizeSpectrum(freq, exportCtx);
+    visualizeSpectrum(exportCtx, freqs, timeData);
     await capturePNG(exportCanvas, frameIndex, batch);
 
     showStatus(createStatusMsg(frameIndex, averageProcTime, totalFrames));

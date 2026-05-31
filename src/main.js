@@ -26,7 +26,7 @@ function visualizeStaticSpectrum() {
   if (isPlaying) return;
   const ctx = getCanvasCtx();
   clearCanvas();
-  visualizeSpectrum(sampleData.freqs[settings.fftSize], ctx);
+  visualizeSpectrum(ctx, sampleData.freqs[settings.fftSize], sampleData.timeData[settings.fftSize]);
 }
 
 visualizeStaticSpectrum();
@@ -63,11 +63,11 @@ function animate(timestamp) {
   if (delta > interval) {
     then = timestamp - (delta % interval);
 
-    const freqs = getAudioData().freqs;
+    const audioData = getAudioData();
     const ctx = getCanvasCtx();
 
     clearCanvas();
-    visualizeSpectrum(freqs, ctx);
+    visualizeSpectrum(ctx, audioData.freqs, audioData.timeData);
   }
 }
 
@@ -80,7 +80,7 @@ renderBtn.addEventListener('click', async () => {
   player.pause();
   await onFileSelected();
   initFraming('track1');
-  await createFrames(preprocessedAudioData.freqData, updateMessage);
+  await createFrames(preprocessedAudioData, updateMessage);
   removeCover();
   settings.setProp('mode', 'visualize');
 });

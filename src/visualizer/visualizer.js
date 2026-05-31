@@ -39,7 +39,7 @@ const drawFns = {
 };
 
 
-export function visualizeSpectrum(freq, ctx) {
+export function visualizeSpectrum(ctx, freqs, timeData) {
   const areaCoords = settings.getCoords();
   const freqNumber = settings.freqNumber;
   const canvasDimensions = settings.getCanvasDimensions();
@@ -68,5 +68,5 @@ export function visualizeSpectrum(freq, ctx) {
   const colorFn = getColorFn(settings.colorType);
   const drawFn = drawFns[settings.visualizationType];
 
-  drawFn(ctx, freq, options, colorFn, tmpData);
+  drawFn(ctx, freqs, options, colorFn, tmpData);
 }
