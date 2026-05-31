@@ -4,26 +4,21 @@ import { player } from './audio.js';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-/**
- * Предварительно собирает frequency data с фиксированным FPS
- * @param {File|Blob} audioFile — выбранный mp3-файл
- * @param {number} fps — желаемый FPS (рекомендую 25 или 30)
- * @param {number} fftSize — размер FFT (должен совпадать с твоим)
- * @returns {Promise<Array<number[]>>}
- */
+
 export async function preprocessAudioData(audioFile, fps = 30, showStatus = (text) => console.log(text)) {
-  let arrayBuffer;
+  //let arrayBuffer;
 
   showStatus(`The audio track is loading...`);
 
-  if (!audioFile) {
-    const response = await fetch(player.src);
-    arrayBuffer = await response.arrayBuffer();
-  } else {
-    arrayBuffer = await audioFile.arrayBuffer();
-  }
+  // if (!audioFile) {
+  //   const response = await fetch(player.src);
+  //   arrayBuffer = await response.arrayBuffer();
+  // } else {
+  //   arrayBuffer = await audioFile.arrayBuffer();
+  // }
 
   const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const arrayBuffer = await getArrayBuffer(audioFile);
   const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
 
   const duration = audioBuffer.duration;
@@ -82,4 +77,16 @@ export async function preprocessAudioData(audioFile, fps = 30, showStatus = (tex
       frameIndex++;
     }, intervalMs);
   });
+}
+
+
+async function getArrayBuffer(audioFile) {
+  let arrayBuffer;
+  if (!audioFile) {
+    const response = await fetch(player.src);
+    arrayBuffer = await response.arrayBuffer();
+  } else {
+    arrayBuffer = await audioFile.arrayBuffer();
+  }
+  return arrayBuffer;
 }
